@@ -30,7 +30,7 @@ def get_user_by_email(email):
     
 
 def create_park(park_name, address, coordinates, url, description):
-    """Create and return a new movie."""
+    """Create and return a new park."""
 
     park = Park(park_name=park_name, address=address, coordinates=coordinates, url=url, description=description)
 
@@ -40,17 +40,23 @@ def create_park(park_name, address, coordinates, url, description):
     return park
 
 def return_all_parks():
-    """Get list of all movies"""
+    """Get list of all parks"""
 
     return Park.query.all()
 
 def get_park_by_id(park_id):
-    """Get movie details by movie_id."""
+    """Get park details by park_id."""
 
     return Park.query.get(park_id)
 
+# TODO: not sure how to do this one, but it's the lynch pin. Ask for help
+def get_park_by_topic(topic_id):
+    """Get park details by park_id."""
+
+    return Park.query.get(topic_id)
+
 def create_favorite(is_favorite, user, park):
-    """Create and return a new rating."""
+    """Create and return a new favorite."""
 
     favorite = Favorite(is_favorite=is_favorite, user=user, park=park)
 
