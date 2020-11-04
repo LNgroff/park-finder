@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Creating tables
+### See to do list at end of file.
 
 #  TODO: change the "ratings" in the postgresql
 def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
@@ -154,6 +154,8 @@ class Topic(db.Model):
                 topic_name: {self.topic_name}
                 park_id: {self.park_id}
                 user_id: {self.user_id}"""
+
+
 
 if __name__ == '__main__':
     from server import app
