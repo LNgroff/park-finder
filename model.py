@@ -100,17 +100,19 @@ class Favorite(db.Model):
                     db.ForeignKey("parks.park_id"))
     user_id = db.Column(db.Integer,
                     db.ForeignKey("users.user_id"))
+    is_favorite = db.Column(db.Boolean)
 
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
                 park_id: {self.park_id}
-                user_id: {self.user_id}"""
+                user_id: {self.user_id}
+                is_favorite: {self.is_favorite}"""
 
     park = db.relationship('Park', backref='favorites')
     user = db.relationship('User', backref='favorites')
 
 
-class Topics(db.Model):
+class Topic(db.Model):
     """A list of parks' topics"""
 
     __tablename__ = "topics"
@@ -136,3 +138,7 @@ class Topics(db.Model):
                 park_id: {self.park_id}
                 user_id: {self.user_id}"""
 
+if __name__ == '__main__':
+    from server import app
+
+    connect_to_db(app)
