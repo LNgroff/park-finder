@@ -26,12 +26,16 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer,
                 primary_key = True,
-                autoincrement = True)
+                autoincrement = True,
+                nullable = False)
     username = db.Column(db.String,
-                unique = True)
+                unique = True,
+                nullable = False))
     email = db.Column(db.String,
-                unique = True)
-    password db.Column(db.String)
+                unique = True,
+                nullable = False)
+    password db.Column(db.String,
+                nullable = False)
 
     def __repr__(self):
         return f"""User user_id: {self.user_id}
@@ -47,14 +51,18 @@ class Park(db.Model):
 
     park_id = db.Column(db.Integer,
                 primary_key = True,
-                autoincrement = True)
+                autoincrement = True,
+                nullable = False))
     park_name = db.Column(db.String,
-                unique = True)
+                unique = True,
+                nullable = False))
     address = db.Column(db.String,
                 unique = True)
-    coordinates = db.Column(db.Integer)
+    coordinates = db.Column(db.Integer,
+                nullable = False))
     url = db.Column(db.String,
-                unique = True)
+                unique = True,
+                nullable = False)
     description = db.Column(db.String)
 
 
@@ -72,12 +80,15 @@ class Image(db.Model):
     __tablename__ = "images"
 
     image_id = db.Column(db.Integer,
-                    primary_key = True,
-                    autoincrement = True)
+                primary_key = True,
+                autoincrement = True,
+                nullable = False)
     park_id = db.Column(db.Integer,
-                    db.ForeignKey("parks.park_id"))
+                db.ForeignKey("parks.park_id"),
+                nullable = False)
     url = db.Column(db.String,
-                unique = True)
+                unique = True,
+                nullable = False)
     
     park = db.relationship('Park', backref='images')
 
@@ -94,12 +105,15 @@ class Favorite(db.Model):
     __tablename__ = "favorites"
 
     favorite_id = db.Column(db.Integer,
-                    primary_key = True,
-                    autoincrement = True)
+                primary_key = True,
+                autoincrement = True,
+                nullable = False)
     park_id = db.Column(db.Integer,
-                    db.ForeignKey("parks.park_id"))
+                db.ForeignKey("parks.park_id"),
+                nullable = False)
     user_id = db.Column(db.Integer,
-                    db.ForeignKey("users.user_id"))
+                db.ForeignKey("users.user_id"),
+                nullable = False)
     is_favorite = db.Column(db.Boolean)
 
     def __repr__(self):
@@ -119,14 +133,17 @@ class Topic(db.Model):
 
 
     topic_id = db.Column(db.Integer,
-                    primary_key = True,
-                    autoincrement = True)
+                primary_key = True,
+                autoincrement = True,
+                nullable = False)
     topic_name = db.Column(db.String,
-                    unique = True)
+                unique = True,
+                nullable = False)
     park_id db.Column(db.Integer,
-                    db.ForeignKey("parks.park_id"))
+                db.ForeignKey("parks.park_id"),
+                nullable = False)
     user_id = db.Column(db.Integer,
-                    db.ForeignKey("users.user_id"))
+                db.ForeignKey("users.user_id"))
     
     park = db.relationship('Park', backref='topics')
     user = db.relationship('User', backref='topics')

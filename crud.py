@@ -27,6 +27,11 @@ def get_user_by_email(email):
     """Get user by email."""
 
     return User.query.filter(User.email == email).first()
+
+def get_user_by_username(username):
+    """Get user by email."""
+
+    return User.query.filter(User.username == username).first()
     
 
 def create_park(park_name, address, coordinates, url, description):
