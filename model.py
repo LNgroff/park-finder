@@ -56,7 +56,7 @@ class Park(db.Model):
     park_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    address = db.Column(db.String,
+    state = db.Column(db.String,
                 unique = True)
     coordinates = db.Column(db.Integer,
                 nullable = False)
@@ -69,7 +69,7 @@ class Park(db.Model):
     def __repr__(self):
         return f"""Park park_id: {self.park_id} 
                 name: {self.name}
-                address: {self.address}
+                state: {self.state}
                 coordinates: {self.coordinates}
                 url: {self.url}
                 description: {self.description}"""

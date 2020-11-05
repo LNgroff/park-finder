@@ -96,6 +96,8 @@ if __name__ == '__main__':
 
 """
 TODO:
-fix log-in so user can enter usernmae OR email. (retcon on homepage.html)
+- fix log-in so user can enter usernmae OR email. (retcon on homepage.html)
+- Add server route for parks by state
+
 
 """

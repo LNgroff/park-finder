@@ -54,9 +54,14 @@ def get_park_by_id(park_id):
 
     return Park.query.get(park_id)
 
+def get_park_by_state(state):
+    """Get park details by state."""
+
+    return Park.query.get(state)
+
 # TODO: not sure how to do this one, but it's the lynch pin. Ask for help
 def get_park_by_topic(topic_id):
-    """Get park details by park_id."""
+    """Get park details by topic_id."""
 
     return Park.query.get(topic_id)
 
