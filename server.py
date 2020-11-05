@@ -29,7 +29,7 @@ def show_all_parks():
 
 @app.route('/parkss/<park_id>')
 def movie_details(park_id):
-    """Show details on specific movies"""
+    """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
 
@@ -45,7 +45,7 @@ def show_all_users():
 
 @app.route('/all-users/<user_id>')
 def user_details(user_id):
-    """Show details on specific movies"""
+    """Show details on specific user"""
 
     user = crud.get_user_by_id(user_id)
 
@@ -57,7 +57,9 @@ def register_user():
 
     email = request.form.get('email')
     password = request.form.get('password')
+    username = request.form.get('username')
     user = crud.get_user_by_email(email)
+
 
     if user == None:
         crud.create_user(email, password)
@@ -72,6 +74,7 @@ def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
 
+    # fix so the user can enter username OR email
     email = request.form.get('email')
     password = request.form.get('password')
     user = crud.get_user_by_email(email)
@@ -89,3 +92,10 @@ def log_in():
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
+
+
+"""
+TODO:
+fix log-in so user can enter usernmae OR email. (retcon on homepage.html)
+
+"""
