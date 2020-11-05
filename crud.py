@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, Park, User, Image, Favorite, Topic, connect_to_db
+from model import db, Park, User, Image, UserFavorite, Topic, connect_to_db
 
 
 def create_user(email, password, username):
@@ -63,9 +63,9 @@ def get_park_by_topic(topic_id):
 def create_favorite(is_favorite, user, park):
     """Create and return a new favorite."""
 
-    favorite = Favorite(is_favorite=is_favorite, user=user, park=park)
+    favorite = UserFavorite(is_favorite=is_favorite, user=user, park=park)
 
-    db.session.add(favotire)
+    db.session.add(favorite)
     db.session.commit()
 
     return favorite

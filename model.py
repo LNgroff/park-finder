@@ -7,7 +7,7 @@ db = SQLAlchemy()
 ### See to do list at end of file.
 
 #  TODO: change the "ratings" in the postgresql
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///parks', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -30,11 +30,11 @@ class User(db.Model):
                 nullable = False)
     username = db.Column(db.String,
                 unique = True,
-                nullable = False))
+                nullable = False)
     email = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    password db.Column(db.String,
+    password = db.Column(db.String,
                 nullable = False)
 
     def __repr__(self):
@@ -52,14 +52,14 @@ class Park(db.Model):
     park_id = db.Column(db.Integer,
                 primary_key = True,
                 autoincrement = True,
-                nullable = False))
+                nullable = False)
     park_name = db.Column(db.String,
                 unique = True,
-                nullable = False))
+                nullable = False)
     address = db.Column(db.String,
                 unique = True)
     coordinates = db.Column(db.Integer,
-                nullable = False))
+                nullable = False)
     url = db.Column(db.String,
                 unique = True,
                 nullable = False)
@@ -99,7 +99,7 @@ class Image(db.Model):
                 park: {self.park}"""
 
 
-class Favorite(db.Model):
+class UserFavorite(db.Model):
     """A list of user's favorites"""
 
     __tablename__ = "favorites"
@@ -139,7 +139,7 @@ class Topic(db.Model):
     topic_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    park_id db.Column(db.Integer,
+    park_id = db.Column(db.Integer,
                 db.ForeignKey("parks.park_id"),
                 nullable = False)
     user_id = db.Column(db.Integer,
