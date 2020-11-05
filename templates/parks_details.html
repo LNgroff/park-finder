@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ park.name }} - Details{% endblock %}
+
+{% block body %}
+<h1>{{ park.name }}</h1>
+
+
+<p>
+    {{ park.description }}
+</p>
+
+<!-- need to figure out how to produce and image for this one -->
+<!-- <img src="{{ park.image }}"> -->
+{% endblock %}
