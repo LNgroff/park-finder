@@ -51,6 +51,7 @@ def user_details(user_id):
 
     return render_template('user_details.html', user=user)
 
+
 @app.route('/users', methods = ['POST'] )
 def register_user():
     """Get inputs from form"""
@@ -62,7 +63,7 @@ def register_user():
 
 
     if user == None:
-        crud.create_user(email, password)
+        crud.create_user(email, password, uname)
         flash('Account created! You can now log in.')
     else:    
         flash('Email already exists. Try again.')
@@ -74,7 +75,6 @@ def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
 
-    # fix so the user can enter uname OR email
     email = request.form.get('email')
     password = request.form.get('password')
     user = crud.get_user_by_email(email)
