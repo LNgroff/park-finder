@@ -49,11 +49,11 @@ class Park(db.Model):
 
     __tablename__ = "parks"
 
-    fullname = db.Column(db.Integer,
+    park_id = db.Column(db.Integer,
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    park_name = db.Column(db.String,
+    fullname = db.Column(db.String,
                 unique = True,
                 nullable = False)
     state = db.Column(db.String,
@@ -67,7 +67,7 @@ class Park(db.Model):
 
 
     def __repr__(self):
-        return f"""Park fullname: {self.fullname} 
+        return f"""Park park_id: {self.park_id} 
                 name: {self.name}
                 state: {self.state}
                 coordinates: {self.coordinates}
@@ -83,8 +83,8 @@ class Image(db.Model):
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    fullname = db.Column(db.Integer,
-                db.ForeignKey("parks.fullname"),
+    park_id = db.Column(db.Integer,
+                db.ForeignKey("parks.park_id"),
                 nullable = False)
     url = db.Column(db.String,
                 unique = True,
@@ -94,7 +94,7 @@ class Image(db.Model):
 
     def __repr__(self):
         return f"""Image image_id: {self.image_id} 
-                fullname: {self.fullname}
+                park_id: {self.Park_id}
                 url: {self.url}
                 park: {self.park}"""
 
@@ -108,8 +108,8 @@ class UserFavorite(db.Model):
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    fullname = db.Column(db.Integer,
-                db.ForeignKey("parks.fullname"),
+    park_id = db.Column(db.Integer,
+                db.ForeignKey("parks.park_id"),
                 nullable = False)
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"),
@@ -118,7 +118,7 @@ class UserFavorite(db.Model):
 
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
-                fullname: {self.fullname}
+                park_id: {self.park_id}
                 user_id: {self.user_id}
                 is_favorite: {self.is_favorite}"""
 
@@ -139,8 +139,8 @@ class Topic(db.Model):
     topic_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    fullname = db.Column(db.Integer,
-                db.ForeignKey("parks.fullname"),
+    park_id = db.Column(db.Integer,
+                db.ForeignKey("parks.park_id"),
                 nullable = False)
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"))
@@ -152,7 +152,7 @@ class Topic(db.Model):
     def __repr__(self):
         return f"""Topic topic_id: {self.topic_id} 
                 topic_name: {self.topic_name}
-                fullname: {self.fullname}
+                park_id: {self.park_id}
                 user_id: {self.user_id}"""
 
 

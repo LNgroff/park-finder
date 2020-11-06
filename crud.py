@@ -23,19 +23,20 @@ def get_user_by_id(user_id):
 
     return User.query.get(user_id)
 
-# combine these two?
+
 def get_user_by_email(email):
     """Get user by email."""
 
     return User.query.filter(User.email == email).first()
-# combine these two?
-def get_user_by_uname(uname):
-    """Get user by uname."""
 
-    return User.query.filter(User.uname == uname).first()
+# unlikely to actually use
+# def get_user_by_uname(uname):
+#     """Get user by uname."""
+
+#     return User.query.filter(User.uname == uname).first()
     
 
-def create_park(fullname, address, coordinates, url, description):
+def create_park(fullname, state, coordinates, url, description):
     """Create and return a new park."""
 
     park = Park(fullname=fullname, address=address, coordinates=coordinates, url=url, description=description)
