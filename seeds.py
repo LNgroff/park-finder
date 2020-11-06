@@ -21,7 +21,7 @@ with open('data/parks.json') as f:
 parks_in_db = []
 for park in park_data:
 
-    db_park = crud.create_park(park['park_name'], park['description'], park['address'], park['url'], park['coordinates'])
+    db_park = crud.create_park(park['park_name'], park['description'], park['state'], park['url'], park['coordinates'])
     
     parks_in_db.append(db_park)
 
@@ -31,8 +31,8 @@ for n in range(10):
 
     user = crud.create_user(email, password)
     
-    for n in range(10):
-        rand_park = choice(parks_in_db)
-        score = randint(1, 5)
+    # for n in range(10):
+    #     rand_park = choice(parks_in_db)
+    #     score = randint(1, 5)
 
-        rating = crud.create_rating(score, user, rand_park)
+    #     rating = crud.create_rating(score, user, rand_park)

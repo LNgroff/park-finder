@@ -49,7 +49,7 @@ class Park(db.Model):
 
     __tablename__ = "parks"
 
-    park_id = db.Column(db.Integer,
+    fullname = db.Column(db.Integer,
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
@@ -67,7 +67,7 @@ class Park(db.Model):
 
 
     def __repr__(self):
-        return f"""Park park_id: {self.park_id} 
+        return f"""Park fullname: {self.fullname} 
                 name: {self.name}
                 state: {self.state}
                 coordinates: {self.coordinates}
@@ -83,8 +83,8 @@ class Image(db.Model):
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    park_id = db.Column(db.Integer,
-                db.ForeignKey("parks.park_id"),
+    fullname = db.Column(db.Integer,
+                db.ForeignKey("parks.fullname"),
                 nullable = False)
     url = db.Column(db.String,
                 unique = True,
@@ -94,7 +94,7 @@ class Image(db.Model):
 
     def __repr__(self):
         return f"""Image image_id: {self.image_id} 
-                park_id: {self.park_id}
+                fullname: {self.fullname}
                 url: {self.url}
                 park: {self.park}"""
 
@@ -108,8 +108,8 @@ class UserFavorite(db.Model):
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    park_id = db.Column(db.Integer,
-                db.ForeignKey("parks.park_id"),
+    fullname = db.Column(db.Integer,
+                db.ForeignKey("parks.fullname"),
                 nullable = False)
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"),
@@ -118,7 +118,7 @@ class UserFavorite(db.Model):
 
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
-                park_id: {self.park_id}
+                fullname: {self.fullname}
                 user_id: {self.user_id}
                 is_favorite: {self.is_favorite}"""
 
@@ -139,8 +139,8 @@ class Topic(db.Model):
     topic_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    park_id = db.Column(db.Integer,
-                db.ForeignKey("parks.park_id"),
+    fullname = db.Column(db.Integer,
+                db.ForeignKey("parks.fullname"),
                 nullable = False)
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"))
@@ -152,7 +152,7 @@ class Topic(db.Model):
     def __repr__(self):
         return f"""Topic topic_id: {self.topic_id} 
                 topic_name: {self.topic_name}
-                park_id: {self.park_id}
+                fullname: {self.fullname}
                 user_id: {self.user_id}"""
 
 
@@ -161,3 +161,9 @@ if __name__ == '__main__':
     from server import app
 
     connect_to_db(app)
+
+
+"""
+TODO:
+Change park_name to fullname to match results from API?
+"""

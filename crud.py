@@ -34,10 +34,10 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).first()
     
 
-def create_park(park_name, address, coordinates, url, description):
+def create_park(fullname, address, coordinates, url, description):
     """Create and return a new park."""
 
-    park = Park(park_name=park_name, address=address, coordinates=coordinates, url=url, description=description)
+    park = Park(fullname=fullname, address=address, coordinates=coordinates, url=url, description=description)
 
     db.session.add(park)
     db.session.commit()
