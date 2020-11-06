@@ -96,7 +96,7 @@ Create a search function that searches by topic and state.
     - If topic within list (for selecting multiple topics at once)
     - Will need lots of if statements with and/or
     - does this go here or in server?
-Search by multiple states at once?
+Option to include search by multiple states at once?
 How do I search by multiple topics?
 Can I combine some functions so there isn't a so many functions?
 
