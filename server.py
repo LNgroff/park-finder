@@ -79,11 +79,11 @@ def log_in():
     password = request.form.get('password')
     user = crud.get_user_by_email(email)
 
-    if email == user.email and password == user.password:
+    if (email == user.email or username == user.username) and password == user.password:
         session['user'] = user.user_id
         flash('Logged in!')
     else:
-        flash('Email and password do not match.')
+        flash('Email/username and password do not match.')
     
     return redirect('/')
     
