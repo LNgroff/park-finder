@@ -20,12 +20,12 @@ def get_homepage():
     return render_template('homepage.html')
 
 @app.route('/parks')
-def show_all_parks():
+def show_parks_by_state(state):
     """View all parks."""
 
-    parks = crud.return_all_parks()
+    parks = crud.get_park_by_state()
 
-    return render_template('all_parks.html', parks=parks)
+    return render_template('parks_by_state.html', parks=parks)
 
 @app.route('/parks/<park_id>')
 def park_details(park_id):
@@ -57,7 +57,7 @@ def register_user():
 
     email = request.form.get('email')
     password = request.form.get('password')
-    username = request.form.get('username')
+    uname = request.form.get('uname')
     user = crud.get_user_by_email(email)
 
 
@@ -74,16 +74,16 @@ def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
 
-    # fix so the user can enter username OR email
+    # fix so the user can enter uname OR email
     email = request.form.get('email')
     password = request.form.get('password')
     user = crud.get_user_by_email(email)
 
-    if (email == user.email or username == user.username) and password == user.password:
+    if (email == user.email) and password == user.password:
         session['user'] = user.user_id
         flash('Logged in!')
     else:
-        flash('Email/username and password do not match.')
+        flash('Email and password do not match.')
     
     return redirect('/')
     
@@ -96,8 +96,7 @@ if __name__ == '__main__':
 
 """
 TODO:
-- fix log-in so user can enter usernmae OR email. (retcon on homepage.html)
-- Add server route for parks by state
+
 
 
 """

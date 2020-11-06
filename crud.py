@@ -3,10 +3,10 @@
 from model import db, Park, User, Image, UserFavorite, Topic, connect_to_db
 
 
-def create_user(email, password, username):
+def create_user(email, password, uname):
     """Create and return a new user."""
 
-    user = User(email=email, password=password, username=username)
+    user = User(email=email, password=password, uname=uname)
 
     db.session.add(user)
     db.session.commit()
@@ -23,15 +23,16 @@ def get_user_by_id(user_id):
 
     return User.query.get(user_id)
 
+# combine these two?
 def get_user_by_email(email):
     """Get user by email."""
 
     return User.query.filter(User.email == email).first()
+# combine these two?
+def get_user_by_uname(uname):
+    """Get user by uname."""
 
-def get_user_by_username(username):
-    """Get user by username."""
-
-    return User.query.filter(User.username == username).first()
+    return User.query.filter(User.uname == uname).first()
     
 
 def create_park(fullname, address, coordinates, url, description):
@@ -44,10 +45,10 @@ def create_park(fullname, address, coordinates, url, description):
 
     return park
 
-def return_all_parks():
-    """Get list of all parks"""
+# def return_all_parks():
+#     """Get list of all parks"""
 
-    return Park.query.all()
+#     return Park.query.all()
 
 def get_park_by_id(park_id):
     """Get park details by park_id."""
@@ -69,11 +70,12 @@ def get_park_by_topic(topic_id):
 def get_park_by_topic(topic_name):
     """Get park details by topic_name."""
 
-    return Park.query.get(topic_id)
+    return Park.query.get(topic_name)
 
 
 def create_favorite(is_favorite, user, park):
     """Create and return a new favorite."""
+    # do I need to change "user" here?
 
     favorite = UserFavorite(is_favorite=is_favorite, user=user, park=park)
 
@@ -96,7 +98,7 @@ Create a search function that searches by topic and state.
     - If topic within list (for selecting multiple topics at once)
     - Will need lots of if statements with and/or
     - does this go here or in server?
-Option to include search by multiple states at once?
+Option to include earch by multiple states at once?
 How do I search by multiple topics?
 Can I combine some functions so there isn't a so many functions?
 

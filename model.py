@@ -28,7 +28,7 @@ class User(db.Model):
                 primary_key = True,
                 autoincrement = True,
                 nullable = False)
-    username = db.Column(db.String,
+    uname = db.Column(db.String,
                 unique = True,
                 nullable = False)
     email = db.Column(db.String,
@@ -39,7 +39,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f"""User user_id: {self.user_id}
-                        username: {self.username}
+                        uname: {self.uname}
                         email: {self.email}"""
 
 
