@@ -68,7 +68,7 @@ class Park(db.Model):
 
     def __repr__(self):
         return f"""Park park_id: {self.park_id} 
-                name: {self.name}
+                fullname: {self.fullname}
                 state: {self.state}
                 coordinates: {self.coordinates}
                 url: {self.url}
@@ -94,7 +94,7 @@ class Image(db.Model):
 
     def __repr__(self):
         return f"""Image image_id: {self.image_id} 
-                park_id: {self.Park_id}
+                park_id: {self.park_id}
                 url: {self.url}
                 park: {self.park}"""
 
