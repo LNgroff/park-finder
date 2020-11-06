@@ -36,3 +36,32 @@ for n in range(10):
     #     score = randint(1, 5)
 
     #     rating = crud.create_rating(score, user, rand_park)
+"""
+Do I approach this similar to the pokemon berries problem listed below?
+Is there a better approach to going about this?
+Do I leave the data here, do I put it in a file?
+
+
+jQuery.ajax({
+    url: 'https://pokeapi.co/api/v2/berry/',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data){
+        
+        // console.log(data); // for testing
+        let nameArray = data.results
+        //console.log(nameArray)
+
+        // looping through each item of the array and
+        // getting the first value (the name)
+        for (let name of nameArray) {
+            let berry = name.name
+            // console.log(name.name); // for testing
+            $('#berries').append(berry + ", ");
+            
+            };
+
+        }
+    
+});
+"""
