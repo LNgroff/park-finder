@@ -27,8 +27,8 @@ def show_all_parks():
 
     return render_template('all_parks.html', parks=parks)
 
-@app.route('/parkss/<park_id>')
-def movie_details(park_id):
+@app.route('/parks/<park_id>')
+def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)

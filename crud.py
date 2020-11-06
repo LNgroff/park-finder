@@ -29,7 +29,7 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 def get_user_by_username(username):
-    """Get user by email."""
+    """Get user by username."""
 
     return User.query.filter(User.username == username).first()
     
@@ -65,6 +65,13 @@ def get_park_by_topic(topic_id):
 
     return Park.query.get(topic_id)
 
+
+def get_park_by_topic(topic_name):
+    """Get park details by topic_name."""
+
+    return Park.query.get(topic_id)
+
+
 def create_favorite(is_favorite, user, park):
     """Create and return a new favorite."""
 
@@ -88,8 +95,10 @@ TODO:
 Create a search function that searches by topic and state.
     - If topic within list (for selecting multiple topics at once)
     - Will need lots of if statements with and/or
+    - does this go here or in server?
 Search by multiple states at once?
 How do I search by multiple topics?
 Can I combine some functions so there isn't a so many functions?
+
 
 """
