@@ -81,7 +81,8 @@ def log_in():
 
     if (email == user.email) and password == user.password:
         session['user'] = user.user_id
-        flash('Logged in!')
+        uname = user.uname
+        flash(f'Welcome {uname}!')
     else:
         flash('Email and password do not match.')
     
