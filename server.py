@@ -32,13 +32,13 @@ def get_homepage():
     if "username" in session:
         return redirect("/park_search")
     else:    
-        return render_template("homepage.html", TOPICS=TOPICS)
+        return render_template("homepage.html")
 
 @app.route('/park_search')
 def search_options():
     """Returns search page"""
 
-    return render_template("park_search.html", )
+    return render_template("park_search.html", TOPICS=TOPICS)
 
 """
 Use this for limiting topic selection.
