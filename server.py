@@ -40,6 +40,9 @@ def search_options():
 
     return render_template("park_search.html", TOPICS=TOPICS)
 
+# need to figure out how to limit box selection and return proper page.
+# also include state selection.
+
 """
 Use this for limiting topic selection.
 
