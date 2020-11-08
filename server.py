@@ -12,12 +12,25 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
 
+TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
+        "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
+        "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
+        "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
+        "Foothills, Plains and Valleys", "Forests and Woodlands",
+        "Fossils and Paleontology", "Geology", "Geothermal", "Glaciers",
+        "Grasslands", "Groundwater", "Impact Craters", "Lakes", "Mountains",
+        "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
+        "Rock Landscapes and Features", "Scenic Views", "The Tropics",
+        "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
+        "Wetlands", "Wilderness"]
+
 
 @app.route('/')
 def get_homepage():
     """View homepage."""
 
     return render_template('homepage.html')
+    
 
 @app.route('/parks')
 def show_parks_by_state(state):
