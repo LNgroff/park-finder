@@ -27,10 +27,30 @@ TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic",
 
 @app.route('/')
 def get_homepage():
-    """View homepage."""
+    """Returns homepage."""
 
-    return render_template('homepage.html')
-    
+    if "username" in session:
+        return redirect("/park_search")
+    else:    
+        return render_template("homepage.html", TOPICS=TOPICS)
+
+@app.route('/park_search')
+def search_options():
+    """Returns search page"""
+
+    return render_template("park_search.html", )
+
+"""
+Use this for limiting topic selection.
+
+$('input[type=checkbox]').on('change', function (e) {
+    if ($('input[type=checkbox]:checked').length > 3) {
+        $(this).prop('checked', false);
+        alert("allowed only 3");
+    }
+});
+"""
+
 
 @app.route('/parks')
 def show_parks_by_state(state):
