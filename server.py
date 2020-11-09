@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db
 import crud
 import os
+import us
 
 from jinja2 import StrictUndefined
 
@@ -24,6 +25,8 @@ TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic",
         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
         "Wetlands", "Wilderness"]
 
+STATES = us.states.STATES_AND_TERRITORIES
+
 
 @app.route('/')
 def get_homepage():
@@ -38,7 +41,7 @@ def get_homepage():
 def search_options():
     """Returns search page"""
 
-    return render_template("park_search.html", TOPICS=TOPICS)
+    return render_template("park_search.html", TOPICS=TOPICS, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
 # also include state selection.
