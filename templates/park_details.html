@@ -3,12 +3,19 @@
 {% block title %}{{ park.name }} - Details{% endblock %}
 
 {% block body %}
-<h1>{{ park.name }}</h1>
+<h1>{{ park.fullname }}</h1>
+
+<p>
+    {{image.park_id}}
+</p>
 
 
 <p>
     {{ park.description }}
 </p>
+
+
+<p>For more details about {{ park.fullname }}, visit it's <a href="{{ park.url }}">official website!</a></p>
 
 <!-- need to figure out how to produce and image for this one -->
 <!-- <img src="{{ park.image }}"> -->

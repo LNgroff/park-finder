@@ -46,6 +46,11 @@ def create_park(fullname, state, coordinates, url, description):
 
     return park
 
+def get_park_image(park_id):
+    """Get image for a park by park_id"""
+
+    return Image.query.get(park_id).first()
+
 # def return_all_parks():
 #     """Get list of all parks"""
 

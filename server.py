@@ -74,6 +74,7 @@ def park_details(park_id):
 
     return render_template('park_details.html', park=park)
 
+# Not a public facing route
 @app.route('/all-users')
 def show_all_users():
     """View all users."""
@@ -87,6 +88,10 @@ def user_details(user_id):
     """Show details on specific user"""
 
     user = crud.get_user_by_id(user_id)
+
+    # return user favorites.
+
+    # favs = session[user].favorites
 
     return render_template('user_details.html', user=user)
 
@@ -122,10 +127,10 @@ def log_in():
         session['user'] = user.user_id
         uname = user.uname
         flash(f'Welcome {uname}!')
+        return render_template("/park_search")
     else:
         flash('Email and password do not match.')
-    
-    return redirect('/')
+        return redirect('/')
     
 
 
