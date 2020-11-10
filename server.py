@@ -141,7 +141,7 @@ if __name__ == '__main__':
 TODO:
 Do I change parks_by_state.html to parks? so the page is used for 
 multiple search types? I think yes.
-
+Add a funtion for a user to add a park to favorites.
 
 
 """

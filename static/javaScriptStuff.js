@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 // This is from assessment 5 but could be used similarily. 
 
 // jQuery.ajax({
@@ -25,34 +27,43 @@
     
 // });
 
-// function limitChecks() {
-//     $('.checkbox').click(function(evt) {
-//         if ($('.checkbox:checked').length >= 3) {
-//             $(".checkbox").not(":checked").attr("disabled",true);
-//         }
-//         else 
-//             $(".checkbox").not(":checked").removeAttr('disabled');
+// $('input[type=checkbox]:checked').map(function(_, el) {
+//     return $(el).val();
+// }).get();
+
+$(document).ready(function () {
+
+        let choices = [];
+    
+        $("input").click(function() {
+        if ($(this).is(':checked')) {
+            var checked = ($(this).val());
+            choices.push(checked);
+        } else {
+            choices.splice($.inArray(checked, choices),1);
+        }
+        });
+    
+        $('#submit').on('click', function () {
+            alert(choices);
+        });
+    
+    });
+
+// $('#{{ topic }}'}).click(function(){
+//     let arr = $('topicCheckbox:checked').map(function(){
+//         return this.value;
+//     }).get();
+// }); 
+
+
+// $(document).ready(function() {
+//     $(".btn_click").click(function(){
+//         let chosenTopics = new Array();
+//         $("input[name='topic']:checked").each(function() {
+//             chosenTopics.push($(this).val());
 //         });
-// }
-// function limitChecks() {
-//     $('input[type=checkbox]').on('change', function(evt) {
-//         if ($('input[type=checkbox]:checked').length > 3) {
-//             $(this).prop('checked', false);
-//             alert("Only 3 selections allowed.");
-//         }
+
+//         alert("My favourite programming languages are: " + chosenTopics);
 //     });
-// }
-
-// $('#topic-select').on('check', limitChecks)
-
-
-// var checks = "park_search.html".querySelectorAll(".topic-check");
-// var max = 3;
-// for (var i = 0; i < checks.length; i++)
-//     checks[i].onclick = selectiveCheck;
-
-// function selectiveCheck (event) {
-//     var checkedChecks = "park_search.html".querySelectorAll(".check:checked");
-//     if (checkedChecks.length >= max + 1)
-//         return false;
-// }
+// });

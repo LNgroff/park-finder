@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block head %} {% endblock %}
+{% block head %} 
+<script
+src="https://code.jquery.com/jquery-3.5.1.js"
+integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+crossorigin="anonymous"
+></script>
+{% endblock %}
 
 {% block title %}Park Search{% endblock %}
 
@@ -15,35 +21,30 @@
             </div> 
 
             <section id="topic-select">
-                <p>Which topics would you like to search for? (Select 3 topics)</p>
+                <p>Which topics would you like to search for? (Select up to 3 topics)</p>
                 
+                <!-- TODO: If the topic has a space in it, is that a problem? -->
                 {% for topic in TOPICS %}
                 <div class="topic-check">
-                    <input class="checkbox" type="checkbox" id="{{ topic }}" name="chk" value= "{{ topic }}" onclick="return limitChecks()">
+                    <input class="topicCheckbox" type="checkbox" id="{{ topic }}" name="topic" value= "{{ topic }}" onclick="return limitChecks()">
                     <label for="{{topic}}">{{topic}}</label><br>
 
-                    <div>
-                        <span id="notvalid" style="color:red"></span>
-                    </div>
 
                     <script type="text/javascript">
-                        function limitChecks() {
-                            let a = document.getElementsByName("chk");
-                            let newvar = 0
-                            let count;
+                    function limitChecks() {
+                        let chkboxes = document.getElementsByName("topic");
+                        let numChkBoxes = 0;
 
-                            for(count=0; count<a.length; count++){
-                                if(a[count].checked==true){
-                                    newvar = newvar +1;
-                                }
-                            }
-                            if(newvar>3){
-                                document.getElementById("notvalid".innerHTML="**Only 3 selections allowed.")
-                                window.alert("Only three selections allowed.")
-                                return false;
+                        for(let count=0; count<chkboxes.length; count++){
+                            if(chkboxes[count].checked){
+                                numChkBoxes = numChkBoxes +1;
                             }
                         }
-                    
+                        if(numChkBoxes>3){
+                            // alert("Only three selections allowed.");
+                            return false;
+                        }
+                    }
                     </script>
 
                 </div>
@@ -69,7 +70,7 @@
             </section>
 
             <div>
-                <button type="submit">Search</button>
+                <button id="submit" type="submit">Search</button>
             </div>
 
         </form>
