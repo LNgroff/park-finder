@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %} {% endblock %}
+
+{% block title %}Park Search{% endblock %}
+
+{% block body %}
+
+    <body
+        <h1>Park Search</h1>
+
+        <div class="headings"> 
+        
+        <form action="/search_results" method="GET, POST">
+            </div> 
+
+            <section id="topic-select">
+                <p>Which topics would you like to search for? (Select 3 topics)</p>
+                
+                {% for topic in TOPICS %}
+                <div class="topic-check">
+                    <input class="checkbox" type="checkbox" id="{{ topic }}" name="chk" value= "{{ topic }}" onclick="return limitChecks()">
+                    <label for="{{topic}}">{{topic}}</label><br>
+
+                    <div>
+                        <span id="notvalid" style="color:red"></span>
+                    </div>
+
+                    <script type="text/javascript">
+                        function limitChecks() {
+                            let a = document.getElementsByName("chk");
+                            let newvar = 0
+                            let count;
+
+                            for(count=0; count<a.length; count++){
+                                if(a[count].checked==true){
+                                    newvar = newvar +1;
+                                }
+                            }
+                            if(newvar>3){
+                                document.getElementById("notvalid".innerHTML="**Only 3 selections allowed.")
+                                window.alert("Only three selections allowed.")
+                                return false;
+                            }
+                        }
+                    
+                    </script>
+
+                </div>
+                {% endfor %}
+                <br>
+            </section>
+
+            <section id="state-select">
+                <label for="state-select">Choose a state/location:</label>
+
+                <select name="states" id="state-select">
+                    <option value="state">--</option>
+
+                    {% for state in STATES %}
+                    <div class="state-div">
+                        <option value="{{ state }}" name="state">{{ state }}</option>
+                    </div>
+                    {% endfor %}
+                    
+                </select>
+                <br>
+                <br>
+            </section>
+
+            <div>
+                <button type="submit">Search</button>
+            </div>
+
+        </form>
+
+    </body>
+
+
+    {% endblock %}
