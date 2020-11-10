@@ -2,6 +2,7 @@ import os
 import json
 from random import choice, randint
 from datetime import datetime
+import us
 
 import model
 import crud
@@ -12,6 +13,9 @@ os.system('createdb parks')
 
 model.connect_to_db(server.app)
 model.db.create_all()
+
+
+url_forAPI_request
 
 # This is what needs to change. I need to find a way to save/get data.
 with open('data/parks.json') as f:
@@ -40,7 +44,6 @@ for n in range(10):
 Do I approach this similar to the pokemon berries problem listed below?
 Is there a better approach to going about this?
 Do I leave the data here, do I put it in a file?
-
 
 jQuery.ajax({
     url: 'https://pokeapi.co/api/v2/berry/',

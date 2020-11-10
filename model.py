@@ -65,6 +65,10 @@ class Park(db.Model):
                 nullable = False)
     description = db.Column(db.String)
 
+    topic = db.relationship("Topic",
+                            secondary="park_topics",
+                            backref="parks")
+
 
     def __repr__(self):
         return f"""Park park_id: {self.park_id} 
@@ -73,6 +77,56 @@ class Park(db.Model):
                 coordinates: {self.coordinates}
                 url: {self.url}
                 description: {self.description}"""
+
+
+class Topic(db.Model):
+    """A list of parks' topics"""
+
+    __tablename__ = "topics"
+
+
+    topic_id = db.Column(db.Integer,
+                primary_key = True,
+                autoincrement = True,
+                nullable = False)
+    topic_name = db.Column(db.String,
+                unique = True,
+                nullable = False)
+    park_id = db.Column(db.Integer,
+                db.ForeignKey("parks.park_id"),
+                nullable = False)
+    user_id = db.Column(db.Integer,
+                db.ForeignKey("users.user_id"))
+    
+    park = db.relationship('Park', backref='topics')
+    user = db.relationship('User', backref='topics')
+    
+
+    def __repr__(self):
+        return f"""Topic topic_id: {self.topic_id} 
+                topic_name: {self.topic_name}
+                park_id: {self.park_id}
+                user_id: {self.user_id}"""
+
+class ParkTopic(db.Model):
+    """Topics of a specific park."""
+
+    __tablename__ = 'parks_topics'
+
+    pktopic_id = db.Column(db.Integer, primary_key=True)
+    park_id = db.Column(db.Integer,
+                        db.ForeignKey('parks.park_id'),
+                        nullable=False)
+    topic_id = db.Column(db.Integer,
+                        db.ForeignKey('topics.topic_id'),
+                        nullable=False)
+
+    
+    def __repr__(self):
+        return f"""Park topics pktopic_id: {self.pktopic_id} 
+                park_id: {self.park_id}
+                topic_id: {self.topic_id}"""
+
 
 class Image(db.Model):
     """Images of a park"""
@@ -125,35 +179,6 @@ class UserFavorite(db.Model):
     park = db.relationship('Park', backref='favorites')
     user = db.relationship('User', backref='favorites')
 
-
-class Topic(db.Model):
-    """A list of parks' topics"""
-
-    __tablename__ = "topics"
-
-
-    topic_id = db.Column(db.Integer,
-                primary_key = True,
-                autoincrement = True,
-                nullable = False)
-    topic_name = db.Column(db.String,
-                unique = True,
-                nullable = False)
-    park_id = db.Column(db.Integer,
-                db.ForeignKey("parks.park_id"),
-                nullable = False)
-    user_id = db.Column(db.Integer,
-                db.ForeignKey("users.user_id"))
-    
-    park = db.relationship('Park', backref='topics')
-    user = db.relationship('User', backref='topics')
-    
-
-    def __repr__(self):
-        return f"""Topic topic_id: {self.topic_id} 
-                topic_name: {self.topic_name}
-                park_id: {self.park_id}
-                user_id: {self.user_id}"""
 
 
 

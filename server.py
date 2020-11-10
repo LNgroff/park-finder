@@ -37,25 +37,23 @@ def get_homepage():
     else:    
         return render_template("homepage.html")
 
+# TODO: fix 
 @app.route('/park_search')
 def search_options():
     """Returns search page"""
+
+    # location = request.form.args("state")
+
+    # if location == "--":
+    #     # location equals none, no argument passed.
+    # else:
+    #     location = us.states
+
 
     return render_template("park_search.html", TOPICS=TOPICS, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
 # also include state selection.
-
-"""
-Use this for limiting topic selection.
-
-$('input[type=checkbox]').on('change', function (e) {
-    if ($('input[type=checkbox]:checked').length > 3) {
-        $(this).prop('checked', false);
-        alert("allowed only 3");
-    }
-});
-"""
 
 
 @app.route('/parks')

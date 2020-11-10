@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -7,7 +7,18 @@
       {% block title %}{% endblock %}
     </title>
 
-    {% block head %}{% endblock %}
+    {% block head %}
+    <head>
+      <title>Park Search</title>
+      <script
+          src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"
+      ></script>
+    </head>
+
+    {% endblock %}
+
   </head>
   <body>
     {% for msg in get_flashed_messages() %}
@@ -17,7 +28,11 @@
     {% endfor %}
     
     {% block body %}{% endblock %}
+    
+    <script src="/static/javaScriptStuff.js"></script>
 
     {% block after_body %}{% endblock %}
   </body>
+
+
 </html>
