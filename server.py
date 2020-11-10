@@ -1,7 +1,7 @@
 """Server for park finder app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                    redirect)
+                    redirect, jsonify)
 from model import connect_to_db
 import crud
 import os
@@ -56,9 +56,9 @@ def search_options():
 # also include state selection.
 
 
-@app.route('/parks')
-def show_parks_by_state(state):
-    """View all parks."""
+@app.route('/search_results', methods = ["POST"])
+def show_search_results():
+    """View results of the search."""
 
     parks = crud.get_park_by_state()
 
@@ -81,17 +81,41 @@ def show_all_users():
 
     return render_template('all_users.html', users=users)
 
+"""TODO: come back to this add to favorites route
+needs to populate favorites page with user choice."""
+
+# @app.route("/add_to_favorites/<park_id>")
+# def add_to_favs(park_id):
+#     if "favs" in session:
+#         favs = session["favs"]
+#     else:
+#         favs = session["favs"] = {}
+    
+#     favs[park_id] = session.get(park_id)
+#     flash("Your park was successfully added")
+
+#     return redirect("/user_details")
+
+
 @app.route('/all-users/<user_id>')
 def user_details(user_id):
     """Show details on specific user"""
 
     user = crud.get_user_by_id(user_id)
 
-    # return user favorites.
+    parks_in_favs = []
+    favs = session["favs"]
+    
+    for park_id in favs.items():
+        park = crud.get_by_park_id(park_id)
+        parks_in_favs.append(park)
 
-    # favs = session[user].favorites
+    print(favs)
 
-    return render_template('user_details.html', user=user)
+
+    return render_template('user_details.html', 
+                            user=user,
+                            parks_in_favs=parks_in_favs)
 
 
 @app.route('/users', methods = ['POST'] )

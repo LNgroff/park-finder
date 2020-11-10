@@ -33,22 +33,44 @@
 
 $(document).ready(function () {
 
-        let choices = [];
-    
-        $("input").click(function() {
-        if ($(this).is(':checked')) {
-            var checked = ($(this).val());
-            choices.push(checked);
-        } else {
-            choices.splice($.inArray(checked, choices),1);
-        }
-        });
-    
-        $('#submit').on('click', function () {
-            alert(choices);
-        });
-    
+    let choices = [];
+
+    $("input").click(function() {
+    if ($(this).is(':checked')) {
+        var checked = ($(this).val());
+        choices.push(checked);
+    } else {
+        choices.splice($.inArray(checked, choices),1);
+    }
     });
+
+    $('#submit').on('click', function () {
+        alert(choices);
+        const chosen = jSON.stringify(choices)
+        return chosen
+    });
+
+});
+
+// document.querySelector('form').addEventListener('submit', (evt) => {
+//     evt.preventDefault();
+
+//     let choices = [];
+
+//     $("input").click(function() {
+//     if ($(this).is(':checked')) {
+//         var checked = ($(this).val());
+//         choices.push(checked);
+//     } else {
+//         choices.splice($.inArray(checked, choices),1);
+//     }
+//     });
+
+//     $('#submit').on('click', function () {
+//         console.log(choices);
+//     });
+
+// });
 
 // $('#{{ topic }}'}).click(function(){
 //     let arr = $('topicCheckbox:checked').map(function(){
