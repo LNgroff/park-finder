@@ -64,8 +64,8 @@ def show_search_results():
 
     fullstate = request.form.get("state")
 
-    state = us.states.lookup(fullstate)
-    state = state.abbr
+    state.abbr = us.states.lookup(fullstate)
+    # state = state.abbr
 
     return render_template("search_results.html", 
                             topics=topics,
