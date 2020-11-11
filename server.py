@@ -62,12 +62,28 @@ def show_search_results():
 
     topics = request.form.getlist("topic")
 
-    state = request.form.get("state")
-    # parks = crud.get_park_by_state()
+    fullstate = request.form.get("state")
+
+    state = us.states.lookup(fullstate)
+    state = state.abbr
 
     return render_template("search_results.html", 
-                        topics=topics,
-                        state=state)
+                            topics=topics,
+                            state=state)
+"""
+    TODO: parse through topics and grab arguments to use in request
+    to API.
+
+    I think I need something like this:
+        >>> payload = {'name': 'hello', 'data': 'hello'}
+        >>> r = requests.get("http://example.com/api/params", params=payload)
+    And then the payload dictionary is topic:value and state:value.
+    Would I need an if statement for two different requests based on
+    whether topics or states are included?
+"""
+    # payload = {"topic_list" : json.dumps(topics)}
+
+    
 
 @app.route('/parks/<park_id>')
 def park_details(park_id):
