@@ -62,12 +62,28 @@ def show_search_results():
 
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
-    state = (us.states.lookup(fullstate)).abbr
-
+    state = us.states.lookup(fullstate).abbr
 
     return render_template("search_results.html", 
                             topics=topics,
                             state=state)
+
+    """ 
+    The following block of code works if a state is selected
+    If no state is selected an attribute error occurs:
+        'AttributeError: 'NoneType' object has no attribute 'abbr'"
+    Have rewritten a number of ways. particularly with the return
+    statement outside of the if else statement.
+    """
+    # if us.states.lookup(fullstate) == "no selection":
+    #     return render_template("search_results.html", 
+    #                     topics=topics,
+    #                     state=fullstate)
+    # else:
+    #     state = (us.states.lookup(fullstate)).abbr
+    #     return render_template("search_results.html", 
+    #                             topics=topics,
+    #                             state=state)
     """
     used as a test:
     return render_template("search_results.html", 
