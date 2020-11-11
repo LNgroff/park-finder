@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
 
-TOPICS = set(["Ancient Seas", "Animals", "Archeology", "Arctic", 
+TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
         "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
         "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
         "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
@@ -23,7 +23,7 @@ TOPICS = set(["Ancient Seas", "Animals", "Archeology", "Arctic",
         "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
         "Rock Landscapes and Features", "Scenic Views", "The Tropics",
         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
-        "Wetlands", "Wilderness"])
+        "Wetlands", "Wilderness"]
 
 STATES = us.states.STATES_AND_TERRITORIES
 

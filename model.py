@@ -95,13 +95,9 @@ class Topic(db.Model):
     topic_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    park_id = db.Column(db.Integer,
-                db.ForeignKey("parks.park_id"),
-                nullable = False)
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"))
     
-    park = db.relationship('Park', backref='topics')
     user = db.relationship('User', backref='topics')
     
 

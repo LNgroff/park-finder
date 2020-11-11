@@ -13,6 +13,25 @@ def create_user(email, password, uname):
 
     return user
 
+def create_park(fullname, state, coordinates, url, description):
+    """Create and return a new park."""
+
+    park = Park(fullname=fullname, address=address, coordinates=coordinates, url=url, description=description)
+
+    db.session.add(park)
+    db.session.commit()
+
+    return park
+
+def create_topic(id, name):
+
+    topic = Topic(nps_id=id, topic_name=name)
+
+    db session.add(topic)
+    db.session.commit()
+
+    return topic
+
 def return_all_users():
     """Get list of all users"""
 
@@ -36,15 +55,7 @@ def get_user_by_email(email):
 #     return User.query.filter(User.uname == uname).first()
     
 
-def create_park(fullname, state, coordinates, url, description):
-    """Create and return a new park."""
 
-    park = Park(fullname=fullname, address=address, coordinates=coordinates, url=url, description=description)
-
-    db.session.add(park)
-    db.session.commit()
-
-    return park
 
 def get_park_image(park_id):
     """Get image for a park by park_id"""

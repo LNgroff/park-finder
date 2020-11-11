@@ -15,15 +15,45 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
-url_forAPI_request
 
-# This is what needs to change. I need to find a way to save/get data.
-with open('data/parks.json') as f:
-    park_data = json.loads(f.read())
+# url for request for all possible topics.
+topics_url = 'https://developer.nps.gov/api/v1/topics/'
 
-# URL from the 
-topics = "https://developer.nps.gov/api/v1/topics/"
+# Response object from URL
+topics_response = requests.get(topic_url)
 
+# Converts the response objecto to a dictionary
+topics_dict = json.loads(topics_response.content)
+
+# Set of available topics:
+finder_topics = set(["Ancient Seas", "Animals", "Archeology", "Arctic", 
+        "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
+        "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
+        "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
+        "Foothills, Plains and Valleys", "Forests and Woodlands",
+        "Fossils and Paleontology", "Geology", "Geothermal", "Glaciers",
+        "Grasslands", "Groundwater", "Impact Craters", "Lakes", "Mountains",
+        "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
+        "Rock Landscapes and Features", "Scenic Views", "The Tropics",
+        "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
+        "Wetlands", "Wilderness"])
+
+topics_in_db = []
+
+# Loop through the topic dictionary to determine if they are available topics.
+for topic in topics_dict:
+    if topic['name'] in finder_topics:
+
+        # populate topic table
+        db_topic = crud.create_topic(topic['id'], topic['name'])
+        topics_in_db.append(db_topic)
+
+
+topic_id = topic["topic_id"]
+
+park_url = f"https://developer.nps.gov/api/v1/topics/parks?q={topic_id}
+
+park_response = requests.get()
 
 
 parks_in_db = []
