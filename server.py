@@ -61,15 +61,19 @@ def show_search_results():
     """View results of the search."""
 
     topics = request.form.getlist("topic")
-
     fullstate = request.form.get("state")
+    state = (us.states.lookup(fullstate)).abbr
 
-    state.abbr = us.states.lookup(fullstate)
-    # state = state.abbr
 
     return render_template("search_results.html", 
                             topics=topics,
                             state=state)
+    """
+    used as a test:
+    return render_template("search_results.html", 
+                        topics=topics,
+                        state=state)
+    """
 """
     TODO: parse through topics and grab arguments to use in request
     to API.
