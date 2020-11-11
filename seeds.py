@@ -21,11 +21,19 @@ url_forAPI_request
 with open('data/parks.json') as f:
     park_data = json.loads(f.read())
 
+# URL from the 
+topics = "https://developer.nps.gov/api/v1/topics/"
+
+
 
 parks_in_db = []
 for park in park_data:
 
-    db_park = crud.create_park(park['park_name'], park['description'], park['state'], park['url'], park['coordinates'])
+    db_park = crud.create_park(park['park_name'], 
+                            park['description'], 
+                            park['state'], 
+                            park['url'], 
+                            park['coordinates'])
     
     parks_in_db.append(db_park)
 
