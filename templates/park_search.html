@@ -56,8 +56,8 @@ crossorigin="anonymous"
             <section id="state-select">
                 <label for="state-select">Choose a state/location:</label>
 
-                <select name="states" id="state-select">
-                    <option value="state">--</option>
+                <select name="state" id="state-select">
+                    <option value="noselection">--</option>
 
                     {% for state in STATES %}
                     <div class="state-div">

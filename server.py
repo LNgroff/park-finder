@@ -60,9 +60,14 @@ def search_options():
 def show_search_results():
     """View results of the search."""
 
-    parks = crud.get_park_by_state()
+    topics = request.form.getlist("topic")
 
-    return render_template('parks_by_state.html', parks=parks)
+    state = request.form.get("state")
+    # parks = crud.get_park_by_state()
+
+    return render_template("search_results.html", 
+                        topics=topics,
+                        state=state)
 
 @app.route('/parks/<park_id>')
 def park_details(park_id):

@@ -4,11 +4,16 @@
 
 {% block body %}
     <h1>Parks</h1>
+    
+    {% for topic in topics %}
+        <ul>
+            <li>{{ topic }}</li>
+        </ul>
+    {% endfor %}
 
-    {% for park in parks %}
     <ul>
-        <li><a href = "/parks/{{park.park_id}}">{{park.fullname}}</a></li>
+        <li>{{ state }}</li>
     </ul>
 
-    {% endfor %}
+
 {% endblock %}  
