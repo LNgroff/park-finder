@@ -60,25 +60,50 @@ def search_options():
 def show_search_results():
     """View results of the search."""
 
+    # get all the inputs from the user.
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
     state = us.states.lookup(fullstate).abbr
 
+    """TODO: should this next piece go in seeds?"""
+    # list to be used for api request if needed.
     topic_inputs =[]
+    # list of parks for results = []
+    # results = crud.get_park_SOMEVALUE
+    
     for topic in topics:
         topic_result = crud.get_topic_by_name(topic)
-        topic_inputs.append(topic_result.topic_id)
+        topic_result_id = topic_result.topic_id
 
-    separator = "%2C"
-    topic_url_input = separator.join(topic_url_input)    
+        """ this is where I'd search a cache for parks. Psuedo code:
+            
+        if topic_result_id in cache: would this be topic result or park?
+            for park in parks pertaining to topic:
+                if park.state == state input from user:
+                    list of parks.append(park)
+        if topic not in cache make request:
+            topic_iputs.append(topic_result_id)
+            
+            #this is on the wrong level.
+            separator = "%2C"
+            topic_url_input = separator.join(topic_url_input)   
+            get request topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={topic_input}"
+            parks_result = topicparks_url
+                for park in parks_request:
+                    crud.create_park(park[details]...)
+
+            
+    
+            
+        """
+
 
     """topic_url_input can be put into seeds's topicparks_url for 
     the get request
     """
 
     return render_template("search_results.html", 
-                            topics=topics,
-                            state=state)
+                            parks=parks)
 
     """ 
     The following block of code works if a state is selected

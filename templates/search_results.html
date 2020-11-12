@@ -5,15 +5,13 @@
 {% block body %}
     <h1>Parks</h1>
     
-    {% for topic in topics %}
+    {% for park in parks %}
         <ul>
-            <li>{{ topic }}</li>
+            <li>{{ park }}</li>
         </ul>
     {% endfor %}
 
-    <ul>
-        <li>{{ state }}</li>
-    </ul>
+
 
 
 {% endblock %}  
