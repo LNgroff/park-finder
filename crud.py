@@ -85,6 +85,11 @@ def get_park_by_id(park_id):
 
     return Park.query.get(park_id)
 
+def get_park_by_park_code(park_code):
+    """Get park details by park_code."""
+
+    return Park.query.get(park_code)
+
 def get_park_by_state(state):
     """Get park details by state."""
 
