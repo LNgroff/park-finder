@@ -56,6 +56,9 @@ class Park(db.Model):
     fullname = db.Column(db.String,
                 unique = True,
                 nullable = False)
+    park_code = db.Column(db.String,
+                unique = True,
+                nullable = False)
     state = db.Column(db.String,
                 unique = True)
     url = db.Column(db.String,
@@ -71,6 +74,7 @@ class Park(db.Model):
     def __repr__(self):
         return f"""Park park_id: {self.park_id} 
                 fullname: {self.fullname}
+                park_code: {self.park_code}
                 state: {self.state}
                 url: {self.url}
                 description: {self.description}"""
