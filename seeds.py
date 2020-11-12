@@ -16,15 +16,24 @@ os.system('createdb parks')
 model.connect_to_db(server.app)
 model.db.create_all()
 
-"""
-Instead of below, I could start with something like this:
 
 with open('data/npsTopic.json') as f:
     topic_data = json.loads(f.read())
 
-and then dive right into creating a topic, without the if loop.
+topics_in_db = []
+
+# Loop through the topic dictionary to determine if they are available topics.
+for topic in topics_data:
+    if topic['name'] in finder_topics:
+
+        # populate topic table
+        db_topic = crud.create_topic(topic['id'], topic['name'])
+        topics_in_db.append(db_topic)
 
 """
+
+Now I think I need to use those for get requests to populate parks.
+
 
 # url for request for all possible topics.
 topics_url = 'https://developer.nps.gov/api/v1/topics/'
@@ -47,16 +56,8 @@ finder_topics = set(["Ancient Seas", "Animals", "Archeology", "Arctic",
         "Rock Landscapes and Features", "Scenic Views", "The Tropics",
         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
         "Wetlands", "Wilderness"])
+"""
 
-topics_in_db = []
-
-# Loop through the topic dictionary to determine if they are available topics.
-for topic in topics_dict:
-    if topic['name'] in finder_topics:
-
-        # populate topic table
-        db_topic = crud.create_topic(topic['id'], topic['name'])
-        topics_in_db.append(db_topic)
 
 """
 # TODO: this changes, where does this come from??  
@@ -65,6 +66,7 @@ function here? A crud function that gets a park by topic id
 and then use that response to populate the parks table?
 
 """
+
 
 topic_id = topic["topic_id"]
 
