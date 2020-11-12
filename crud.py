@@ -13,10 +13,14 @@ def create_user(email, password, uname):
 
     return user
 
-def create_park(fullname, state, url, description):
+def create_park(fullname, state, url, park_code, description):
     """Create and return a new park."""
 
-    park = Park(fullname=fullname, address=address, url=url, description=description)
+    park = Park(fullname=fullname, 
+                address=address, 
+                url=url, 
+                park_code=park_code,
+                description=description)
 
     db.session.add(park)
     db.session.commit()
@@ -37,7 +41,9 @@ def create_favorite(is_favorite, user, park):
     """Create and return a new favorite."""
     # do I need to change "user" here?
 
-    favorite = UserFavorite(is_favorite=is_favorite, user=user, park=park)
+    favorite = UserFavorite(is_favorite=is_favorite, 
+                            user=user, 
+                            park=park)
 
     db.session.add(favorite)
     db.session.commit()

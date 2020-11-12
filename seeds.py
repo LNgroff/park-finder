@@ -80,8 +80,10 @@ parks_in_db = []
 # TODO: how do I save these in a cache? Like a session?
 for park in topicparks_dict:
     # TODO: if no decription, is that okay? how does that work?
+    # TODO: Some parks have multiple states... How do I deal with that?
     db_park = crud.create_park(park['state'],
-                            park['fullname'], 
+                            park['fullname'],
+                            park['park_code'], 
                             park['url'])
                             # park['description'])
     
