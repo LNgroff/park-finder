@@ -90,7 +90,18 @@ for park in topicparks_dict:
     parks_in_db.append(db_park)
 
 
+"""
+In order to populate images, I need to get the first image from the park
+result. Would this be correct? And nest this under the above for loop?
+Would I do something similar for state then? with an if loop?
 
+
+for Park.park_code in db_park:
+    parkget = f""https://developer.nps.gov/api/v1/parks?parkCode={Park.park_code}
+    db_image = crud.create_image(Park.park_id, parkget[url])
+
+
+"""
 
 
 for n in range(10):
