@@ -64,6 +64,18 @@ def show_search_results():
     fullstate = request.form.get("state")
     state = us.states.lookup(fullstate).abbr
 
+    topic_inputs =[]
+    for topic in topics:
+        topic_result = crud.get_topic_by_name(topic)
+        topic_inputs.append(topic_result.topic_id)
+
+    separator = "%2C"
+    topic_url_input = separator.join(topic_url_input)    
+
+    """topic_url_input can be put into seeds's topicparks_url for 
+    the get request
+    """
+
     return render_template("search_results.html", 
                             topics=topics,
                             state=state)

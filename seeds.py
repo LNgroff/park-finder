@@ -8,9 +8,11 @@ import model
 import crud
 import server
 
+# TODO: Do I want to drop it every time?
 os.system('dropdb parks')
 os.system('createdb parks')
 
+# TODO: Is this different too?
 model.connect_to_db(server.app)
 model.db.create_all()
 
@@ -20,7 +22,7 @@ Instead of below, I could start with something like this:
 with open('data/npsTopic.json') as f:
     topic_data = json.loads(f.read())
 
-and then dive right into creating a topic.
+and then dive right into creating a topic, without the if loop.
 
 """
 

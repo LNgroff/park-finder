@@ -79,7 +79,12 @@ def get_user_by_email(email):
 #     """Get user by uname."""
 
 #     return User.query.filter(User.uname == uname).first()
-    
+
+def get_topic_by_name(topic_name) :
+    """Get topic id by name"""
+
+    return Topic.query.get(topic_name)
+
 
 def get_park_image(park_id):
     """Get image for a park by park_id"""
