@@ -14,7 +14,15 @@ os.system('createdb parks')
 model.connect_to_db(server.app)
 model.db.create_all()
 
+"""
+Instead of below, I could start with something like this:
 
+with open('data/npsTopic.json') as f:
+    topic_data = json.loads(f.read())
+
+and then dive right into creating a topic.
+
+"""
 
 # url for request for all possible topics.
 topics_url = 'https://developer.nps.gov/api/v1/topics/'
@@ -48,24 +56,40 @@ for topic in topics_dict:
         db_topic = crud.create_topic(topic['id'], topic['name'])
         topics_in_db.append(db_topic)
 
+"""
+# TODO: this changes, where does this come from??  
+populating parks will need to be done case by case. Do I put a crud
+function here? A crud function that gets a park by topic id
+and then use that response to populate the parks table?
+
+"""
 
 topic_id = topic["topic_id"]
 
-park_url = f"https://developer.nps.gov/api/v1/topics/parks?q={topic_id}
+# url for request of parks using specific id
+topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={topic_id}"
 
-park_response = requests.get()
+# response object from URL
+topicparks_response = requests.get(topicparks_url)
 
+# converts the response object to a dictionary
+topicparks_dict = json.loads(topicparks_response.content)
 
 parks_in_db = []
-for park in park_data:
 
-    db_park = crud.create_park(park['park_name'], 
-                            park['description'], 
-                            park['state'], 
-                            park['url'], 
-                            park['coordinates'])
+# TODO: how do I save these in a cache? Like a session?
+for park in topicparks_dict:
+    # TODO: if no decription, is that okay? how does that work?
+    db_park = crud.create_park(park['state'],
+                            park['fullname'], 
+                            park['url'])
+                            # park['description'])
     
     parks_in_db.append(db_park)
+
+
+
+
 
 for n in range(10):
     email = f'user{n}@test.com'
@@ -78,31 +102,3 @@ for n in range(10):
     #     score = randint(1, 5)
 
     #     rating = crud.create_rating(score, user, rand_park)
-"""
-Do I approach this similar to the pokemon berries problem listed below?
-Is there a better approach to going about this?
-Do I leave the data here, do I put it in a file?
-
-jQuery.ajax({
-    url: 'https://pokeapi.co/api/v2/berry/',
-    type: 'GET',
-    dataType: 'json',
-    success: function(data){
-        
-        // console.log(data); // for testing
-        let nameArray = data.results
-        //console.log(nameArray)
-
-        // looping through each item of the array and
-        // getting the first value (the name)
-        for (let name of nameArray) {
-            let berry = name.name
-            // console.log(name.name); // for testing
-            $('#berries').append(berry + ", ");
-            
-            };
-
-        }
-    
-});
-"""

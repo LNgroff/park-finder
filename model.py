@@ -58,8 +58,6 @@ class Park(db.Model):
                 nullable = False)
     state = db.Column(db.String,
                 unique = True)
-    coordinates = db.Column(db.Integer,
-                nullable = False)
     url = db.Column(db.String,
                 unique = True,
                 nullable = False)
@@ -74,7 +72,6 @@ class Park(db.Model):
         return f"""Park park_id: {self.park_id} 
                 fullname: {self.fullname}
                 state: {self.state}
-                coordinates: {self.coordinates}
                 url: {self.url}
                 description: {self.description}"""
 

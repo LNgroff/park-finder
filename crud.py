@@ -13,24 +13,44 @@ def create_user(email, password, uname):
 
     return user
 
-def create_park(fullname, state, coordinates, url, description):
+def create_park(fullname, state, url, description):
     """Create and return a new park."""
 
-    park = Park(fullname=fullname, address=address, coordinates=coordinates, url=url, description=description)
+    park = Park(fullname=fullname, address=address, url=url, description=description)
 
     db.session.add(park)
     db.session.commit()
 
     return park
 
-def create_topic(id, name):
+def create_topic(nps_id, name):
 
-    topic = Topic(nps_id=id, topic_name=name)
+    topic = Topic(nps_id=nps_id, topic_name=name)
 
     db session.add(topic)
     db.session.commit()
 
     return topic
+
+
+def create_favorite(is_favorite, user, park):
+    """Create and return a new favorite."""
+    # do I need to change "user" here?
+
+    favorite = UserFavorite(is_favorite=is_favorite, user=user, park=park)
+
+    db.session.add(favorite)
+    db.session.commit()
+
+    return favorite
+
+def create_image(park_id, url):
+    """Create an image relating to a park"""
+
+    image = Image(park_id=park_id, url=url)
+
+    db.session.add(image)
+    db.session.commit
 
 def return_all_users():
     """Get list of all users"""
@@ -55,17 +75,10 @@ def get_user_by_email(email):
 #     return User.query.filter(User.uname == uname).first()
     
 
-
-
 def get_park_image(park_id):
     """Get image for a park by park_id"""
 
-    return Image.query.get(park_id).first()
-
-# def return_all_parks():
-#     """Get list of all parks"""
-
-#     return Park.query.all()
+    return Image.query.get(park_id)
 
 def get_park_by_id(park_id):
     """Get park details by park_id."""
@@ -77,29 +90,19 @@ def get_park_by_state(state):
 
     return Park.query.get(state)
 
-# TODO: not sure how to do this one, but it's the lynch pin. Ask for help
 def get_park_by_topic(topic_id):
     """Get park details by topic_id."""
 
     return Park.query.get(topic_id)
 
 
-def get_park_by_topic(topic_name):
+def get_park_by_topic_name(topic_name):
     """Get park details by topic_name."""
 
     return Park.query.get(topic_name)
 
 
-def create_favorite(is_favorite, user, park):
-    """Create and return a new favorite."""
-    # do I need to change "user" here?
 
-    favorite = UserFavorite(is_favorite=is_favorite, user=user, park=park)
-
-    db.session.add(favorite)
-    db.session.commit()
-
-    return favorite
 
 
 if __name__ == '__main__':
