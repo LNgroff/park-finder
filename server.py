@@ -154,8 +154,9 @@ def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
+    image = crud.get_park_image(park_id)
 
-    return render_template('park_details.html', park=park)
+    return render_template('park_details.html', park=park, image=image)
 
 # Not a public facing route
 @app.route('/all-users')
