@@ -7,6 +7,12 @@
 
 <p>
     Parks
+    
+    {% for park in parks_in_favs %}
+    <ul>
+        <li><a href = "/parks/{{park.park}}">{{park.full}}</a></li>
+    </ul>
+
 </p>
 
 {% endblock %}

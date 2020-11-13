@@ -168,7 +168,8 @@ def show_all_users():
     return render_template('all_users.html', users=users)
 
 """TODO: come back to this add to favorites route
-needs to populate favorites page with user choice."""
+needs to populate favorites page with user choice. Use a radio button on
+park details page I think."""
 
 # @app.route("/add_to_favorites/<park_id>")
 # def add_to_favs(park_id):
@@ -182,26 +183,26 @@ needs to populate favorites page with user choice."""
 
 #     return redirect("/user_details")
 
+"""Need to look at figure out populating the parks before I can do this part"""
+# @app.route('/all-users/<user_id>')
+# def user_details(user_id):
+#     """Show details on specific user"""
 
-@app.route('/all-users/<user_id>')
-def user_details(user_id):
-    """Show details on specific user"""
+#     user = crud.get_user_by_id(user_id)
 
-    user = crud.get_user_by_id(user_id)
-
-    parks_in_favs = []
-    favs = session["favs"]
+#     parks_in_favs = []
+#     favs = session["favs"]
     
-    for park_id in favs.items():
-        park = crud.get_by_park_id(park_id)
-        parks_in_favs.append(park)
+#     for park_id in favs.items():
+#         park = crud.get_by_park_id(park_id)
+#         parks_in_favs.append(park)
 
-    print(favs)
+#     # print(favs)
 
 
-    return render_template('user_details.html', 
-                            user=user,
-                            parks_in_favs=parks_in_favs)
+#     return render_template('user_details.html', 
+#                             user=user,
+#                             parks_in_favs=parks_in_favs)
 
 
 @app.route('/users', methods = ['POST'] )
