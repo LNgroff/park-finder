@@ -11,43 +11,47 @@ import server
 
 # TODO: Do I want to drop it every time?
 
-os.system('dropdb parks')
-os.system('createdb parks')
+os.system("dropdb parks")
+os.system("createdb parks")
 
 # TODO: Is this different too?
 model.connect_to_db(server.app)
 model.db.create_all()
 
 
-with open('data/parks.json') as f:
+with open("data/parks.json") as f:
     park_data = json.loads(f.read())
 
 parks_in_db = []
 topics_in_db = []
 images_in_db = []
 
-for park in park_data['data']:
-    db_park = crud.create_park(park['fullName'],
-                park['states'],
-                park['url'],
-                park['parkCode'],
-                park['description'])
+for park in park_data["data"]:
+    db_park = crud.create_park(park["fullName"],
+                park["states"],
+                park["url"],
+                park["parkCode"],
+                park["description"])
                 # db.save to reference id in images.
     parks_in_db.append(db_park)
     # print("**********", db_park.park_id, "*************")
-    for topic in park['topics']:
-        if (crud.get_topic_by_nps_id(topic["id"])) == None:
+    for topic in park["topics"]:
+
+        print(topic)
+        # This should be looking at the topics already in the db 
+        # Looking to see if the topic["id"] is in the local topic["nps"]
+        if (crud.get_topic_by_nps_id(topic["id"])) == None: 
             db_topic = crud.create_topic(topic["id"], topic["name"])
             topics_in_db.append(db_topic)
-    for image in park['images']:
+    for image in park["images"]:
         # need to reference park_id 
         #use a crud function here?
-        db_image = crud.create_image(db_park.park_id, image['url'])
+        db_image = crud.create_image(db_park.park_id, image["url"])
         images_in_db.append(db_image)
 
 
 # # This section poulates the topics table:
-# with open('data/npsTopic.json') as f:
+# with open("data/npsTopic.json") as f:
 #     topic_data = json.loads(f.read())
 
 # topics_in_db = []
@@ -100,22 +104,22 @@ for park in park_data['data']:
 # converts the response object to a dictionary
 # topicparks_dict = json.loads(topicparks_response.content)
 
-# with open('data/topicsParks.json','w') as fd:
+# with open("data/topicsParks.json","w") as fd:
 #     fd.write(topicparks_response.content)
 
-# with open('data/topicParks.json') as f:
+# with open("data/topicParks.json") as f:
 #     topicPark_data = json.loads(f.read())
 
 # """Ask about this part."""
 # parks_in_db = []
 # for topic in topicPark_data: # would this just be topic[park] see postman.
-#     for parks in topic: # and then this line wouldn't be necessary?
+#     for parks in topic: # and then this line wouldn"t be necessary?
 #         if parks[parkCode] not in db_park: # TODO: check on the order of this.
-#             db_park = crud.create_park(park['state'],
-#                             park['fullname'],
-#                             park['park_code'], 
-#                             park['url'])
-#                             # park['description'])
+#             db_park = crud.create_park(park["state"],
+#                             park["fullname"],
+#                             park["park_code"], 
+#                             park["url"])
+#                             # park["description"])
 #             parks_in_db.append(db_park)
 #         # TODO: Some parks have multiple states... How do I deal with that? do I need ANOTHER table?        
 
@@ -130,7 +134,7 @@ for park in park_data['data']:
 #     # Uses park table to get an image for the park
 #     parkget = f""https://developer.nps.gov/api/v1/parks?parkCode={Park.park_code}
 
-#     #get's the park
+#     #get"s the park
 #     parkget_dict = json.loads(parkget.content)
 
 #     # Will the "total..." stuff at the top of a reponse be an issue?
@@ -143,8 +147,8 @@ for park in park_data['data']:
 # """
 
 # for n in range(10):
-#     email = f'user{n}@test.com'
-#     password = 'test'
+#     email = f"user{n}@test.com"
+#     password = "test"
 
 #     user = crud.create_user(email, password)
     

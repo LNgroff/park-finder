@@ -92,7 +92,7 @@ def get_topic_by_id(topic_id):
 def get_topic_by_nps_id(nps_id):
     """get topic by nps_id"""
 
-    return Topic.query.get(nps_id).first()
+    return Topic.query.filter(Topic.nps_id == nps_id).first()
 
 
 def get_park_image(park_id):
@@ -120,11 +120,15 @@ def get_park_by_nps_id(nps_id):
 
     return Topic.query.get(nps_id)
 
+def get_park_list_by_topic(topic_id):
+    """Gets a list of of parks """
+    #TODO Join along topic_id
+    return db.session.query(topic_id).join(ParkTopics)
 
-def get_park_by_topic_name(topic_name):
+def get_park_by_topic_name(topic_id):
     """Get park details by topic_name."""
 
-    return Park.query.get(topic_name)
+    return ParkTopics.query.get(topic_id)
 
 
 

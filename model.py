@@ -66,9 +66,7 @@ class Park(db.Model):
     description = db.Column(db.String)
 
     # is this right?
-    topic = db.relationship("Topic",
-                            secondary="park_topics",
-                            backref="parks")
+    topic = db.relationship("Topic", secondary='park_topics' , backref="parks")
 
 
     def __repr__(self):
@@ -101,6 +99,7 @@ class Topic(db.Model):
     
     user = db.relationship('User', backref='topics')
     
+    park = db.relationship("Park", secondary='park_topics' , backref="topics")
 
     def __repr__(self):
         return f"""Topic topic_id: {self.topic_id}
@@ -121,6 +120,8 @@ class ParkTopic(db.Model):
     topic_id = db.Column(db.Integer,
                         db.ForeignKey('topics.topic_id'),
                         nullable=False)
+
+
 
     
     def __repr__(self):
