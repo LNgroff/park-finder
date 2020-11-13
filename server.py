@@ -6,11 +6,14 @@ from model import connect_to_db
 import crud
 import os
 import us
+import secrets
 
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = secrets.token_hex(16)
+
+# os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
 
 TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
@@ -39,7 +42,7 @@ def get_homepage():
 
 # TODO: fix 
 @app.route('/park_search')
-def search_options():
+def park_search():
     """Returns search page"""
 
     # location = request.form.args("state")
@@ -71,16 +74,24 @@ def show_search_results():
         topic_result = crud.get_topic_by_name(topic)
         topic_result_id = topic_result.topic_id
 
-        # Get all the parks with that topic id
-        park_by_topic = crud.get_park_by_topic(topic_result_id)
-        
-        # Checks to see if park is in the state and if it's not in resulting parks
-        if park_by_topic[state] == user_state and park_by_topic not in resulting_parks:
-            resulting_parks.append(park_by_topic)
-
-
     return render_template("search_results.html", 
-                            parks=resulting_parks)
+                    parks=topic_result_id,
+                    state=user_state)
+
+    # for topic in topics:
+    #     topic_result = crud.get_topic_by_name(topic)
+    #     topic_result_id = topic_result.topic_id
+
+    #     # Get all the parks with that topic id
+    #     park_by_topic = crud.get_park_by_topic_name(topic_result_id)
+        
+    #     # Checks to see if park is in the state and if it's not in resulting parks
+    #     if park_by_topic[state] == user_state and park_by_topic not in resulting_parks:
+    #         resulting_parks.append(park_by_topic)
+
+
+    # return render_template("search_results.html", 
+    #                         parks=resulting_parks)
 
 
 #         """ TODO: probably delete all this. 
@@ -236,7 +247,7 @@ def log_in():
         session['user'] = user.user_id
         uname = user.uname
         flash(f'Welcome {uname}!')
-        return render_template("/park_search")
+        return redirect("/park_search")
     else:
         flash('Email and password do not match.')
         return redirect('/')
