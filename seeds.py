@@ -18,6 +18,20 @@ os.system('createdb parks')
 model.connect_to_db(server.app)
 model.db.create_all()
 
+
+# This section poulates the topics table:
+with open('data/npsTopic.json') as f:
+    topic_data = json.loads(f.read())
+
+topics_in_db = []
+
+# Loop through the topic dictionary to determine if they are available topics.
+for topic in topics_data:
+        # populate topic table
+        db_topic = crud.create_topic(topic["id"], topic["name"])
+        topics_in_db.append(db_topic)
+
+# This seaction populates the parks table
 """TODO: delete if loop for ids works.
 topic_ids_only = "FB3641FE-67A3-4EC7-B9C4-0A0867776798,0D00073E-18C3-46E5-8727-2F87B112DDC6,
                     7F81A0CB-B91F-4896-B9A5-41BE9A54A27B,77B7EFDF-1A74-409C-8BA2-324EC919DB0E,
@@ -38,71 +52,68 @@ topic_ids_only = "FB3641FE-67A3-4EC7-B9C4-0A0867776798,0D00073E-18C3-46E5-8727-2
                     90F8744F-CD10-4925-955C-064CB1A17EB0,5ED826E0-76BB-47BB-87DD-E081A72B0A04,
                     1365C347-952C-475A-B755-731DD523C195,B85866E2-0897-4000-9040-605CA335804F"
 """
-
-with open('data/npsTopic.json') as f:
-    topic_data = json.loads(f.read())
-
-topics_in_db = []
-
-# Loop through the topic dictionary to determine if they are available topics.
-for topic in topics_data:
-        # populate topic table
-        db_topic = crud.create_topic(topic["id"], topic["name"])
-        topics_in_db.append(db_topic)
-
-
+# List to be used for the API get request
 ids_for_request = []
 
+# Adds the propper id to the list
 for topic in db_topic:
     ids_for_request.append(topic.nps_id)
 
 """ Check indentation for this next part"""
-id_list = ids_for_request.join(",")
-    # url for request of parks using specific id pass the api key too
-    topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={id_list}"
+# removes the spaces so it is in the correct format.
+request_id_list = ids_for_request.join(",")
 
-    # response object from URL
-    topicparks_response = requests.get(topicparks_url)
+# url for request of parks using specific id pass the api key too
+topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={request_id_list}"
 
-    # converts the response object to a dictionary
-    topicparks_dict = json.loads(topicparks_response.content)
+# response object from URL
+topicparks_response = requests.get(topicparks_url)
 
-topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={topic_ids_only}"
-response = requests.get(topicparks_url)
+# Unnecessary? Can I use this to combine the next two pieces? or to do away with the second open?
+# converts the response object to a dictionary
+# topicparks_dict = json.loads(topicparks_response.content)
 
 with open('data/topicsParks.json','w') as fd:
-    fd.write(response.content)
+    fd.write(topicparks_response.content)
 
 with open('data/topicParks.json') as f:
     topicPark_data = json.loads(f.read())
 
 """Ask about this part."""
 parks_in_db = []
-for topic in topicPark_data: # would this just be topic[park] 
+for topic in topicPark_data: # would this just be topic[park] see postman.
     for parks in topic: # and then this line wouldn't be necessary?
-        if parks[parkCode] not in db_park:
+        if parks[parkCode] not in db_park: # TODO: check on the order of this.
             db_park = crud.create_park(park['state'],
                             park['fullname'],
                             park['park_code'], 
                             park['url'])
                             # park['description'])
             parks_in_db.append(db_park)
-        # TODO: Some parks have multiple states... How do I deal with that? do I need ANOTHER table?
+        # TODO: Some parks have multiple states... How do I deal with that? do I need ANOTHER table?        
 
-
+# This section populates the image table
 """
 In order to populate images, I need to get the first image from the park
 result. Would this be correct? And nest this under the above for loop?
 Would I do something similar for state then? with an if loop?
-
+Is this too big? Worried about run time.
 
 for Park.park_code in db_park:
+    # Uses park table to get an image for the park
     parkget = f""https://developer.nps.gov/api/v1/parks?parkCode={Park.park_code}
-    db_image = crud.create_image(Park.park_id, parkget[url])
 
+    #get's the park
+    parkget_dict = json.loads(parkget.content)
+
+    # Will the "total..." stuff at the top of a reponse be an issue?
+images_in_db = []
+for image in parkget_dict[images]: # Is this the right 
+    first_image = [images][0]
+    db_image = crud.create_image(Park.park_id, first_image[url])
+    images_in_db.append(db_image)
 
 """
-
 
 for n in range(10):
     email = f'user{n}@test.com'
@@ -110,8 +121,3 @@ for n in range(10):
 
     user = crud.create_user(email, password)
     
-    # for n in range(10):
-    #     rand_park = choice(parks_in_db)
-    #     score = randint(1, 5)
-
-    #     rating = crud.create_rating(score, user, rand_park)
