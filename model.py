@@ -66,6 +66,7 @@ class Park(db.Model):
                 nullable = False)
     description = db.Column(db.String)
 
+    # is this right?
     topic = db.relationship("Topic",
                             secondary="park_topics",
                             backref="parks")

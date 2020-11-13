@@ -68,7 +68,6 @@ def get_user_by_id(user_id):
 
     return User.query.get(user_id)
 
-
 def get_user_by_email(email):
     """Get user by email."""
 
@@ -113,7 +112,7 @@ def get_park_by_state(state):
 def get_park_by_topic(topic_id):
     """Get park details by topic_id."""
 
-    return Park.query.get(topic_id)
+    return ParkTopic.query.get(topic_id)
 
 
 def get_park_by_topic_name(topic_name):

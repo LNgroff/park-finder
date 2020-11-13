@@ -63,19 +63,28 @@ def show_search_results():
     # get all the inputs from the user.
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
-    state = us.states.lookup(fullstate).abbr
+    user_state = us.states.lookup(fullstate).abbr
 
-    """TODO: should this next piece go in seeds?"""
-    # list to be used for api request if needed.
-    topic_inputs =[]
-    # list of parks for results = []
-    # results = crud.get_park_SOMEVALUE
-    
+    resulting_parks = []
+
     for topic in topics:
         topic_result = crud.get_topic_by_name(topic)
         topic_result_id = topic_result.topic_id
 
-        """ this is where I'd search a cache for parks. Psuedo code:
+        # Get all the parks with that topic id
+        park_by_topic = crud.get_park_by_topic(topic_result_id)
+        
+        # Checks to see if park is in the state and if it's not in resulting parks
+        if park_by_topic[state] == user_state and park_by_topic not in resulting_parks:
+            resulting_parks.append(park_by_topic)
+
+
+    return render_template("search_results.html", 
+                            parks=resulting_parks)
+
+
+        """ TODO: probably delete all this. 
+        this is where I'd search a cache for parks. Psuedo code:
             
         if topic_result_id in cache: would this be topic result or park?
             for park in parks pertaining to topic:
@@ -100,12 +109,12 @@ def show_search_results():
 
     """topic_url_input can be put into seeds's topicparks_url for 
     the get request
-    """
+
 
     return render_template("search_results.html", 
                             parks=parks)
 
-    """ 
+
     The following block of code works if a state is selected
     If no state is selected an attribute error occurs:
         'AttributeError: 'NoneType' object has no attribute 'abbr'"
@@ -139,8 +148,6 @@ def show_search_results():
     whether topics or states are included?
 """
     # payload = {"topic_list" : json.dumps(topics)}
-
-    
 
 @app.route('/parks/<park_id>')
 def park_details(park_id):
