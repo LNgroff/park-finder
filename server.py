@@ -83,70 +83,70 @@ def show_search_results():
                             parks=resulting_parks)
 
 
-        """ TODO: probably delete all this. 
-        this is where I'd search a cache for parks. Psuedo code:
+#         """ TODO: probably delete all this. 
+#         this is where I'd search a cache for parks. Psuedo code:
             
-        if topic_result_id in cache: would this be topic result or park?
-            for park in parks pertaining to topic:
-                if park.state == state input from user:
-                    list of parks.append(park)
-        if topic not in cache make request:
-            topic_iputs.append(topic_result_id)
+#         if topic_result_id in cache: would this be topic result or park?
+#             for park in parks pertaining to topic:
+#                 if park.state == state input from user:
+#                     list of parks.append(park)
+#         if topic not in cache make request:
+#             topic_iputs.append(topic_result_id)
             
-            #this is on the wrong level.
-            separator = "%2C"
-            topic_url_input = separator.join(topic_url_input)   
-            get request topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={topic_input}"
-            parks_result = topicparks_url
-                for park in parks_request:
-                    crud.create_park(park[details]...)
+#             #this is on the wrong level.
+#             separator = "%2C"
+#             topic_url_input = separator.join(topic_url_input)   
+#             get request topicparks_url = f"https://developer.nps.gov/api/v1/topics/parks?id={topic_input}"
+#             parks_result = topicparks_url
+#                 for park in parks_request:
+#                     crud.create_park(park[details]...)
 
             
     
             
-        """
+#         """
 
 
-    """topic_url_input can be put into seeds's topicparks_url for 
-    the get request
+#     """topic_url_input can be put into seeds's topicparks_url for 
+#     the get request
 
 
-    return render_template("search_results.html", 
-                            parks=parks)
+#     return render_template("search_results.html", 
+#                             parks=parks)
 
 
-    The following block of code works if a state is selected
-    If no state is selected an attribute error occurs:
-        'AttributeError: 'NoneType' object has no attribute 'abbr'"
-    Have rewritten a number of ways. particularly with the return
-    statement outside of the if else statement.
-    """
-    # if us.states.lookup(fullstate) == "no selection":
-    #     return render_template("search_results.html", 
-    #                     topics=topics,
-    #                     state=fullstate)
-    # else:
-    #     state = (us.states.lookup(fullstate)).abbr
-    #     return render_template("search_results.html", 
-    #                             topics=topics,
-    #                             state=state)
-    """
-    used as a test:
-    return render_template("search_results.html", 
-                        topics=topics,
-                        state=state)
-    """
-"""
-    TODO: parse through topics and grab arguments to use in request
-    to API.
+#     The following block of code works if a state is selected
+#     If no state is selected an attribute error occurs:
+#         'AttributeError: 'NoneType' object has no attribute 'abbr'"
+#     Have rewritten a number of ways. particularly with the return
+#     statement outside of the if else statement.
+#     """
+#     # if us.states.lookup(fullstate) == "no selection":
+#     #     return render_template("search_results.html", 
+#     #                     topics=topics,
+#     #                     state=fullstate)
+#     # else:
+#     #     state = (us.states.lookup(fullstate)).abbr
+#     #     return render_template("search_results.html", 
+#     #                             topics=topics,
+#     #                             state=state)
+#     """
+#     used as a test:
+#     return render_template("search_results.html", 
+#                         topics=topics,
+#                         state=state)
+#     """
+# """
+#     TODO: parse through topics and grab arguments to use in request
+#     to API.
 
-    I think I need something like this:
-        >>> payload = {'name': 'hello', 'data': 'hello'}
-        >>> r = requests.get("http://example.com/api/params", params=payload)
-    And then the payload dictionary is topic:value and state:value.
-    Would I need an if statement for two different requests based on
-    whether topics or states are included?
-"""
+#     I think I need something like this:
+#         >>> payload = {'name': 'hello', 'data': 'hello'}
+#         >>> r = requests.get("http://example.com/api/params", params=payload)
+#     And then the payload dictionary is topic:value and state:value.
+#     Would I need an if statement for two different requests based on
+#     whether topics or states are included?
+# """
     # payload = {"topic_list" : json.dumps(topics)}
 
 @app.route('/parks/<park_id>')

@@ -17,7 +17,7 @@ def create_park(fullname, state, url, park_code, description):
     """Create and return a new park."""
 
     park = Park(fullname=fullname, 
-                address=address, 
+                state=state, 
                 url=url, 
                 park_code=park_code,
                 description=description)
@@ -31,7 +31,7 @@ def create_topic(nps_id, name):
 
     topic = Topic(nps_id=nps_id, topic_name=name)
 
-    db session.add(topic)
+    db.session.add(topic)
     db.session.commit()
 
     return topic
@@ -87,7 +87,13 @@ def get_topic_by_name(topic_name) :
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""
 
-    return Topic.query.filter_by(Topic.topic_id==topic_id).first()
+    return Topic.query.get(topic_id).first()
+
+def get_topic_by_nps_id(nps_id):
+    """get topic by nps_id"""
+
+    return Topic.query.get(nps_id).first()
+
 
 def get_park_image(park_id):
     """Get image for a park by park_id"""
@@ -109,10 +115,10 @@ def get_park_by_state(state):
 
     return Park.query.get(state)
 
-def get_park_by_topic(topic_id):
-    """Get park details by topic_id."""
+def get_park_by_nps_id(nps_id):
+    """Get park nps by topic_id."""
 
-    return ParkTopic.query.get(topic_id)
+    return Topic.query.get(nps_id)
 
 
 def get_park_by_topic_name(topic_name):

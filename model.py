@@ -59,8 +59,7 @@ class Park(db.Model):
     park_code = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    state = db.Column(db.String,
-                unique = True)
+    state = db.Column(db.String)
     url = db.Column(db.String,
                 unique = True,
                 nullable = False)
@@ -113,7 +112,7 @@ class Topic(db.Model):
 class ParkTopic(db.Model):
     """Topics of a specific park."""
 
-    __tablename__ = 'parks_topics'
+    __tablename__ = 'park_topics'
 
     pktopic_id = db.Column(db.Integer, primary_key=True)
     park_id = db.Column(db.Integer,
