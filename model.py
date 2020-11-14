@@ -107,9 +107,8 @@ class Topic(db.Model):
     def __repr__(self):
         return f"""Topic topic_id: {self.topic_id}
                 nps_id: {self.nps_id} 
-                topic_name: {self.topic_name}
-                park_id: {self.park_id}
-                user_id: {self.user_id}"""
+                topic_name: {self.topic_name}"""
+                # park_id: {self.park_id}"""
 
 class ParkTopic(db.Model):
     """Topics of a specific park."""

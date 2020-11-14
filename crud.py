@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, Park, User, Image, UserFavorite, Topic, connect_to_db
+from model import db, Park, User, Image, Favorite, Topic, ParkTopic, connect_to_db
 
 
 def create_user(email, password, uname):
@@ -37,13 +37,12 @@ def create_topic(nps_id, name):
     return topic
 
 
-def create_favorite(is_favorite, user, park):
+def create_favorite(park_id, user_id):
     """Create and return a new favorite."""
     # do I need to change "user" here?
 
-    favorite = UserFavorite(is_favorite=is_favorite, 
-                            user=user, 
-                            park=park)
+    favorite = Favorite(park_id=park_id,
+                        user_id=user_id)
 
     db.session.add(favorite)
     db.session.commit()
@@ -82,12 +81,12 @@ def get_user_by_email(email):
 def get_topic_by_name(topic_name) :
     """Get topic by name"""
 
-    return Topic.query.get(topic_name)
+    return Topic.query.filter(topic_name).all()
 
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""
 
-    return Topic.query.get(topic_id).first()
+    return Topic.query.get(topic_id)
 
 def get_topic_by_nps_id(nps_id):
     """get topic by nps_id"""
@@ -123,7 +122,7 @@ def get_park_by_nps_id(nps_id):
 def get_park_list_by_topic(topic_id):
     """Gets a list of of parks """
     #TODO Join along topic_id
-    return db.session.query(topic_id).join(ParkTopics)
+    return db.session.query(Topic).join(ParkTopic).all()
 
 def get_park_by_topic_name(topic_id):
     """Get park details by topic_name."""
