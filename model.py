@@ -37,6 +37,9 @@ class User(db.Model):
     password = db.Column(db.String,
                 nullable = False)
 
+    # favorite = a list of Favorite objects
+
+
     def __repr__(self):
         return f"""User user_id: {self.user_id}
                         uname: {self.uname}
@@ -64,6 +67,10 @@ class Park(db.Model):
                 unique = True,
                 nullable = False)
     description = db.Column(db.String)
+
+    # image = list of Image objects
+    # topic = list of Topic objects
+    # favorite = list of Favorite objects
 
     # is this right?
     topic = db.relationship("Topic", secondary='park_topics' , backref="parks")
@@ -94,10 +101,6 @@ class Topic(db.Model):
     topic_name = db.Column(db.String,
                 unique = True,
                 nullable = False)
-    user_id = db.Column(db.Integer,
-                db.ForeignKey("users.user_id"))
-    
-    user = db.relationship('User', backref='topics')
     
     park = db.relationship("Park", secondary='park_topics' , backref="topics")
 
@@ -155,7 +158,7 @@ class Image(db.Model):
                 park: {self.park}"""
 
 
-class UserFavorite(db.Model):
+class Favorite(db.Model):
     """A list of user's favorites"""
 
     __tablename__ = "favorites"
@@ -170,13 +173,12 @@ class UserFavorite(db.Model):
     user_id = db.Column(db.Integer,
                 db.ForeignKey("users.user_id"),
                 nullable = False)
-    is_favorite = db.Column(db.Boolean)
+
 
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
                 park_id: {self.park_id}
-                user_id: {self.user_id}
-                is_favorite: {self.is_favorite}"""
+                user_id: {self.user_id}"""
 
     park = db.relationship('Park', backref='favorites')
     user = db.relationship('User', backref='favorites')
