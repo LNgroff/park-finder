@@ -81,7 +81,7 @@ def get_user_by_email(email):
 def get_topic_by_name(topic_name) :
     """Get topic by name"""
 
-    return Topic.query.filter(topic_name).all()
+    return Topic.query.filter(topic_name).first()
 
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""
