@@ -27,9 +27,9 @@ def create_park(fullname, state, url, park_code, description):
 
     return park
 
-def create_topic(nps_id, name):
+def create_topic(nps_id, topic_name):
 
-    topic = Topic(nps_id=nps_id, topic_name=name)
+    topic = Topic(nps_id=nps_id, topic_name=topic_name)
 
     db.session.add(topic)
     db.session.commit()
@@ -81,7 +81,7 @@ def get_user_by_email(email):
 def get_topic_by_name(topic_name) :
     """Get topic by name"""
 
-    return Topic.query.filter(topic_name).first()
+    return Topic.query.filter(Topic.topic_name == topic_name).first()
 
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""

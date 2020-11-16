@@ -46,14 +46,6 @@ def get_homepage():
 def park_search():
     """Returns search page"""
 
-    # location = request.form.args("state")
-
-    # if location == "--":
-    #     # location equals none, no argument passed.
-    # else:
-    #     location = us.states
-
-
     return render_template("park_search.html", TOPICS=TOPICS, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
@@ -74,7 +66,8 @@ def show_search_results():
     for topic in topics:
         """ Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
         expression 'Waterfalls' should be explicitly declared as text('Waterfalls')"""
-        topic_result = crud.get_topic_by_name(topic)
+        
+        topic_result = crud.get_topic_by_name(text(topic))
         topic_result_id = topic_result.topic_id
 
     return render_template("search_results.html", 
