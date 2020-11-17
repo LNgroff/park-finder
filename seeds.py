@@ -27,7 +27,12 @@ topics_in_db = []
 images_in_db = []
 topics_dict = {}
 
-# topics_dict = { topic["id"]} : crud.create_topic(topic["id"], topic["name"])}
+with open("data/npsTopic.json") as n:
+    topic_data = json.loads(n.read())
+
+for topic in topic_data:
+    #topics_dict["id"] = get_topic_by_id(topic"id")
+    topics_dict = { topic["id"] : crud.create_topic(topic["id"], topic["name"])}
 
 for park in park_data["data"]:
     db_park = crud.create_park(park["fullName"],
@@ -42,9 +47,8 @@ for park in park_data["data"]:
         print(topic)
         # This should be looking at the topics already in the db 
         # Looking to see if the topic["id"] is in the local topic["nps"]
-        if topic["id"] in tpics_dict:
-            # crud.add_topics_to_part(park, topics_dict[topic["id"]])
-        if (crud.get_topic_by_nps_id(topic["id"])) == None: 
+        if topic["id"] in topics_dict:
+            crud.add_topics_to_park(park, topics_dict[topic["id"]])
             db_topic = crud.create_topic(topic["id"], topic["name"])
             topics_in_db.append(db_topic)
 

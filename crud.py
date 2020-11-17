@@ -59,7 +59,7 @@ def create_image(park_id, url):
 
 def add_topics_to_park(park, topic):
 
-    park.topics.append(topic)
+    park.topic.append(topic)
 
     db.session.commit()
 

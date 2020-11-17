@@ -66,7 +66,6 @@ def show_search_results():
     for topic in topics:
         """ Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
         expression 'Waterfalls' should be explicitly declared as text('Waterfalls')"""
-        
         topic_result = crud.get_topic_by_name(text(topic))
         topic_result_id = topic_result.topic_id
 
