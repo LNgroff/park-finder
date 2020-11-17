@@ -96,7 +96,6 @@ class Topic(db.Model):
                 autoincrement = True,
                 nullable = False)
     nps_id = db.Column(db.String,
-                unique = True,
                 nullable = False)
     topic_name = db.Column(db.String,
                 unique = True,

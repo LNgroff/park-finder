@@ -55,7 +55,14 @@ def create_image(park_id, url):
     image = Image(park_id=park_id, url=url)
 
     db.session.add(image)
-    db.session.commit
+    db.session.commit()
+
+def add_topics_to_park(park, topic):
+
+    park.topics.append(topic)
+
+    db.session.commit()
+
 
 def return_all_users():
     """Get list of all users"""
@@ -124,11 +131,10 @@ def get_park_list_by_topic(topic_id):
     #TODO Join along topic_id
     return db.session.query(Topic).join(ParkTopic).all()
 
-def get_park_by_topic_name(topic_id):
-    """Get park details by topic_name."""
+def get_park_by_topic_id(topic_id):
+    """Get park details by topic_id."""
 
-    return ParkTopics.query.get(topic_id)
-
+    return ParkTopic.query.get(topic_id)
 
 
 
