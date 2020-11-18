@@ -8,6 +8,7 @@ import os
 import us
 import secrets
 from sqlalchemy import text
+import json
 
 from jinja2 import StrictUndefined
 
@@ -17,17 +18,21 @@ app.secret_key = secrets.token_hex(16)
 # os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
 
-OPT_TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
-        "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
-        "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
-        "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
-        "Foothills, Plains and Valleys", "Forests and Woodlands",
-        "Fossils and Paleontology", "Geology", "Geothermal", "Glaciers",
-        "Grasslands", "Groundwater", "Impact Craters", "Lakes", "Mountains",
-        "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
-        "Rock Landscapes and Features", "Scenic Views", "The Tropics",
-        "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
-        "Wetlands", "Wilderness"]
+# OPT_TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
+#         "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
+#         "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
+#         "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
+#         "Foothills, Plains and Valleys", "Forests and Woodlands",
+#         "Fossils and Paleontology", "Geology", "Geothermal", "Glaciers",
+#         "Grasslands", "Groundwater", "Impact Craters", "Lakes", "Mountains",
+#         "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
+#         "Rock Landscapes and Features", "Scenic Views", "The Tropics",
+#         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
+#         "Wetlands", "Wilderness"]
+
+with open("data/npsTopic.json") as n:
+    OPT_TOPICS = json.loads(n.read())
+
 
 STATES = us.states.STATES_AND_TERRITORIES
 
@@ -58,20 +63,16 @@ def show_search_results():
 
     # get all the inputs from the user.
     topics = request.form.getlist("topic")
+    
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
     print("*****", topics, "********")
     resulting_parks = []
 
     for topic in topics:
-        # topics = set(topics)
-        # print(f"************{topics}**************")
-        """ FIXED: Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
-        expression 'Waterfalls' should be explicitly declared as text('Waterfalls')"""
         # topic = text(topic)
-        # print(f"************{topic}**************")
+
         # topic_result = crud.get_topic_by_name(topic)
-        # result = crud.get_topic_by_name(topic)
         # resulting_parks.append(result)
         resulting_parks.append(crud.get_topic_by_name(topic))
         # topic_result_id = topic_result[topic_id]
