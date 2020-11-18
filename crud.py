@@ -1,7 +1,7 @@
 """CRUD operations."""
 
 from model import db, Park, User, Image, Favorite, Topic, ParkTopic, connect_to_db
-
+from sqlalchemy import text
 
 def create_user(email, password, uname):
     """Create and return a new user."""
@@ -62,9 +62,6 @@ def create_image(park_id, url):
 def add_topics_to_park(park, topic):
 
     park.topic.append(topic)
-
-    print("*****************************************")
-    print(park.topic)
     
     db.session.commit()
 
@@ -93,7 +90,7 @@ def get_user_by_email(email):
 def get_topic_by_name(name) :
     """Get topic by name"""
 
-    return Topic.query.filter_by(topic_name=name).first
+    return Topic.query.filter(Topic.topic_name==name).first()
 
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""
@@ -104,7 +101,6 @@ def get_topic_by_nps_id(nps_id):
     """get topic by nps_id"""
 
     return Topic.query.filter(Topic.nps_id == nps_id).first()
-
 
 def get_park_image(park_id):
     """Get image for a park by park_id"""
@@ -131,15 +127,11 @@ def get_park_by_nps_id(nps_id):
 
     return Topic.query.get(nps_id)
 
-def get_park_list_by_topic(topic_id):
-    """Gets a list of of parks """
-    #TODO Join along topic_id
-    return db.session.query(Topic).join(ParkTopic).all()
 
-def get_park_by_topic_id(topic_id):
+def get_parks_by_topic_id(topic_id):
     """Get park details by topic_id."""
 
-    return ParkTopic.query.get(topic_id)
+    return ParkTopic.query.filter(topic_id)
 
 
 

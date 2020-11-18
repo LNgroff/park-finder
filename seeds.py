@@ -34,7 +34,7 @@ with open("data/npsTopic.json") as n:
 
 for topic in topic_data:
     #topics_dict["id"] = get_topic_by_id(topic"id")
-    topics_dict['id'] = crud.create_topic(topic["id"], topic["name"])
+    topics_dict[topic["id"]] = crud.create_topic(topic["id"], topic["name"])
     print(topics_dict)
 
 for park in park_data["data"]:
@@ -46,16 +46,14 @@ for park in park_data["data"]:
 
     parks_in_db.append(db_park)
 
-    # print("**********", db_park.park_id, "*************")
+    # Looking at each park in
     for topic in park["topics"]:
-        # print(f"************************{topic}*******************")
-        # This should be looking at the topics already in the db 
+        
         # Looking to see if the topic["id"] is in the local topic["nps"]
         if topic["id"] in topics_dict:
-            # print("**********", topic['id'], "*************")
-            # print(f"************************{topic}*******************")
+
             db_topic = crud.add_topics_to_park(db_park, topics_dict[topic["id"]])
-            # print(f"************************{db_topic}*******************")
+
             topics_in_db.append(db_topic)
 
     for image in park["images"]:
@@ -64,21 +62,18 @@ for park in park_data["data"]:
         db_image = crud.create_image(db_park.park_id, image["url"])
         images_in_db.append(db_image)
 
+for n in range(10):
+    email = f"user{n}@test.com"
+    password = f"test{n}"
+    uname = f"bob{n}"
 
-# # This section poulates the topics table:
-# with open("data/npsTopic.json") as f:
-#     topic_data = json.loads(f.read())
+    user = crud.create_user(email, password, uname)
+    
 
-# topics_in_db = []
 
-# # Loop through the topic dictionary to determine if they are available topics.
-# for topic in topics_data:
-#         # populate topic table
-#         db_topic = crud.create_topic(topic["id"], topic["name"])
-#         topics_in_db.append(db_topic)
+"""
+Modify this section in order to populate the database with a new request everytime.
 
-# # This seaction populates the parks table
-# """TODO: delete if loop for ids works.
 # topic_ids_only = "FB3641FE-67A3-4EC7-B9C4-0A0867776798,0D00073E-18C3-46E5-8727-2F87B112DDC6,
 #                     7F81A0CB-B91F-4896-B9A5-41BE9A54A27B,77B7EFDF-1A74-409C-8BA2-324EC919DB0E,
 #                     607D41B0-F830-4C07-A557-BCEF880A3929,BCE3ACBE-7871-495B-AEA3-5E19BC482405,
@@ -97,15 +92,13 @@ for park in park_data["data"]:
 #                     A86F34FB-BD6D-4D09-80CC-421B6113DF2E,5BE55D7F-BDB6-4E3D-AC35-2D8EBB974417,
 #                     90F8744F-CD10-4925-955C-064CB1A17EB0,5ED826E0-76BB-47BB-87DD-E081A72B0A04,
 #                     1365C347-952C-475A-B755-731DD523C195,B85866E2-0897-4000-9040-605CA335804F"
-# """
+
+
 # # List to be used for the API get request
 # ids_for_request = []
 
-# # Adds the propper id to the list
-# for topic in db_topic:
-#     ids_for_request.append(topic.nps_id)
 
-# """ Check indentation for this next part"""
+# Check indentation for this next part
 # # removes the spaces so it is in the correct format.
 # request_id_list = ids_for_request.join(",")
 
@@ -125,14 +118,4 @@ for park in park_data["data"]:
 # with open("data/topicParks.json") as f:
 #     topicPark_data = json.loads(f.read())
 
-
-
 # """
-
-for n in range(10):
-    email = f"user{n}@test.com"
-    password = f"test{n}"
-    uname = f"blue{n}"
-
-    user = crud.create_user(email, password, uname)
-    

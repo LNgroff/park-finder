@@ -60,7 +60,7 @@ def show_search_results():
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
-
+    print("*****", topics, "********")
     resulting_parks = []
 
     for topic in topics:
@@ -68,27 +68,17 @@ def show_search_results():
         # print(f"************{topics}**************")
         """ FIXED: Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
         expression 'Waterfalls' should be explicitly declared as text('Waterfalls')"""
-        topic = text(topic)
-        print(f"************{topic}**************")
+        # topic = text(topic)
+        # print(f"************{topic}**************")
         # topic_result = crud.get_topic_by_name(topic)
-        resulting_parks.extend(crud.get_topic_by_name(topic))
+        # result = crud.get_topic_by_name(topic)
+        # resulting_parks.append(result)
+        resulting_parks.append(crud.get_topic_by_name(topic))
         # topic_result_id = topic_result[topic_id]
 
     return render_template("search_results.html", 
                     parks=resulting_parks,
                     state=user_state)
-
-    # for topic in topics:
-    #     topic_result = crud.get_topic_by_name(topic)
-    #     topic_result_id = topic_result.topic_id
-
-    #     # Get all the parks with that topic id
-    #     park_by_topic = crud.get_park_by_topic_name(topic_result_id)
-        
-    #     # Checks to see if park is in the state and if it's not in resulting parks
-    #     if park_by_topic[state] == user_state and park_by_topic not in resulting_parks:
-    #         resulting_parks.append(park_by_topic)
-
 
 
 @app.route('/parks/<park_id>')
