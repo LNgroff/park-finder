@@ -25,7 +25,7 @@ crossorigin="anonymous"
                 <p>Which topics would you like to search for? (Select up to 3 topics)</p>
                 
                 <!-- TODO: If the topic has a space in it, is that a problem? -->
-                {% for topic in TOPICS %}
+                {% for topic in topics %}
                 <div class="topic-check">
                     <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
                     <label for="{{topic.topic_name}}">{{topic.topic_name}}</label><br>

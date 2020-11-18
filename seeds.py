@@ -35,7 +35,7 @@ with open("data/npsTopic.json") as n:
 for topic in topic_data:
     #topics_dict["id"] = get_topic_by_id(topic"id")
     topics_dict[topic["id"]] = crud.create_topic(topic["id"], topic["name"])
-    print(topics_dict)
+    # print(topics_dict)
 
 for park in park_data["data"]:
     db_park = crud.create_park(park["fullName"],

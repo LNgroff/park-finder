@@ -51,9 +51,9 @@ def get_homepage():
 def park_search():
     """Returns search page"""
 
-    OPT_TOPICS = crud.return_all_topics()
+    opt_topics = crud.return_all_topics()
 
-    return render_template("park_search.html", TOPICS=OPT_TOPICS, STATES=STATES)
+    return render_template("park_search.html", topics=opt_topics, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
 # also include state selection.
