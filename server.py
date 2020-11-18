@@ -73,7 +73,7 @@ def show_search_results():
 
     for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
-        resulting_parks[topic] = crud.get_parks_by_topic_id(topic)
+        resulting_parks[topic] = crud.get_park_by_userstate(topic, user_state)
         print("*****", resulting_parks, "********")
     
     # for park in resulting_parks:

@@ -90,7 +90,6 @@ class Topic(db.Model):
 
     __tablename__ = "topics"
 
-
     topic_id = db.Column(db.String,
                 primary_key = True,
                 nullable = False)
@@ -114,7 +113,7 @@ class ParkTopic(db.Model):
     park_id = db.Column(db.Integer,
                         db.ForeignKey('parks.park_id'),
                         nullable=False)
-    topic_id = db.Column(db.Integer,
+    topic_id = db.Column(db.String,
                         db.ForeignKey('topics.topic_id'),
                         nullable=False)
 

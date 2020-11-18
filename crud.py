@@ -152,7 +152,7 @@ def get_parks_by_topic_id(topic_id):
 def get_park_by_userstate(topic_id, userstate):
 
     # return Park.query.filter(Park.park_id==park_id and Park.state==state)
-    return Park.query.join(ParkTopic).filter((Park.state== userstate) and (ParkTopic.topic_id== topic_id)).all()
+    return Park.query.join(ParkTopic).filter((Park.state== userstate and ParkTopic.topic_id== topic_id)).all()
 
 
 
