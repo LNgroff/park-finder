@@ -27,8 +27,8 @@ crossorigin="anonymous"
                 <!-- TODO: If the topic has a space in it, is that a problem? -->
                 {% for topic in TOPICS %}
                 <div class="topic-check">
-                    <input class="topicCheckbox" type="checkbox" id="{{ topic.id }}" name="topic" value= "{{ topic.id }}" onclick="return limitChecks()">
-                    <label for="{{topic.name}}">{{topic.name}}</label><br>
+                    <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
+                    <label for="{{topic.topic_name}}">{{topic.topic_name}}</label><br>
 
 
                     <script type="text/javascript">

@@ -30,8 +30,8 @@ app.jinja_env.undefined = StrictUndefined
 #         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
 #         "Wetlands", "Wilderness"]
 
-with open("data/npsTopic.json") as n:
-    OPT_TOPICS = json.loads(n.read())
+# with open("data/npsTopic.json") as n:
+#     OPT_TOPICS = json.loads(n.read())
 
 
 STATES = us.states.STATES_AND_TERRITORIES
@@ -51,6 +51,8 @@ def get_homepage():
 def park_search():
     """Returns search page"""
 
+    OPT_TOPICS = crud.return_all_topics()
+
     return render_template("park_search.html", TOPICS=OPT_TOPICS, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
@@ -63,19 +65,21 @@ def show_search_results():
 
     # get all the inputs from the user.
     topics = request.form.getlist("topic")
-    
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
     print("*****", topics, "********")
-    resulting_parks = []
+    resulting_parks = {}
+    final_parks = {}
 
     for topic in topics:
-        # topic = text(topic)
-
-        # topic_result = crud.get_topic_by_name(topic)
-        # resulting_parks.append(result)
-        resulting_parks.append(crud.get_topic_by_name(topic))
-        # topic_result_id = topic_result[topic_id]
+        # Gets park associated with each topic and appends to list for further parsing
+        resulting_parks[topic] = crud.get_parks_by_topic_id(topic)
+    print("*****", resulting_parks, "********")
+    
+    # for park in resulting_parks:
+    #     respark = crud.get_park_by_id(park.park_id)
+    #     if respark.state == userstate:
+    #         final_parks.append(respark)
 
     return render_template("search_results.html", 
                     parks=resulting_parks,

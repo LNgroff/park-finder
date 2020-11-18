@@ -65,6 +65,11 @@ def add_topics_to_park(park, topic):
     
     db.session.commit()
 
+def return_all_topics():
+    """Get list of all topics"""
+
+    return Topic.query.all()
+
 
 def return_all_users():
     """Get list of all users"""
@@ -131,10 +136,9 @@ def get_park_by_nps_id(nps_id):
 def get_parks_by_topic_id(topic_id):
     """Get park details by topic_id."""
 
-    return ParkTopic.query.filter(topic_id)
+    return ParkTopic.query.filter(ParkTopic.topic_id== topic_id).all()
 
-
-
+# Topic.nps_id == nps_id
 
 if __name__ == '__main__':
     from server import app
