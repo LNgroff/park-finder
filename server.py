@@ -67,16 +67,17 @@ def show_search_results():
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
-    print("*****", topics, "********")
+    # print("*****", topics, "********")
     resulting_parks = {}
     final_parks = {}
 
     for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
         resulting_parks[topic] = crud.get_parks_by_topic_id(topic)
-    print("*****", resulting_parks, "********")
+        print("*****", resulting_parks, "********")
     
     # for park in resulting_parks:
+        # edit crud function/ create one that looks at park_id and state
     #     respark = crud.get_park_by_id(park.park_id)
     #     if respark.state == userstate:
     #         final_parks.append(respark)

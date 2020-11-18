@@ -3,6 +3,7 @@
 from model import db, Park, User, Image, Favorite, Topic, ParkTopic, connect_to_db
 from sqlalchemy import text
 
+# TODO: used or unused? 👍🏻
 def create_user(email, password, uname):
     """Create and return a new user."""
 
@@ -13,6 +14,7 @@ def create_user(email, password, uname):
 
     return user
 
+# TODO: used or unused? 👍🏻
 def create_park(fullname, state, url, park_code, description):
     """Create and return a new park."""
 
@@ -27,6 +29,7 @@ def create_park(fullname, state, url, park_code, description):
 
     return park
 
+# TODO: used or unused? 👍🏻
 def create_topic(nps_id, topic_name):
 
     topic = Topic(nps_id=nps_id, topic_name=topic_name)
@@ -36,7 +39,7 @@ def create_topic(nps_id, topic_name):
 
     return topic
 
-
+# TODO: used or unused? 👍🏻
 def create_favorite(park_id, user_id):
     """Create and return a new favorite."""
     # do I need to change "user" here?
@@ -49,6 +52,7 @@ def create_favorite(park_id, user_id):
 
     return favorite
 
+# TODO: used or unused? 👍🏻
 def create_image(park_id, url):
     """Create an image relating to a park"""
 
@@ -59,28 +63,32 @@ def create_image(park_id, url):
 
     return image
 
+# TODO: used or unused? 👍🏻
 def add_topics_to_park(park, topic):
 
     park.topic.append(topic)
     
     db.session.commit()
 
+# TODO: used or unused? 
 def return_all_topics():
     """Get list of all topics"""
 
     return Topic.query.all()
 
-
+# TODO: used or unused? 
 def return_all_users():
     """Get list of all users"""
 
     return User.query.all()
 
+# TODO: used or unused?
 def get_user_by_id(user_id):
     """Display user profile by user_id"""
 
     return User.query.get(user_id)
 
+# TODO: used or unused? 👍🏻
 def get_user_by_email(email):
     """Get user by email."""
 
@@ -92,53 +100,67 @@ def get_user_by_email(email):
 
 #     return User.query.filter(User.uname == uname).first()
 
+# TODO: used or unused?
 def get_topic_by_name(name) :
     """Get topic by name"""
 
     return Topic.query.filter(Topic.topic_name==name).first()
 
+# TODO: used or unused?
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""
 
     return Topic.query.get(topic_id)
 
+# TODO: used or unused?
 def get_topic_by_nps_id(nps_id):
     """get topic by nps_id"""
 
     return Topic.query.filter(Topic.nps_id == nps_id).first()
 
+# TODO: used or unused?
 def get_park_image(park_id):
     """Get image for a park by park_id"""
 
     return Image.query.get(park_id)
 
+# TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
     """Get park details by park_id."""
 
     return Park.query.get(park_id)
 
+# TODO: used or unused?
 def get_park_by_park_code(park_code):
     """Get park details by park_code."""
 
     return Park.query.get(park_code)
 
+# TODO: used or unused?
 def get_park_by_state(state):
     """Get park details by state."""
 
     return Park.query.get(state)
 
+# TODO: used or unused?
 def get_park_by_nps_id(nps_id):
     """Get park nps by topic_id."""
 
     return Topic.query.get(nps_id)
 
-
+# TODO: used or unused? 👍🏻
 def get_parks_by_topic_id(topic_id):
     """Get park details by topic_id."""
 
     return ParkTopic.query.filter(ParkTopic.topic_id== topic_id).all()
 
-# Topic.nps_id == nps_id
+# TODO: used or unused? 👍🏻
+def get_park_by_userstate(topic_id, userstate):
+
+    # return Park.query.filter(Park.park_id==park_id and Park.state==state)
+    return Park.query.join(ParkTopic).filter((Park.state== userstate) and (ParkTopic.topic_id== topic_id)).all()
+
+
 
 if __name__ == '__main__':
     from server import app
