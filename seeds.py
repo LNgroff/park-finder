@@ -27,12 +27,15 @@ topics_in_db = []
 images_in_db = []
 topics_dict = {}
 
+# topics_dict = { topic["id"]} : crud.create_topic(topic["id"], topic["name"])}
+
 with open("data/npsTopic.json") as n:
     topic_data = json.loads(n.read())
 
 for topic in topic_data:
     #topics_dict["id"] = get_topic_by_id(topic"id")
-    topics_dict = { topic["id"] : crud.create_topic(topic["id"], topic["name"])}
+    topics_dict['id'] = crud.create_topic(topic["id"], topic["name"])
+    print(topics_dict)
 
 for park in park_data["data"]:
     db_park = crud.create_park(park["fullName"],
@@ -40,16 +43,19 @@ for park in park_data["data"]:
                 park["url"],
                 park["parkCode"],
                 park["description"])
-                # db.save to reference id in images.
+
     parks_in_db.append(db_park)
+
     # print("**********", db_park.park_id, "*************")
     for topic in park["topics"]:
-        print(topic)
+        # print(f"************************{topic}*******************")
         # This should be looking at the topics already in the db 
         # Looking to see if the topic["id"] is in the local topic["nps"]
         if topic["id"] in topics_dict:
-            crud.add_topics_to_park(park, topics_dict[topic["id"]])
-            db_topic = crud.create_topic(topic["id"], topic["name"])
+            # print("**********", topic['id'], "*************")
+            # print(f"************************{topic}*******************")
+            db_topic = crud.add_topics_to_park(db_park, topics_dict[topic["id"]])
+            # print(f"************************{db_topic}*******************")
             topics_in_db.append(db_topic)
 
     for image in park["images"]:
@@ -123,9 +129,10 @@ for park in park_data["data"]:
 
 # """
 
-# for n in range(10):
-#     email = f"user{n}@test.com"
-#     password = "test"
+for n in range(10):
+    email = f"user{n}@test.com"
+    password = f"test{n}"
+    uname = f"blue{n}"
 
-#     user = crud.create_user(email, password)
+    user = crud.create_user(email, password, uname)
     

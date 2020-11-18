@@ -57,10 +57,15 @@ def create_image(park_id, url):
     db.session.add(image)
     db.session.commit()
 
+    return image
+
 def add_topics_to_park(park, topic):
 
     park.topic.append(topic)
 
+    print("*****************************************")
+    print(park.topic)
+    
     db.session.commit()
 
 
@@ -85,10 +90,10 @@ def get_user_by_email(email):
 
 #     return User.query.filter(User.uname == uname).first()
 
-def get_topic_by_name(topic_name) :
+def get_topic_by_name(name) :
     """Get topic by name"""
 
-    return Topic.query.filter(Topic.topic_name == topic_name).first()
+    return Topic.query.filter_by(topic_name=name).first
 
 def get_topic_by_id(topic_id):
     """get topic by topic_id"""

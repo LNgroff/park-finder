@@ -17,7 +17,7 @@ app.secret_key = secrets.token_hex(16)
 # os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
 
-TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
+OPT_TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
         "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
         "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
         "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
@@ -46,7 +46,7 @@ def get_homepage():
 def park_search():
     """Returns search page"""
 
-    return render_template("park_search.html", TOPICS=TOPICS, STATES=STATES)
+    return render_template("park_search.html", TOPICS=OPT_TOPICS, STATES=STATES)
 
 # need to figure out how to limit box selection and return proper page.
 # also include state selection.
@@ -64,13 +64,18 @@ def show_search_results():
     resulting_parks = []
 
     for topic in topics:
-        """ Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
+        # topics = set(topics)
+        # print(f"************{topics}**************")
+        """ FIXED: Throws error: sqlalchemy.exc.ArgumentError: Textual SQL 
         expression 'Waterfalls' should be explicitly declared as text('Waterfalls')"""
-        topic_result = crud.get_topic_by_name(text(topic))
-        topic_result_id = topic_result.topic_id
+        topic = text(topic)
+        print(f"************{topic}**************")
+        # topic_result = crud.get_topic_by_name(topic)
+        resulting_parks.extend(crud.get_topic_by_name(topic))
+        # topic_result_id = topic_result[topic_id]
 
     return render_template("search_results.html", 
-                    parks=topic_result_id,
+                    parks=resulting_parks,
                     state=user_state)
 
     # for topic in topics:
