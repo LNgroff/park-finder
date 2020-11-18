@@ -30,9 +30,9 @@ def create_park(fullname, state, url, park_code, description):
     return park
 
 # TODO: used or unused? 👍🏻
-def create_topic(nps_id, topic_name):
+def create_topic(topic_id, topic_name):
 
-    topic = Topic(nps_id=nps_id, topic_name=topic_name)
+    topic = Topic(topic_id=topic_id, topic_name=topic_name)
 
     db.session.add(topic)
     db.session.commit()
@@ -106,17 +106,17 @@ def get_topic_by_name(name) :
 
     return Topic.query.filter(Topic.topic_name==name).first()
 
+# # TODO: used or unused?
+# def get_topic_by_id(topic_id):
+#     """get topic by topic_id"""
+
+#     return Topic.query.get(topic_id)
+
 # TODO: used or unused?
-def get_topic_by_id(topic_id):
+def get_topic_by_topic_id(topic_id):
     """get topic by topic_id"""
 
-    return Topic.query.get(topic_id)
-
-# TODO: used or unused?
-def get_topic_by_nps_id(nps_id):
-    """get topic by nps_id"""
-
-    return Topic.query.filter(Topic.nps_id == nps_id).first()
+    return Topic.query.filter(Topic.topic_id == topic_id).first()
 
 # TODO: used or unused?
 def get_park_image(park_id):
@@ -141,12 +141,6 @@ def get_park_by_state(state):
     """Get park details by state."""
 
     return Park.query.get(state)
-
-# TODO: used or unused?
-def get_park_by_nps_id(nps_id):
-    """Get park nps by topic_id."""
-
-    return Topic.query.get(nps_id)
 
 # TODO: used or unused? 👍🏻
 def get_parks_by_topic_id(topic_id):

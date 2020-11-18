@@ -91,11 +91,8 @@ class Topic(db.Model):
     __tablename__ = "topics"
 
 
-    topic_id = db.Column(db.Integer,
+    topic_id = db.Column(db.String,
                 primary_key = True,
-                autoincrement = True,
-                nullable = False)
-    nps_id = db.Column(db.String,
                 nullable = False)
     topic_name = db.Column(db.String,
                 unique = True,
@@ -105,7 +102,6 @@ class Topic(db.Model):
 
     def __repr__(self):
         return f"""Topic topic_id: {self.topic_id}
-                nps_id: {self.nps_id} 
                 topic_name: {self.topic_name}"""
                 # park_id: {self.park_id}"""
 
