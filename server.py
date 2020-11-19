@@ -15,23 +15,8 @@ from jinja2 import StrictUndefined
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# os.environ.get("SECRET_KEY")
+os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
-
-# OPT_TOPICS = ["Ancient Seas", "Animals", "Archeology", "Arctic", 
-#         "Burial, Cemetery and Gravesite", "Canyons and Canyonlands",
-#         "Caves, Caverns and Karst", "Coasts, Islands and Atolls", 
-#         "Dams", "Dunes", "Estuaries and Mangroves", "Fire", 
-#         "Foothills, Plains and Valleys", "Forests and Woodlands",
-#         "Fossils and Paleontology", "Geology", "Geothermal", "Glaciers",
-#         "Grasslands", "Groundwater", "Impact Craters", "Lakes", "Mountains",
-#         "Natural Sounds", "Night Sky", "Oceans", "River and Riparian", 
-#         "Rock Landscapes and Features", "Scenic Views", "The Tropics",
-#         "Thickets and Shrublands", "Trails", "Volcanoes", "Waterfalls",
-#         "Wetlands", "Wilderness"]
-
-# with open("data/npsTopic.json") as n:
-#     OPT_TOPICS = json.loads(n.read())
 
 
 STATES = us.states.STATES_AND_TERRITORIES
@@ -55,9 +40,6 @@ def park_search():
 
     return render_template("park_search.html", topics=opt_topics, STATES=STATES)
 
-# need to figure out how to limit box selection and return proper page.
-# also include state selection.
-
 
 @app.route('/search_results', methods = ["POST"])
 def show_search_results():
@@ -67,20 +49,31 @@ def show_search_results():
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
-    # print("*****", topics, "********")
+    # print("********", topics, "********")
+    # resulting_parks = set()
     resulting_parks = {}
+    # final_parks = []
     final_parks = {}
 
     for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
-        resulting_parks[topic] = crud.get_park_by_userstate(topic, user_state)
-        print("*****", resulting_parks, "********")
+        resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
+        
+        print("********", resulting_parks, "********")
     
-    # for park in resulting_parks:
-        # edit crud function/ create one that looks at park_id and state
-    #     respark = crud.get_park_by_id(park.park_id)
-    #     if respark.state == userstate:
-    #         final_parks.append(respark)
+    # for topic in topics:
+    #     # Gets park associated with each topic and appends to list for further parsing
+    
+    #     # resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
+    #     results = crud.get_park_by_userstate(topic, user_state)
+        
+    #     for park in results:
+    #         resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
+    #         resulting_parks.add(park)
+    #     for park in resulting_parks:
+    #         final_parks.append(f"Park: park_id={park.fullname}, name={park.url}")
+
+    #     print("********", resulting_parks, "********")
 
     return render_template("search_results.html", 
                     parks=resulting_parks,

@@ -106,11 +106,6 @@ def get_topic_by_name(name) :
 
     return Topic.query.filter(Topic.topic_name==name).first()
 
-# # TODO: used or unused?
-# def get_topic_by_id(topic_id):
-#     """get topic by topic_id"""
-
-#     return Topic.query.get(topic_id)
 
 # TODO: used or unused?
 def get_topic_by_topic_id(topic_id):
@@ -122,7 +117,7 @@ def get_topic_by_topic_id(topic_id):
 def get_park_image(park_id):
     """Get image for a park by park_id"""
 
-    return Image.query.get(park_id)
+    return Image.query.get(park_id).first()
 
 # TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
@@ -142,23 +137,25 @@ def get_park_by_state(state):
 
     return Park.query.get(state)
 
-# TODO: used or unused? 👍🏻
+# TODO: used or unused? 
 def get_parks_by_topic_id(topic_id):
     """Get park details by topic_id."""
 
     return ParkTopic.query.filter(ParkTopic.topic_id== topic_id).all()
 
 # TODO: used or unused? 👍🏻
-def get_park_by_userstate(topic_id, userstate):
+def get_park_by_topic_and_userstate(topic_id, userstate):
 
     # return Park.query.filter(Park.park_id==park_id and Park.state==state)
-    return Park.query.join(ParkTopic).filter((Park.state== userstate and ParkTopic.topic_id== topic_id)).all()
+    # return Park.query.join(ParkTopic).filter((Park.state== userstate and ParkTopic.topic_id== topic_id)).all()
+    # return Park.query().filter(userstate == Park.state).join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
+    return Park.query.filter(Park.state.contains(userstate)).join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
 
 
 
 if __name__ == '__main__':
     from server import app
-    connect_to_db(app)
+    connect_to_db(app)  
 
 
 
