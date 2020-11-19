@@ -55,25 +55,31 @@ def show_search_results():
     # final_parks = []
     final_parks = {}
 
-    for topic in topics:
+    # NOTE: This section works, but provides response in form of a string for each topic
+    if userstate == '--':
+        for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
-        resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
-        
-        print("********", resulting_parks, "********")
-    
+        resulting_parks[topic] = crud.get_parks_by_topic_id_nostate(topic)
+
     # for topic in topics:
     #     # Gets park associated with each topic and appends to list for further parsing
-    
-    #     # resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
-    #     results = crud.get_park_by_userstate(topic, user_state)
+    #     resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
         
-    #     for park in results:
-    #         resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
-    #         resulting_parks.add(park)
-    #     for park in resulting_parks:
-    #         final_parks.append(f"Park: park_id={park.fullname}, name={park.url}")
-
     #     print("********", resulting_parks, "********")
+    
+    for topic in topics:
+        # Gets park associated with each topic and appends to list for further parsing
+    
+        # resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
+        results = crud.get_park_by_userstate(topic, user_state)
+        
+        for park in results:
+            resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
+            resulting_parks.add(park)
+        for park in resulting_parks:
+            final_parks.append(f"Park: park_id={park.fullname}, name={park.url}")
+
+        print("********", resulting_parks, "********")
 
     return render_template("search_results.html", 
                     parks=resulting_parks,

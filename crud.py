@@ -137,11 +137,11 @@ def get_park_by_state(state):
 
     return Park.query.get(state)
 
-# TODO: used or unused? 
-def get_parks_by_topic_id(topic_id):
+# TODO: used or unused? 👍🏻
+def v(topic_id):
     """Get park details by topic_id."""
 
-    return ParkTopic.query.filter(ParkTopic.topic_id== topic_id).all()
+    return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
 
 # TODO: used or unused? 👍🏻
 def get_park_by_topic_and_userstate(topic_id, userstate):
