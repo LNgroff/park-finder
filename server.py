@@ -49,40 +49,51 @@ def show_search_results():
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
     user_state = us.states.lookup(fullstate).abbr
-    # print("********", topics, "********")
-    # resulting_parks = set()
-    resulting_parks = {}
-    # final_parks = []
-    final_parks = {}
+    # if fullstate == "no selection":
+    #     user_state = "none"
+    # else:
+    #     user_state = us.states.lookup(fullstate).abbr
 
-    # NOTE: This section works, but provides response in form of a string for each topic
-    if userstate == '--':
-        for topic in topics:
-        # Gets park associated with each topic and appends to list for further parsing
-        resulting_parks[topic] = crud.get_parks_by_topic_id_nostate(topic)
+    resulting_parks = set()
+    final_parks = []
 
-    # for topic in topics:
-    #     # Gets park associated with each topic and appends to list for further parsing
-    #     resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
-        
-    #     print("********", resulting_parks, "********")
+    # resulting_parks = {}
+    # final_parks = {}
+
+    # NOTE: This section works, but provides response in form of a string for each topic. dictionary has topics as keys, string response is value.
     
+    # if fullstate == "no selection":
+    #     user_state = "none"
+    #     for topic in topics:
+    #     # Gets park associated with each topic and appends to list for further parsing
+    #         resulting_parks[topic] = crud.get_parks_by_topic_id_nostate(topic)
+
+    # else:
+    #     user_state = us.states.lookup(fullstate).abbr
+    #     for topic in topics:
+    #         # Gets park associated with each topic and appends to list for further parsing
+    #         resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
+        
+
+    # NOTE: Need to add an if no state section under this. For now always test with state.
     for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
     
-        # resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
-        results = crud.get_park_by_userstate(topic, user_state)
+        results = crud.get_park_by_topic_and_userstate(topic, user_state)
         
         for park in results:
-            resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
+            # resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
             resulting_parks.add(park)
+            
         for park in resulting_parks:
-            final_parks.append(f"Park: park_id={park.fullname}, name={park.url}")
+            image = crud.get_park_image(park.park_id)
+            final_parks.append(f"Park: park_name={park.fullname}, pic={image.url}, link={park.url}")
+
 
         print("********", resulting_parks, "********")
 
     return render_template("search_results.html", 
-                    parks=resulting_parks,
+                    parks=final_parks,
                     state=user_state)
 
 

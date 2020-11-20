@@ -113,11 +113,11 @@ def get_topic_by_topic_id(topic_id):
 
     return Topic.query.filter(Topic.topic_id == topic_id).first()
 
-# TODO: used or unused?
-def get_park_image(park_id):
+# TODO: used or unused? 👍🏻
+def get_park_image(park_id): 
     """Get image for a park by park_id"""
 
-    return Image.query.get(park_id).first()
+    return Image.query.filter(Image.park_id == park_id).first()
 
 # TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
@@ -138,7 +138,7 @@ def get_park_by_state(state):
     return Park.query.get(state)
 
 # TODO: used or unused? 👍🏻
-def v(topic_id):
+def get_parks_by_topic_id_nostate(topic_id):
     """Get park details by topic_id."""
 
     return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
