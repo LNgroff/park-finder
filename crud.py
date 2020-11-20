@@ -82,8 +82,8 @@ def return_all_users():
 
     return User.query.all()
 
-# TODO: used or unused?
-def get_user_by_id(user_id):
+# TODO: used or unused? 👍🏻
+def get_user_by_id(user_id): 
     """Display user profile by user_id"""
 
     return User.query.get(user_id)
@@ -99,6 +99,15 @@ def get_user_by_email(email):
 #     """Get user by uname."""
 
 #     return User.query.filter(User.uname == uname).first()
+
+# TODO: used or unused?
+def get_user_favs(user_id) :
+    """Get topic by name"""
+
+    return Favorite.query.filter(Favorite.user_id==user_id).all()
+    # return db.session.query(Favorite, User)\
+    #     .filter(Favorite.user_id == User.user_id)
+    
 
 # TODO: used or unused?
 def get_topic_by_name(name) :
@@ -125,15 +134,15 @@ def get_park_image(park_id):
 def get_park_image_topic(topic_id, userstate):
 
     # NOTE: Parsable, no images.
-    # return Park.query.filter(Park.state.contains(userstate))\
-    #     .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
-    #     .join(Image, Park.park_id==Image.park_id).all()
+    return Park.query.filter(Park.state.contains(userstate))\
+        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
+        .join(Image, Park.park_id==Image.park_id).all()
         # .filter(Image.park_id == Park.park_id)
 
-    return Park.query.join(ParkTopic)\
-        .filter(Park.state.contains(userstate))\
-        .filter(ParkTopic.topic_id==topic_id)\
-        .filter(Image.park_id == Park.park_id).all()
+    # return Park.query.join(ParkTopic).join(Image)\
+    #     .filter(Park.state.contains(userstate))\
+    #     .filter(ParkTopic.topic_id==topic_id)\
+    #     .filter(Park.park_id == Image.park_id).all()
 
     # # NOTE: Parsable, no images.
     # return Park.query.filter(Park.state.contains(userstate))\
@@ -167,8 +176,11 @@ def get_parks_by_topic_id_image_nostate(topic_id):
 def get_park_by_id(park_id):
     """Get park details by park_id."""
 
-    return db.session.query(Park, Image)\
-        .filter(Park.park_id == park_id).all()
+    
+    return Park.query.filter(Park.park_id == park_id)\
+        .join(Image).filter(Image.park_id == park_id).first()
+    # return db.session.query(Park, Image)\
+    #     .filter(Park.park_id == park_id).all()
 
 # TODO: used or unused?
 def get_park_by_park_code(park_code):
@@ -182,14 +194,14 @@ def get_park_by_state(state):
 
     return Park.query.get(state)
 
-# TODO: used or unused? 👍🏻
+# TODO: used or unused? 👎🏻
 # NOTE: Currently being rewritten to include image above.
 def get_parks_by_topic_id_nostate(topic_id):
     """Get park details by topic_id."""
 
     return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
 
-# TODO: used or unused? 👍🏻
+# TODO: used or unused? 👎🏻
 # NOTE: Currently being rewritten to include image above.
 def get_park_by_topic_and_userstate(topic_id, userstate):
 
