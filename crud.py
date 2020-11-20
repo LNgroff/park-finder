@@ -148,7 +148,7 @@ def get_park_image_topic(topic_id, userstate):
 
 # TODO: used or unused? 👍🏻
 # NOTE: grabs image too.
-def get_parks_by_topic_id_nostate(topic_id):
+def get_parks_by_topic_id_image_nostate(topic_id):
     """Get park details by topic_id."""
 
     return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\

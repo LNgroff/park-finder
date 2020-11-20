@@ -62,25 +62,25 @@ def show_search_results():
 
     # NOTE: This section works, but provides response in form of a string for each topic. dictionary has topics as keys, string response is value.
     
-    # if fullstate == "no selection":
-    #     user_state = "none"
-    #     for topic in topics:
-    #     # Gets park associated with each topic and appends to list for further parsing
-    #         resulting_parks[topic] = crud.get_parks_by_topic_id_nostate(topic)
+    if fullstate == "no selection":
+        user_state = "none"
+        for topic in topics:
+        # Gets park associated with each topic and appends to list for further parsing
+            resulting_parks[topic] = crud.get_parks_by_topic_id_image_nostate(topic)
 
-    # else:
-    #     user_state = us.states.lookup(fullstate).abbr
-    #     for topic in topics:
-    #         # Gets park associated with each topic and appends to list for further parsing
-    #         resulting_parks[topic] = crud.get_park_by_topic_and_userstate(topic, user_state)
+    else:
+        user_state = us.states.lookup(fullstate).abbr
+        for topic in topics:
+            # Gets park associated with each topic and appends to list for further parsing
+            resulting_parks[topic] = crud.get_park_image_topic(topic, user_state)
         
 
     # NOTE: Need to add an if no state section under this. For now always test with state.
-    for topic in topics:
-        # Gets park associated with each topic and appends to list for further parsing
+    # for topic in topics:
+    #     # Gets park associated with each topic and appends to list for further parsing
     
-        # results = crud.get_park_by_topic_and_userstate(topic, user_state)
-        results = crud.get_park_image_topic(topic, user_state)
+    #     # results = crud.get_park_by_topic_and_userstate(topic, user_state)
+    #     results = crud.get_park_image_topic(topic, user_state)
         
         # for park in results:
         #     # resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
