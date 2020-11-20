@@ -129,16 +129,31 @@ def get_park_image_topic(topic_id, userstate):
         .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
         .join(Image).filter(Image.park_id == Park.park_id).all()
 
-    # return Park.query.filter(Park.state.contains(userstate))\
-    #     .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
-    #     .join(Image).all()
+    # NOTE: Parsable, no images.
+    return Park.query.filter(Park.state.contains(userstate))\
+        .join(Image).filter(Image.park_id == Park.park_id)\
+        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
 
-    # NOTE: Not parsable, state.
-    # return db.session.query(Park, ParkTopic, Image)\
-    #     .filter(Park.park_id == ParkTopic.park_id)\
-    #     .filter(Park.park_id == Image.park_id)\
-    #     .filter(Park.state.contains(userstate))\
-    #     .filter(ParkTopic.topic_id == topic_id)
+    # NOTE: Parsable, no images.
+    return Park.query.filter(Park.state.contains(userstate))\
+        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
+        .join(Image).all()
+
+    # NOTE: Not parsable, includes images.
+    return db.session.query(Park, ParkTopic, Image)\
+        .filter(Park.park_id == ParkTopic.park_id)\
+        .filter(Park.park_id == Image.park_id)\
+        .filter(Park.state.contains(userstate))\
+        .filter(ParkTopic.topic_id == topic_id)
+
+# TODO: used or unused? 👍🏻
+# NOTE: grabs image too.
+def get_parks_by_topic_id_nostate(topic_id):
+    """Get park details by topic_id."""
+
+    return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
+        .join(Image).filter(Image.park_id == Park.park_id).all()
+
 
 # TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
