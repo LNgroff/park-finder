@@ -8,7 +8,10 @@
     {% for park in parks %}
     
         <ul>
-            <li>{{ parks }}</li>
+            <li>{{park.fullname}}<br>
+                {{park.description}}<br>
+                {{park.url}}<br></li>
+            
         </ul>
         
     {% endfor %}

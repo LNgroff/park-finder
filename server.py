@@ -79,21 +79,24 @@ def show_search_results():
     for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
     
-        results = crud.get_park_by_topic_and_userstate(topic, user_state)
+        # results = crud.get_park_by_topic_and_userstate(topic, user_state)
+        results = crud.get_park_image_topic(topic, user_state)
         
-        for park in results:
-            # resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
-            resulting_parks.add(park)
-            
-        for park in resulting_parks:
-            image = crud.get_park_image(park.park_id)
-            final_parks.append(f"Park: park_name={park.fullname}, pic={image.url}, link={park.url}")
+        # for park in results:
+        #     # resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
+        #     # image = crud.get_park_image(park.park_id)
+        #     resulting_parks.add(park)
+            # resulting_parks.add(image)
+
+        # for park in resulting_parks:
+        #     image = crud.get_park_image(park.park_id)
+        #     final_parks.append(f"Park: park_name={park.fullname}, pic={image.url}, link={park.url}")
 
 
         print("********", resulting_parks, "********")
 
     return render_template("search_results.html", 
-                    parks=final_parks,
+                    parks=results,
                     state=user_state)
 
 
@@ -102,7 +105,7 @@ def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
-    image = crud.get_park_image(park_id)
+    # image = crud.get_park_image(park_id)
 
     return render_template('park_details.html', park=park, image=image)
 
