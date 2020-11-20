@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ park.name }} - Details{% endblock %}
+{% block title %}{{ park.fullname }} - Details{% endblock %}
 
 {% block body %}
 <h1>{{ park.fullname }}</h1>
 
-<p>
-    <img src="{{ image.url }}">
-</p>
+
 
 <p>
     {{ park.description }}
@@ -16,12 +14,15 @@
 
 <p>For more details about {{ park.fullname }}, visit it's <a href="{{ park.url }}">official website!</a></p>
 
-<!-- <section id="fav-save">
 
-    <div class="save-fav">
-        <input class="favCheckbox" type="checkbox" id="{{ park.park_id }}" name="park" value= "{{ park.park_id  }}" onclick="return limitChecks()">
-        <label for="{{topic}}">{{topic}}</label><br> -->
+<section id="fav-save">
+{% if 'user' in session %}
+
+    <form action="/parks/{{park.park_id}}/fav/save" id="fav-park">
+        <button type="submit"Add to favorites>
+    </form>        
+{% endif %}
 
 <!-- need to figure out how to produce and image for this one -->
-<!-- <img src="{{ park.image }}"> -->
+
 {% endblock %}
