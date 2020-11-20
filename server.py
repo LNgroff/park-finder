@@ -48,7 +48,7 @@ def show_search_results():
     # get all the inputs from the user.
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
-    user_state = us.states.lookup(fullstate).abbr
+    # user_state = us.states.lookup(fullstate).abbr
     # if fullstate == "no selection":
     #     user_state = "none"
     # else:
@@ -66,20 +66,21 @@ def show_search_results():
         user_state = "none"
         for topic in topics:
         # Gets park associated with each topic and appends to list for further parsing
-            resulting_parks[topic] = crud.get_parks_by_topic_id_image_nostate(topic)
+            # resulting_parks[topic] = crud.get_parks_by_topic_id_image_nostate(topic)
+            results = crud.get_parks_by_topic_id_image_nostate(topic)
 
     else:
         user_state = us.states.lookup(fullstate).abbr
         for topic in topics:
             # Gets park associated with each topic and appends to list for further parsing
-            resulting_parks[topic] = crud.get_park_image_topic(topic, user_state)
+            # resulting_parks[topic] = crud.get_park_image_topic(topic, user_state)
+            results = crud.get_park_image_topic(topic, user_state)
         
 
     # NOTE: Need to add an if no state section under this. For now always test with state.
     # for topic in topics:
     #     # Gets park associated with each topic and appends to list for further parsing
     
-    #     # results = crud.get_park_by_topic_and_userstate(topic, user_state)
     #     results = crud.get_park_image_topic(topic, user_state)
         
         # for park in results:
@@ -107,7 +108,7 @@ def park_details(park_id):
     park = crud.get_park_by_id(park_id)
     # image = crud.get_park_image(park_id)
 
-    return render_template('park_details.html', park=park, image=image)
+    return render_template('park_details.html', park=park)
 
 # Not a public facing route
 @app.route('/all-users')
@@ -122,38 +123,39 @@ def show_all_users():
 needs to populate favorites page with user choice. Use a radio button on
 park details page I think."""
 
-# @app.route("/add_to_favorites/<park_id>")
-# def add_to_favs(park_id):
-#     if "favs" in session:
-#         favs = session["favs"]
-#     else:
-#         favs = session["favs"] = {}
+@app.route("/parks/<park_id>/fav/save")
+def add_to_favs(park_id):
     
-#     favs[park_id] = session.get(park_id)
-#     flash("Your park was successfully added")
+    park = crud.get_park_by_id(park_id)
+    fav = session["fav"]
 
-#     return redirect("/user_details")
-
-"""Need to look at figure out populating the parks before I can do this part"""
-# @app.route('/all-users/<user_id>')
-# def user_details(user_id):
-#     """Show details on specific user"""
-
-#     user = crud.get_user_by_id(user_id)
-
-#     parks_in_favs = []
-#     favs = session["favs"]
+    if session["user"]:
+        db_fav = crud.create_favorite(park, session["user"])
+        flash("Park added!")
+    else:
+        flash("Log in to favorite park!")
     
-#     for park_id in favs.items():
-#         park = crud.get_by_park_id(park_id)
-#         parks_in_favs.append(park)
+    return redirect(f"/all-users/{session['user']}")
 
-#     # print(favs)
+@app.route('/all-users/<user_id>')
+def user_details(user_id):
+    """Show details on specific user"""
+
+    user = crud.get_user_by_id(user_id)
+
+    parks_in_favs = []
+    user_favs = crud.get_user_favs(user_id)
+    
+    for park_id in favs.items(): # is this correct syntax?
+        park = crud.get_by_park_id(park_id)
+        parks_in_favs.append(park)
+
+    # print(favs)
 
 
-#     return render_template('user_details.html', 
-#                             user=user,
-#                             parks_in_favs=parks_in_favs)
+    return render_template('user_details.html', 
+                            user=user,
+                            parks_in_favs=parks_in_favs)
 
 
 @app.route('/users', methods = ['POST'] )
