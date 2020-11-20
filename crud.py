@@ -56,7 +56,7 @@ def create_favorite(park_id, user_id):
 def create_image(park_id, url):
     """Create an image relating to a park"""
 
-    image = Image(park_id=park_id, url=url)
+    image = Image(park_id=park_id, image_url=url)
 
     db.session.add(image)
     db.session.commit()
@@ -125,41 +125,50 @@ def get_park_image(park_id):
 def get_park_image_topic(topic_id, userstate):
 
     # NOTE: Parsable, no images.
-    return Park.query.filter(Park.state.contains(userstate))\
-        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
-        .join(Image).filter(Image.park_id == Park.park_id).all()
+    # return Park.query.filter(Park.state.contains(userstate))\
+    #     .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
+    #     .join(Image, Park.park_id==Image.park_id).all()
+        # .filter(Image.park_id == Park.park_id)
 
-    # NOTE: Parsable, no images.
-    return Park.query.filter(Park.state.contains(userstate))\
-        .join(Image).filter(Image.park_id == Park.park_id)\
-        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
-
-    # NOTE: Parsable, no images.
-    return Park.query.filter(Park.state.contains(userstate))\
-        .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
-        .join(Image).all()
-
-    # NOTE: Not parsable, includes images.
-    return db.session.query(Park, ParkTopic, Image)\
-        .filter(Park.park_id == ParkTopic.park_id)\
-        .filter(Park.park_id == Image.park_id)\
+    return Park.query.join(ParkTopic)\
         .filter(Park.state.contains(userstate))\
-        .filter(ParkTopic.topic_id == topic_id)
+        .filter(ParkTopic.topic_id==topic_id)\
+        .filter(Image.park_id == Park.park_id).all()
+
+    # # NOTE: Parsable, no images.
+    # return Park.query.filter(Park.state.contains(userstate))\
+    #     .join(Image).filter(Image.park_id == Park.park_id)\
+    #     .join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
+
+    # # NOTE: Parsable, no images.
+    # return Park.query.filter(Park.state.contains(userstate))\
+    #     .join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
+    #     .join(Image).all()
+
+    # # NOTE: Not parsable, includes images.
+    # return db.session.query(Park, ParkTopic, Image)\
+    #     .filter(Park.park_id == ParkTopic.park_id)\
+    #     .filter(Park.park_id == Image.park_id)\
+    #     .filter(Park.state.contains(userstate))\
+    #     .filter(ParkTopic.topic_id == topic_id)
 
 # TODO: used or unused? 👍🏻
 # NOTE: grabs image too.
 def get_parks_by_topic_id_image_nostate(topic_id):
     """Get park details by topic_id."""
 
-    return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id)\
-        .join(Image).filter(Image.park_id == Park.park_id).all()
+    return db.session.query(Park, ParkTopic, Image)\
+        .filter(Park.park_id == ParkTopic.park_id)\
+        .filter(Park.park_id == Image.park_id)\
+        .filter(ParkTopic.topic_id == topic_id)
 
 
 # TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
     """Get park details by park_id."""
 
-    return Park.query.get(park_id)
+    return db.session.query(Park, Image)\
+        .filter(Park.park_id == park_id).all()
 
 # TODO: used or unused?
 def get_park_by_park_code(park_code):

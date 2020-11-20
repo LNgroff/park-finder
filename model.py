@@ -71,7 +71,7 @@ class Park(db.Model):
     # image = list of Image objects
     # topic = list of Topic objects
     # favorite = list of Favorite objects
-
+    # images = db.relationship('Image')
     # is this right?
     topic = db.relationship("Topic", secondary='park_topics' , backref="parks")
 
@@ -138,7 +138,7 @@ class Image(db.Model):
     park_id = db.Column(db.Integer,
                 db.ForeignKey("parks.park_id"),
                 nullable = False)
-    url = db.Column(db.String,
+    image_url = db.Column(db.String,
                 unique = True,
                 nullable = False)
     
@@ -147,7 +147,7 @@ class Image(db.Model):
     def __repr__(self):
         return f"""Image image_id: {self.image_id} 
                 park_id: {self.park_id}
-                url: {self.url}
+                url: {self.image_url}
                 park: {self.park}"""
 
 
