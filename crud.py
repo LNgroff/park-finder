@@ -159,8 +159,7 @@ def get_park_notopic_bystate(userstate):
 
     park_image_nostate = db.session.query(Park, Image)\
         .filter(Park.state.contains(userstate))\
-        .filter(Park.park_id == Image.park_id)\
-        .filter(ParkTopic.topic_id == topic_id).all()
+        .filter(Park.park_id == Image.park_id).all()
     
     return [q._asdict() for q in park_image_nostate]
 
