@@ -55,11 +55,23 @@ def show_search_results():
     resulting_parks = {}
     final_parks = {}
 
+    userstate = us.states.lookup(fullstate).abbr
+
+    for topic in topics:
+        # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
+        results = crud.get_parktopic_image(topic, userstate)
+    image = results[0]['Image'].image_url
+
+    return render_template("search_results.html", 
+                    parks=results,
+                    state=userstate,
+                    image=image)
+
 # NOTE: Ideally, each park is put in one of the lists or dictionaries above and that 
-# is passes to the html. unfortunately I'm not sure how to do that properly.
+# is passes to the html. unfortunately I'm not sure how to do that properly. Need solution for if no park is found.
 
     # If the user selects a state but no topic:
-    if topics == [] and fullstate != "noselection":
+"""    if topics == [] and fullstate != "noselection":
 
         userstate = us.states.lookup(fullstate).abbr
         results = crud.get_park_notopic_bystate(userstate)
@@ -89,8 +101,10 @@ def show_search_results():
             for park in results:
                 resulting_parks[topic] = park
                 # image = results[0]['Image'].image_url
-                # resulting_parks.add(image)
-        
+                # resulting_parks.add(image)"""
+            
+            # for park in results:
+            #     resulting_parks[topic] = park
 
         # for park in resulting_parks:
         #     image = crud.get_park_image(park.park_id)
@@ -99,16 +113,17 @@ def show_search_results():
 
         # print("********", results[0]['Image'].image_url, "********")
 
-    return render_template("search_results.html", 
-                    parks=resulting_parks,
-                    state=userstate)
+    # return render_template("search_results.html", 
+    #                 parks=results,
+    #                 state=userstate,
+    #                 image=image)
 
 
 @app.route('/parks/<park_id>')
 def park_details(park_id):
     """Show details on specific parks"""
 
-    park = crud.get_park_by_id(park_id)
+    park = crud.get_park_image(park_id)
     # image = crud.get_park_image(park_id)
 
     return render_template('park_details.html', park=park)
