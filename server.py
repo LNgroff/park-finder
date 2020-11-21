@@ -68,6 +68,7 @@ def show_search_results():
         # Gets park associated with each topic and appends to list for further parsing
             # resulting_parks[topic] = crud.get_parks_by_topic_id_image_nostate(topic)
             results = crud.get_parks_by_topic_id_image_nostate(topic)
+        image = results[0]['Image'].image_url
 
     else:
         user_state = us.states.lookup(fullstate).abbr
@@ -75,6 +76,7 @@ def show_search_results():
             # Gets park associated with each topic and appends to list for further parsing
             # resulting_parks[topic] = crud.get_park_image_topic(topic, user_state)
             results = crud.get_park_image_topic(topic, user_state)
+        image = results[0]['Image'].image_url
         
 
     # NOTE: Need to add an if no state section under this. For now always test with state.
@@ -94,11 +96,12 @@ def show_search_results():
         #     final_parks.append(f"Park: park_name={park.fullname}, pic={image.url}, link={park.url}")
 
 
-        print("********", resulting_parks, "********")
-
+        # print("********", results[0]['Image'].image_url, "********")
+    # image = results[0]['Image'].image_url
     return render_template("search_results.html", 
                     parks=results,
-                    state=user_state)
+                    state=user_state,
+                    image=image)
 
 
 @app.route('/parks/<park_id>')
@@ -127,7 +130,7 @@ park details page I think."""
 def add_to_favs(park_id):
     
     park = crud.get_park_by_id(park_id)
-    fav = session["fav"]
+    # fav = session["fav"]
 
     if session["user"]:
         db_fav = crud.create_favorite(park, session["user"])
