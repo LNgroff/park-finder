@@ -12,16 +12,18 @@
 </p>
 
 
-<p>For more details about {{ park.fullname }}, visit it's <a href="{{ park.url }}">official website!</a></p>
+<p>For more details about {{ Park.park.fullname }}, visit it's <a href="{{ park.park_url }}">official website!</a></p>
 
+<p>
+    <img src="{{park.image_url}}" width="50%" height="50%">
+</p>
 
 <section id="fav-save">
-{% if 'user' in session %}
 
     <form action="/parks/{{park.park_id}}/fav/save" id="fav-park">
         <button type="submit">Add to favorites</button>
     </form>        
-{% endif %}
+
 
 <!-- need to figure out how to produce and image for this one -->
 

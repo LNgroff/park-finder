@@ -8,18 +8,15 @@
     {% for park in parks %}
     
         <ul>
-            <li>{{ park }}</li>
+            <li><a href = "/parks/{{park.Park.park_id}}">{{park.Park.fullname}}</a></li>
+            <img src="{{park.Image.image_url}}" width="50%" height="50%">
             
         </ul>
         
-
+        <!-- add line here for image if able to make it work. -->
 
         
     {% endfor %}
 
-
-    <ul>
-        <li>{{ state }}</li>
-    </ul>
 
 {% endblock %}  
