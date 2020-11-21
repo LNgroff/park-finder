@@ -48,48 +48,49 @@ def show_search_results():
     # get all the inputs from the user.
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
-    # user_state = us.states.lookup(fullstate).abbr
-    # if fullstate == "no selection":
-    #     user_state = "none"
-    # else:
-    #     user_state = us.states.lookup(fullstate).abbr
 
-    resulting_parks = set()
-    final_parks = []
+    # resulting_parks = set()
+    # final_parks = []
 
-    # resulting_parks = {}
-    # final_parks = {}
+    resulting_parks = {}
+    final_parks = {}
 
-    # NOTE: This section works, but provides response in form of a string for each topic. dictionary has topics as keys, string response is value.
-    
-    if fullstate == "no selection":
-        user_state = "none"
-        for topic in topics:
-        # Gets park associated with each topic and appends to list for further parsing
-            # resulting_parks[topic] = crud.get_parks_by_topic_id_image_nostate(topic)
-            results = crud.get_parks_by_topic_id_image_nostate(topic)
+# NOTE: Ideally, each park is put in one of the lists or dictionaries above and that 
+# is passes to the html. unfortunately I'm not sure how to do that properly.
+
+    # If the user selects a state but no topic:
+    if topics == [] and fullstate != "noselection":
+
+        userstate = us.states.lookup(fullstate).abbr
+        results = crud.get_park_notopic_bystate(userstate)
         image = results[0]['Image'].image_url
+        # resulting_parks.add(results).add(image)
+
+    # if the user selects a state but no topic:
+    elif fullstate == "no selection"  and topics != []:
+        userstate = "none"
+        
+        for topic in topics:
+
+            results = crud.get_parktopic_image_nostate(topic)
+            resulting_parks[topic] = results
+            # results = crud.get_parktopic_image_nostate(topic)
+        image = results[0]['Image'].image_url
+        # resulting_parks.add(results).add(image)
 
     else:
-        user_state = us.states.lookup(fullstate).abbr
-        for topic in topics:
-            # Gets park associated with each topic and appends to list for further parsing
-            # resulting_parks[topic] = crud.get_park_image_topic(topic, user_state)
-            results = crud.get_park_image_topic(topic, user_state)
-        image = results[0]['Image'].image_url
-        
+        userstate = us.states.lookup(fullstate).abbr
 
-    # NOTE: Need to add an if no state section under this. For now always test with state.
-    # for topic in topics:
-    #     # Gets park associated with each topic and appends to list for further parsing
-    
-    #     results = crud.get_park_image_topic(topic, user_state)
+        for topic in topics:
+            # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
+            results = crud.get_parktopic_image(topic, userstate)
+            # image = results[0]['Image'].image_url
+            
+            for park in results:
+                resulting_parks[topic] = park
+                # image = results[0]['Image'].image_url
+                # resulting_parks.add(image)
         
-        # for park in results:
-        #     # resulting_parks[topic][park] = park[image] = crud.get_park_image(park[park_id)
-        #     # image = crud.get_park_image(park.park_id)
-        #     resulting_parks.add(park)
-            # resulting_parks.add(image)
 
         # for park in resulting_parks:
         #     image = crud.get_park_image(park.park_id)
@@ -97,11 +98,10 @@ def show_search_results():
 
 
         # print("********", results[0]['Image'].image_url, "********")
-    # image = results[0]['Image'].image_url
+
     return render_template("search_results.html", 
-                    parks=results,
-                    state=user_state,
-                    image=image)
+                    parks=resulting_parks,
+                    state=userstate)
 
 
 @app.route('/parks/<park_id>')
