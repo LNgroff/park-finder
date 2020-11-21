@@ -128,7 +128,9 @@ def get_park_image(park_id):
     """Get image for a park by park_id"""
 
     # return Image.query.filter(Image.park_id == park_id).first()
-    return Park.query.join(Image).filter(Park.park_id==park_id).first()
+    # return Park.query.join(Image).filter(Image.park_id==park_id).first()
+    return db.session.query(Image).join(Park, Image.park_id==Park.park_id).filter((Park.park_id == park_id)).all()
+        # .filter(Park.park_id == Image.park_id).first()
 
 # TODO: used or unused? 👍
 def get_parktopic_image(topic_id, userstate):
