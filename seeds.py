@@ -59,8 +59,10 @@ for park in park_data["data"]:
     for image in park["images"]:
         # need to reference park_id 
         #use a crud function here?
-        db_image = crud.create_image(db_park.park_id, image["url"])
-        images_in_db.append(db_image)
+        if image == park["images"][0]:
+            db_image = crud.create_image(db_park.park_id, image["url"])
+            images_in_db.append(db_image)
+
 
 for n in range(10):
     email = f"user{n}@test.com"
