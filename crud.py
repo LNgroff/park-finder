@@ -127,10 +127,8 @@ def get_topic_by_topic_id(topic_id):
 def get_park_image(park_id): 
     """Get image for a park by park_id"""
 
-    # return Image.query.filter(Image.park_id == park_id).first()
-    # return Park.query.join(Image).filter(Image.park_id==park_id).first()
-    return db.session.query(Image).join(Park, Image.park_id==Park.park_id).filter((Park.park_id == park_id)).all()
-        # .filter(Park.park_id == Image.park_id).first()
+    return Image.query.filter(Image.park_id == park_id).first()
+
 
 # TODO: used or unused? 👍
 def get_parktopic_image(topic_id, userstate):
@@ -168,13 +166,10 @@ def get_park_notopic_bystate(userstate):
 
 # TODO: used or unused? 👍🏻
 def get_park_by_id(park_id):
-    """Get park details by park_id."""
+    """Get park details by park_id with image."""
 
-    
-    return Park.query.filter(Park.park_id == park_id)\
-        .join(Image).filter(Image.park_id == park_id).first()
-    # return db.session.query(Park, Image)\
-    #     .filter(Park.park_id == park_id).all()
+    return db.session.query(Park, Image).join(Image)\
+        .filter(Image.park_id == park_id).first()
 
 # TODO: used or unused?
 def get_park_by_park_code(park_code):

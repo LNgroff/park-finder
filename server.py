@@ -62,6 +62,8 @@ def show_search_results():
         results = crud.get_parktopic_image(topic, userstate)
     image = results[0]['Image'].image_url
 
+    # print('*************', results, '****************')
+
     return render_template("search_results.html", 
                     parks=results,
                     state=userstate,
@@ -123,8 +125,13 @@ def show_search_results():
 def park_details(park_id):
     """Show details on specific parks"""
 
-    park = crud.get_park_image(park_id)
+    park = crud.get_park_by_id(park_id)
+
+    # the image crud below grabs a whole park object with it.
     # image = crud.get_park_image(park_id)
+    
+    print('*************', park, '****************')
+    # print('*************', image, '****************')
 
     return render_template('park_details.html', park=park)
 
@@ -137,9 +144,6 @@ def show_all_users():
 
     return render_template('all_users.html', users=users)
 
-"""TODO: come back to this add to favorites route
-needs to populate favorites page with user choice. Use a radio button on
-park details page I think."""
 
 @app.route("/parks/<park_id>/fav/save")
 def add_to_favs(park_id):
