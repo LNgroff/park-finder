@@ -60,12 +60,6 @@ def create_park(fullname, state, url, park_code, description):
 
     return park
 
-# TODO: used or unused? 👍🏻
-def get_park_image(park_id): 
-    """Get image for a park by park_id"""
-
-    return Image.query.filter(Image.park_id == park_id).first()
-
 
 # TODO: used or unused? 👍🏻
 def get_parktopic_image(topic_id, userstate):
@@ -194,8 +188,6 @@ def get_user_favs() :
     #     .filter(Favorite.user_id == User.user_id)
 
 
-
-
 # IMAGE FUNCTIONS    
 
 # TODO: used or unused? 👍🏻
@@ -209,8 +201,11 @@ def create_image(park_id, image_url):
 
     return image
 
-#TODO: Add function for all images.
+# TODO: used or unused? 👍🏻
+def get_park_image(park_id): 
+    """Get image for a park by park_id"""
 
+    return Image.query.filter(Image.park_id == park_id).all()
 
 
 # PARKTOPIC FUNCTIONS
