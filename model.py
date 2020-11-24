@@ -165,14 +165,16 @@ class Favorite(db.Model):
                 db.ForeignKey("users.user_id"),
                 nullable = False)
 
+    park = db.relationship('Park', backref='favorites')
+    user = db.relationship('User', backref='favorites')
 
+    
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
                 park_id: {self.park_id}
                 user_id: {self.user_id}"""
 
-    park = db.relationship('Park', backref='favorites')
-    user = db.relationship('User', backref='favorites')
+
 
 
 
