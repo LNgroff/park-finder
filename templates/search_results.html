@@ -5,18 +5,19 @@
 {% block body %}
     <h1>Parks</h1>
     
-    {% for park in parks %}
+    {% for key, value in parks.items() %}
     
         <ul>
-            <li><a href = "/parks/{{park.Park.park_id}}">{{park.Park.fullname}}</a></li>
-            <img src="{{park.Image.image_url}}" width="50%" height="50%">
+            <li><a href = "/parks/{{ key }}">{{value["fullname"]}}</a></li>
+            <img src="{{value['image']}}" width="50%" height="50%">
             
         </ul>
-        
+
+ 
         <!-- add line here for image if able to make it work. -->
 
         
     {% endfor %}
 
 
-{% endblock %}  
+{% endblock %}

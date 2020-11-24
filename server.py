@@ -60,14 +60,18 @@ def show_search_results():
     for topic in topics:
         # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
         results = crud.get_parktopic_image(topic, userstate)
-    image = results[0]['Image'].image_url
+        
+        for result in results:
 
-    # print('*************', results, '****************')
+            park = result["Park"]
+            park_image = result["Image"]
+            
+            resulting_parks[park.park_id] = {"park_id" :  park.park_id, "image" : park_image.image_url, "fullname" : park.fullname}
+            
 
     return render_template("search_results.html", 
-                    parks=results,
-                    state=userstate,
-                    image=image)
+                    parks=resulting_parks,
+                    state=userstate)
 
 # NOTE: Ideally, each park is put in one of the lists or dictionaries above and that 
 # is passes to the html. unfortunately I'm not sure how to do that properly. Need solution for if no park is found.
@@ -149,10 +153,11 @@ def show_all_users():
 def add_to_favs(park_id):
     
     park = crud.get_park_by_id(park_id)
-    # fav = session["fav"]
+    session["fav"] = park
 
     if session["user"]:
-        db_fav = crud.create_favorite(park, session["user"])
+        db_fav = crud.create_favorite(park, crud.get_user_by_id(session["user"]))
+        # user_fav = crud.
         flash("Park added!")
     else:
         flash("Log in to favorite park!")
@@ -161,18 +166,23 @@ def add_to_favs(park_id):
 
 @app.route('/all-users/<user_id>')
 def user_details(user_id):
-    """Show details on specific user"""
+    """Show user detail page with their saved parks"""
 
     user = crud.get_user_by_id(user_id)
 
-    parks_in_favs = []
+    # parks_in_favs = []
     user_favs = crud.get_user_favs(user_id)
     
-    for park_id in favs.items(): # is this correct syntax?
-        park = crud.get_by_park_id(park_id)
-        parks_in_favs.append(park)
+    # for park_id in favs.items(): # is this correct syntax?
+    #     park = crud.get_by_park_id(park_id)
+    #     parks_in_favs.append(park)
 
-    # print(favs)
+    try:
+
+        favs = user_favs[int(user_id)]
+
+    except KeyError:
+        favs = []
 
 
     return render_template('user_details.html', 
