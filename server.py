@@ -49,80 +49,78 @@ def show_search_results():
     topics = request.form.getlist("topic")
     fullstate = request.form.get("state")
 
-    # resulting_parks = set()
-    # final_parks = []
-
     resulting_parks = {}
-    final_parks = {}
-
-    userstate = us.states.lookup(fullstate).abbr
-
-    for topic in topics:
-        # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
-        results = crud.get_parktopic_image(topic, userstate)
-        
-        for result in results:
-
-            park = result["Park"]
-            park_image = result["Image"]
-            
-            resulting_parks[park.park_id] = {"park_id" :  park.park_id, "image" : park_image.image_url, "fullname" : park.fullname}
-            
-
-    return render_template("search_results.html", 
-                    parks=resulting_parks,
-                    state=userstate)
-
-# NOTE: Ideally, each park is put in one of the lists or dictionaries above and that 
-# is passes to the html. unfortunately I'm not sure how to do that properly. Need solution for if no park is found.
 
     # If the user selects a state but no topic:
-"""    if topics == [] and fullstate != "noselection":
-
+    if topics == [] and fullstate != "noselection":
+        
+        # convert state to postal code and perform search by state
         userstate = us.states.lookup(fullstate).abbr
         results = crud.get_park_notopic_bystate(userstate)
-        image = results[0]['Image'].image_url
-        # resulting_parks.add(results).add(image)
+        
+        # Loop through each park in results and get needed values
+        # Store in resulting_parks dict
+        for result in results:
+
+                park = result["Park"]
+                park_image = result["Image"]
+                
+                resulting_parks[park.park_id] = {"park_id" :  park.park_id,\
+                    "image" : park_image.image_url, "fullname" : park.fullname}
+                
+        return render_template("search_results.html", 
+                        parks=resulting_parks,
+                        state=userstate)
+
 
     # if the user selects a state but no topic:
     elif fullstate == "no selection"  and topics != []:
+        
+        # Set the userstate to none, no conversion necessary
         userstate = "none"
         
+        # Perform search for each topic chosen by user
         for topic in topics:
-
             results = crud.get_parktopic_image_nostate(topic)
-            resulting_parks[topic] = results
-            # results = crud.get_parktopic_image_nostate(topic)
-        image = results[0]['Image'].image_url
-        # resulting_parks.add(results).add(image)
 
+            # Loop through each park in results and get needed values
+            # Store in resulting_parks dict
+            for result in results:
+
+                    park = result["Park"]
+                    park_image = result["Image"]
+                    
+                    resulting_parks[park.park_id] = {"park_id" :  park.park_id,\
+                        "image" : park_image.image_url, "fullname" : park.fullname}
+                    
+
+        return render_template("search_results.html", 
+                        parks=resulting_parks,
+                        state=userstate)
+
+    # If the user selects a state and topic:
     else:
+        
+        # Set user state to postal code abreviation
         userstate = us.states.lookup(fullstate).abbr
 
         for topic in topics:
             # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
             results = crud.get_parktopic_image(topic, userstate)
-            # image = results[0]['Image'].image_url
             
-            for park in results:
-                resulting_parks[topic] = park
-                # image = results[0]['Image'].image_url
-                # resulting_parks.add(image)"""
-            
-            # for park in results:
-            #     resulting_parks[topic] = park
+            # Loop through each park in results and get needed values
+            # Store in resulting_parks dict
+            for result in results:
 
-        # for park in resulting_parks:
-        #     image = crud.get_park_image(park.park_id)
-        #     final_parks.append(f"Park: park_name={park.fullname}, pic={image.url}, link={park.url}")
+                park = result["Park"]
+                park_image = result["Image"]
+                
+                resulting_parks[park.park_id] = {"park_id" :  park.park_id,\
+                    "image" : park_image.image_url, "fullname" : park.fullname}
 
-
-        # print("********", results[0]['Image'].image_url, "********")
-
-    # return render_template("search_results.html", 
-    #                 parks=results,
-    #                 state=userstate,
-    #                 image=image)
+        return render_template("search_results.html", 
+                        parks=resulting_parks,
+                        state=userstate)
 
 
 @app.route('/parks/<park_id>')
