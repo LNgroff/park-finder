@@ -3,6 +3,8 @@
 from model import db, Park, User, Image, Favorite, Topic, ParkTopic, connect_to_db
 from sqlalchemy import text
 
+
+# USER FUNCTIONS
 # TODO: used or unused? 👍🏻
 def create_user(email, password, uname):
     """Create and return a new user."""
@@ -13,69 +15,6 @@ def create_user(email, password, uname):
     db.session.commit()
 
     return user
-
-# TODO: used or unused? 👍🏻
-def create_park(fullname, state, url, park_code, description):
-    """Create and return a new park."""
-
-    park = Park(fullname=fullname, 
-                state=state, 
-                park_url=url, 
-                park_code=park_code,
-                description=description)
-
-    db.session.add(park)
-    db.session.commit()
-
-    return park
-
-# TODO: used or unused? 👍🏻
-def create_topic(topic_id, topic_name):
-
-    topic = Topic(topic_id=topic_id, topic_name=topic_name)
-
-    db.session.add(topic)
-    db.session.commit()
-
-    return topic
-
-# TODO: used or unused? 👍🏻
-def create_favorite(park_id, user_id):
-    """Create and return a new favorite."""
-    # do I need to change "user" here?
-
-    favorite = Favorite(park_id=park_id,
-                        user_id=user_id)
-
-    db.session.add(favorite)
-    db.session.commit()
-
-    return favorite
-
-# TODO: used or unused? 👍🏻
-def create_image(park_id, image_url):
-    """Create an image relating to a park"""
-
-    image = Image(park_id=park_id, image_url=image_url)
-
-    db.session.add(image)
-    db.session.commit()
-
-    return image
-
-# TODO: used or unused? 👍🏻
-def add_topics_to_park(park, topic):
-
-    park.topic.append(topic)
-
-    
-    db.session.commit()
-
-# TODO: used or unused? 
-def return_all_topics():
-    """Get list of all topics"""
-
-    return Topic.query.all()
 
 # TODO: used or unused? 
 def return_all_users():
@@ -95,33 +34,31 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).first()
 
+# TODO: used or unused? 👎🏻
 # unlikely to actually use
-# def get_user_by_uname(uname):
-#     """Get user by uname."""
+def get_user_by_uname(uname):
+    """Get user by uname."""
 
-#     return User.query.filter(User.uname == uname).first()
-
-# TODO: used or unused?
-def get_user_favs(user_id) :
-    """Get topic by name"""
-
-    return Favorite.query.filter(Favorite.user_id==user_id).all()
-    # return db.session.query(Favorite, User)\
-    #     .filter(Favorite.user_id == User.user_id)
-    
-
-# TODO: used or unused?
-def get_topic_by_name(name) :
-    """Get topic by name"""
-
-    return Topic.query.filter(Topic.topic_name==name).first()
+    return User.query.filter(User.uname == uname).first()
 
 
-# TODO: used or unused?
-def get_topic_by_topic_id(topic_id):
-    """get topic by topic_id"""
 
-    return Topic.query.filter(Topic.topic_id == topic_id).first()
+# PARK FUNCTIONS
+
+# TODO: used or unused? 👍🏻
+def create_park(fullname, state, url, park_code, description):
+    """Create and return a new park."""
+
+    park = Park(fullname=fullname, 
+                state=state, 
+                park_url=url, 
+                park_code=park_code,
+                description=description)
+
+    db.session.add(park)
+    db.session.commit()
+
+    return park
 
 # TODO: used or unused? 👍🏻
 def get_park_image(park_id): 
@@ -130,7 +67,7 @@ def get_park_image(park_id):
     return Image.query.filter(Image.park_id == park_id).first()
 
 
-# TODO: used or unused? 👍
+# TODO: used or unused? 👍🏻
 def get_parktopic_image(topic_id, userstate):
     """Get parks by topic and state, include image"""
 
@@ -139,6 +76,8 @@ def get_parktopic_image(topic_id, userstate):
         .filter(Park.park_id == Image.park_id)\
         .filter(Park.state.contains(userstate))\
         .filter(ParkTopic.topic_id == topic_id).all()
+
+    print(park_image_state)
     
     return [q._asdict() for q in park_image_state]
 
@@ -171,33 +110,118 @@ def get_park_by_id(park_id):
     return db.session.query(Park, Image).join(Image)\
         .filter(Image.park_id == park_id).first()
 
-# TODO: used or unused?
+
+# TODO: used or unused? 👎🏻
 def get_park_by_park_code(park_code):
     """Get park details by park_code."""
 
     return Park.query.get(park_code)
 
-# TODO: used or unused?
+# TODO: used or unused? 👎🏻
 def get_park_by_state(state):
     """Get park details by state."""
 
     return Park.query.get(state)
 
-# TODO: used or unused? 👎🏻
-# NOTE: Currently being rewritten to include image above.
-def get_parks_by_topic_id_nostate(topic_id):
-    """Get park details by topic_id."""
 
-    return Park.query.join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
 
-# TODO: used or unused? 👎🏻
-# NOTE: Currently being rewritten to include image above.
-def get_park_by_topic_and_userstate(topic_id, userstate):
+#TOPIC FUNCTIONS
 
-    # return Park.query.filter(Park.park_id==park_id and Park.state==state)
-    # return Park.query.join(ParkTopic).filter((Park.state== userstate and ParkTopic.topic_id== topic_id)).all()
-    # return Park.query().filter(userstate == Park.state).join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
-    return Park.query.filter(Park.state.contains(userstate)).join(ParkTopic).filter(ParkTopic.topic_id==topic_id).all()
+# TODO: used or unused? 👍🏻
+def create_topic(topic_id, topic_name):
+
+    topic = Topic(topic_id=topic_id, topic_name=topic_name)
+
+    db.session.add(topic)
+    db.session.commit()
+
+    return topic
+
+# TODO: used or unused? 
+def return_all_topics():
+    """Get list of all topics"""
+
+    return Topic.query.all()
+    
+
+# TODO: used or unused?
+def get_topic_by_name(name) :
+    """Get topic by name"""
+
+    return Topic.query.filter(Topic.topic_name==name).first()
+
+
+# TODO: used or unused?
+def get_topic_by_topic_id(topic_id):
+    """get topic by topic_id"""
+
+    return Topic.query.filter(Topic.topic_id == topic_id).first()
+
+
+
+# FAVORITE FUNCTIONS
+
+# TODO: used or unused? 👍🏻
+def create_favorite(park_id, user_id):
+    """Create and return a new favorite."""
+    # do I need to change "user" here?
+
+    favorite = Favorite(park_id=park_id,
+                        user_id=user_id)
+
+    db.session.add(favorite)
+    db.session.commit()
+
+    return favorite
+
+# TODO: used or unused?
+def get_user_favs() :
+    """Get a dictionary of user favorites."""
+
+    # joined_favs = db.session.query(Favorites).options(db.joinedload("parks"))\
+    #     .options(db.joinedload("users")).all()
+    
+    # user_favs = {}
+
+    # for favorite in joined_favs:
+
+    #     user_id = favorite.park.user_id
+
+    #     park = get_park_by_id(favorite.park_id)
+
+    return Favorite.query.filter(Favorite.user_id==user_id).all()
+    # return db.session.query(Favorite, User)\
+    #     .filter(Favorite.user_id == User.user_id)
+
+
+
+
+# IMAGE FUNCTIONS    
+
+# TODO: used or unused? 👍🏻
+def create_image(park_id, image_url):
+    """Create an image relating to a park"""
+
+    image = Image(park_id=park_id, image_url=image_url)
+
+    db.session.add(image)
+    db.session.commit()
+
+    return image
+
+#TODO: Add function for all images.
+
+
+
+# PARKTOPIC FUNCTIONS
+
+# TODO: used or unused? 👍🏻
+def add_topics_to_park(park, topic):
+
+    park.topic.append(topic)
+
+    
+    db.session.commit()
 
 
 
