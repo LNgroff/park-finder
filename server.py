@@ -122,18 +122,16 @@ def show_search_results():
                         parks=resulting_parks,
                         state=userstate)
 
-
+# TODO: Image gallery
 @app.route('/parks/<park_id>')
 def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
 
-    # the image crud below grabs a whole park object with it.
-    # image = crud.get_park_image(park_id)
+    # TODO: Write out function in html to show image gallery
+    # images = crud.get_park_image(park_id)
     
-    print('*************', park, '****************')
-    # print('*************', image, '****************')
 
     return render_template('park_details.html', park=park)
 
@@ -144,7 +142,7 @@ def show_all_users():
 
     users = crud.return_all_users()
 
-    return render_template('all_users.html', users=users)
+    return render_template("all_users.html", users=users)
 
 
 @app.route("/parks/<park_id>/fav/save")
@@ -192,11 +190,13 @@ def user_details(user_id):
 def register_user():
     """Get inputs from form"""
 
+    # Get inputs from the creat account form
     email = request.form.get('email')
     password = request.form.get('password')
     uname = request.form.get('uname')
+    
+    # Return user by email in database
     user = crud.get_user_by_email(email)
-
 
     if user == None:
         crud.create_user(email, password, uname)
@@ -215,15 +215,24 @@ def log_in():
     password = request.form.get('password')
     user = crud.get_user_by_email(email)
 
-    if (email == user.email) and password == user.password:
+    if email == user.email and password == user.password:
         session['user'] = user.user_id
         uname = user.uname
-        flash(f'Welcome {uname}!')
+        flash(f'Logged in. Welcome {uname}!')
         return redirect("/park_search")
     else:
-        flash('Email and password do not match.')
+        flash('Email and password do not match. Try again.')
         return redirect('/')
     
+
+@app.route('/logout', methods = ['POST'])
+def logout():
+    if "user" in session:
+        del session ["user"]
+
+        flash("Logged out!")
+    
+    return redirect("/")
 
 
 if __name__ == '__main__':
