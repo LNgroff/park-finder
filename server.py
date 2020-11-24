@@ -40,7 +40,6 @@ def park_search():
 
     return render_template("park_search.html", topics=opt_topics, STATES=STATES)
 
-
 @app.route('/search_results', methods = ["POST"])
 def show_search_results():
     """View results of the search."""
@@ -128,7 +127,7 @@ def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
-
+    print('**************', park, '*************')
     # TODO: Write out function in html to show image gallery
     # images = crud.get_park_image(park_id)
     
@@ -145,22 +144,24 @@ def show_all_users():
     return render_template("all_users.html", users=users)
 
 
-@app.route("/parks/<park_id>/fav/save")
+@app.route("/parks/<park_id>/fav-save")
 def add_to_favs(park_id):
     
     park = crud.get_park_by_id(park_id)
-    session["fav"] = park
-
-    if session["user"]:
-        db_fav = crud.create_favorite(park, crud.get_user_by_id(session["user"]))
-        # user_fav = crud.
-        flash("Park added!")
-    else:
-        flash("Log in to favorite park!")
     
-    return redirect(f"/all-users/{session['user']}")
+    if "user" in session:
+        crud.create_favorite(park.Park.park_id, crud.get_user_by_id(session["user"].user_id))
 
-@app.route('/all-users/<user_id>')
+        flash("Park added!")
+        return redirect(f"/all_users/{session['user']}")
+    
+    # If user not in session, ask to be in session
+    else:
+        flash("Log in to add park to favorites!")
+    
+        return redirect(f"/parks/{park.Park.park_id}")
+
+@app.route('/all_users/<user_id>')
 def user_details(user_id):
     """Show user detail page with their saved parks"""
 
@@ -169,16 +170,11 @@ def user_details(user_id):
     # parks_in_favs = []
     user_favs = crud.get_user_favs(user_id)
     
-    # for park_id in favs.items(): # is this correct syntax?
-    #     park = crud.get_by_park_id(park_id)
-    #     parks_in_favs.append(park)
+    if user_favs == []:
+        parks_in_favs = "You have not saved any parks."
 
-    try:
-
-        favs = user_favs[int(user_id)]
-
-    except KeyError:
-        favs = []
+    else:
+        parks_in_favs = user_favs
 
 
     return render_template('user_details.html', 
