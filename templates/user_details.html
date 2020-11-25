@@ -2,17 +2,25 @@
 
 {% block title %}{{ user.email }} - Profile{% endblock %}
 
+
 {% block body %}
-<h1>{{ user.email }}</h1>
+<h1>{{ user.uname }}</h1>
+
+
 
 <p>
-    Parks
+    <h2>Favorite Parks</h2>
     
-    {% for park in parks_in_favs %}
-    <ul>
-        <li><a href = "/parks/{{park.park_id}}">{{park.fullname}}</a></li>
-    </ul>
+    {% for key, value in parks.items() %}
+    
+        <ul>
+            <li><a href = "/parks/{{ key }}">{{value["fullname"]}}</a></li>
+            <img src="{{value['image']}}" width="50%" height="50%">
+            
+        </ul>
 
+        
+    {% endfor %}
 </p>
 
 {% endblock %}
