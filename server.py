@@ -2,21 +2,25 @@
 
 from flask import (Flask, render_template, request, flash, session,
                     redirect, jsonify)
-from model import connect_to_db
-import crud
+from flask_login import (LoginManager, login_user, login_required,
+                    logout_user, current_user)
+from werkzeug.security import (generate_password_hash, check_password_hash)
+from jinja2 import StrictUndefined
 import os
 import us
-import secrets
 from sqlalchemy import text
 import json
 
-from jinja2 import StrictUndefined
+from model import connect_to_db
+import crud
+
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
-
-os.environ.get("SECRET_KEY")
+app.secret_key = os.environ.get("SECRET_KEY")
 app.jinja_env.undefined = StrictUndefined
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 STATES = us.states.STATES_AND_TERRITORIES
@@ -26,12 +30,9 @@ STATES = us.states.STATES_AND_TERRITORIES
 def get_homepage():
     """Returns homepage."""
 
-    if "username" in session:
-        return redirect("/park_search")
-    else:    
-        return render_template("homepage.html")
+    return render_template("homepage.html")
 
-# TODO: fix 
+
 @app.route('/park_search')
 def park_search():
     """Returns search page"""
@@ -39,6 +40,7 @@ def park_search():
     opt_topics = crud.return_all_topics()
 
     return render_template("park_search.html", topics=opt_topics, STATES=STATES)
+
 
 @app.route('/search_results', methods = ["POST"])
 def show_search_results():
@@ -127,7 +129,7 @@ def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
-    print('**************', park, '*************')
+    print('**************', park.Park.park_id, '*************')
     # TODO: Write out function in html to show image gallery
     # images = crud.get_park_image(park_id)
     
@@ -144,89 +146,139 @@ def show_all_users():
     return render_template("all_users.html", users=users)
 
 
+
 @app.route("/parks/<park_id>/fav-save")
 def add_to_favs(park_id):
     
+    # park_id = request.form.get("park_id")
     park = crud.get_park_by_id(park_id)
     
-    if "user" in session:
-        crud.create_favorite(park.Park.park_id, crud.get_user_by_id(session["user"].user_id))
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    # If current user is logged in
+    if current_user.is_authenticated:
+
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!", current_user.get_id(), "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        fav = crud.create_favorite(park.Park.park_id, current_user.get_id())
 
         flash("Park added!")
-        return redirect(f"/all_users/{session['user']}")
+        return redirect(f"/user/{current_user.get_id()}")
+        # return redirect(f"/parks/{park.Park.park_id}")
     
-    # If user not in session, ask to be in session
+    # If user is not logged in, ask to log in 
     else:
         flash("Log in to add park to favorites!")
     
         return redirect(f"/parks/{park.Park.park_id}")
 
-@app.route('/all_users/<user_id>')
+
+@app.route('/user/<user_id>')
 def user_details(user_id):
     """Show user detail page with their saved parks"""
-
+    # TODO: [perform join to get parks with favs]
     user = crud.get_user_by_id(user_id)
 
-    # parks_in_favs = []
-    user_favs = crud.get_user_favs(user_id)
+    user_favs = {}
+    results = crud.get_user_favs(user_id)
     
-    if user_favs == []:
-        parks_in_favs = "You have not saved any parks."
-
+    if results == []:
+        user_favs = "You do not have not saved any parks."
+    
     else:
-        parks_in_favs = user_favs
+        
+        for result in results:
+            # print('********', result, '***********')
+            # user_favs[park.park_id] = crud.get_parkimage_by_id(park.park_id)
+            park = result["Park"]
+            park_image = result["Image"]
+            
+            user_favs[park.park_id] = {"park_id" : park.park_id,\
+                "image" : park_image.image_url, "fullname" : park.fullname}
+
+        print('********', user_favs, '***********')
 
 
     return render_template('user_details.html', 
                             user=user,
-                            parks_in_favs=parks_in_favs)
+                            parks=user_favs)
 
 
 @app.route('/users', methods = ['POST'] )
 def register_user():
-    """Get inputs from form"""
+    """Get inputs from Creat Account form"""
 
-    # Get inputs from the creat account form
+    # Return inputs from the create account form
     email = request.form.get('email')
-    password = request.form.get('password')
+    hashed_password = generate_password_hash(request.form.get('password'), method ="sha256")
     uname = request.form.get('uname')
     
     # Return user by email in database
     user = crud.get_user_by_email(email)
 
-    if user == None:
-        crud.create_user(email, password, uname)
-        flash('Account created! You can now log in.')
-    else:    
-        flash('Email already exists. Try again.')
+    # Check that user entered correct info:
+    if email != "" and hashed_password != "" and uname != "":
+
+        # Check that user doesn't already exist
+        if user == None:
+
+            # Create new user
+            crud.create_user(email, password, uname)
+            flash('Account created! You can now log in.')
+        
+        else:    
+            flash('Email already exists. Try again.')
+
+    # Ask user to enter all fields
+    else:
+        flash('Please fill out all fields.')
 
     return redirect('/')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """"Flask user loader"""
+
+    return crud.get_user_by_id(user_id)
+
 
 @app.route('/login', methods = ['POST'])
 def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
 
+    # Get email from log in form
     email = request.form.get('email')
-    password = request.form.get('password')
+
+    # Get user by email in database
     user = crud.get_user_by_email(email)
 
-    if email == user.email and password == user.password:
-        session['user'] = user.user_id
-        uname = user.uname
-        flash(f'Logged in. Welcome {uname}!')
-        return redirect("/park_search")
-    else:
-        flash('Email and password do not match. Try again.')
+    if user:
+
+        if check_password_hash(user.password, request.form.get('password')):
+            
+            login_user(user)
+            flash(f'Logged in. Welcome {user.uname}!')
+
+            print('********', current_user, '***********')
+            
+            return redirect("/park_search")
+        else:
+            flash('Email and password do not match. Try again.')
+            return redirect('/')
+    
+    else: 
+        flash("No account is associated with this email.")        
         return redirect('/')
     
 
 @app.route('/logout', methods = ['POST'])
+@login_required
 def logout():
-    if "user" in session:
-        del session ["user"]
-
-        flash("Logged out!")
+    """Log a user out."""
+        
+    logout_user()
+    flash("Logged out!")
     
     return redirect("/")
 
