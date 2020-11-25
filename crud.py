@@ -104,6 +104,14 @@ def get_park_by_id(park_id):
     return db.session.query(Park, Image).join(Image)\
         .filter(Image.park_id == park_id).first()
 
+# TODO: used or unused? 👍🏻
+def get_parkimage_by_id(park_id):
+    """Get park details by park_id with image."""
+
+    # return db..session.query(Favorite, Park).join
+
+    return Image.query.filter(Image.park_id == park_id).first()
+
 
 # TODO: used or unused? 👎🏻
 def get_park_by_park_code(park_code):
@@ -169,24 +177,15 @@ def create_favorite(park_id, user_id):
     return favorite
 
 # TODO: used or unused?
-def get_user_favs() :
+def get_user_favs(user_id) :
     """Get a dictionary of user favorites."""
 
-    # joined_favs = db.session.query(Favorites).options(db.joinedload("parks"))\
-    #     .options(db.joinedload("users")).all()
-    
-    # user_favs = {}
+    favorite_park = db.session.query(Park, Favorite, Image)\
+        .filter(Park.park_id == Favorite.park_id)\
+        .filter(Park.park_id == Image.park_id)\
+        .filter(Favorite.user_id == user_id).all()
 
-    # for favorite in joined_favs:
-
-    #     user_id = favorite.park.user_id
-
-    #     park = get_park_by_id(favorite.park_id)
-
-    return Favorite.query.filter(Favorite.user_id==user_id).all()
-    # return db.session.query(Favorite, User)\
-    #     .filter(Favorite.user_id == User.user_id)
-
+    return [q._asdict() for q in favorite_park]
 
 
 # IMAGE FUNCTIONS    
@@ -202,7 +201,7 @@ def create_image(park_id, image_url):
 
     return image
 
-# TODO: used or unused? 👍🏻
+# TODO: used or unused? 👎🏻
 def get_park_image(park_id): 
     """Get image for a park by park_id"""
 
@@ -217,7 +216,6 @@ def add_topics_to_park(park, topic):
 
     park.topic.append(topic)
 
-    
     db.session.commit()
 
 
@@ -227,17 +225,3 @@ if __name__ == '__main__':
     connect_to_db(app)  
 
 
-
-"""
-TODO:
-
-Create a search function that searches by topic and state.
-    - If topic within list (for selecting multiple topics at once)
-    - Will need lots of if statements with and/or
-    - does this go here or in server?
-Option to include earch by multiple states at once?
-How do I search by multiple topics?
-Can I combine some functions so there isn't a so many functions?
-
-
-"""
