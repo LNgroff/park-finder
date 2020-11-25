@@ -3,6 +3,7 @@ import json
 from random import choice, randint
 from datetime import datetime
 import us
+from werkzeug.security import (generate_password_hash, check_password_hash)
 
 
 import model
@@ -66,7 +67,7 @@ for park in park_data["data"]:
 
 for n in range(10):
     email = f"user{n}@test.com"
-    password = f"test{n}"
+    password = generate_password_hash(f"test{n}", method="sha256")
     uname = f"bob{n}"
 
     user = crud.create_user(email, password, uname)
