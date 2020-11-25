@@ -6,7 +6,6 @@
 <h1>{{ park.Park.fullname }}</h1>
 
 
-
 <p>
     {{ park.Park.description }}
 </p>
@@ -21,7 +20,7 @@
 <section id="fav-save">
 
         
-    <form action="/parks/{{park.Image.park_id}}/fav-save">
+    <form action="/parks/{{park.Park.park_id}}/fav-save">
         <button type="submit">Add to favorites</button>
     </form>        
 
