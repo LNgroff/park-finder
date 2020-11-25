@@ -45,6 +45,20 @@ class User(db.Model):
                         uname: {self.uname}
                         email: {self.email}"""
 
+    # Flask UserMixin methods
+    def is_authenticated(self):
+        return True
+    
+    def is_active(self):
+        return True
+    
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return str(self.user_id)
+
+
 
 
 class Park(db.Model):
@@ -168,7 +182,7 @@ class Favorite(db.Model):
     park = db.relationship('Park', backref='favorites')
     user = db.relationship('User', backref='favorites')
 
-    
+
     def __repr__(self):
         return f"""Favorite favorite_id: {self.favorite_id} 
                 park_id: {self.park_id}
