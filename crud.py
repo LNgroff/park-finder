@@ -71,7 +71,7 @@ def get_parktopic_image(topic_id, userstate):
         .filter(Park.state.contains(userstate))\
         .filter(ParkTopic.topic_id == topic_id).all()
 
-    print(park_image_state)
+    # print(park_image_state)
     
     return [q._asdict() for q in park_image_state]
 
@@ -188,6 +188,7 @@ def get_user_favs() :
     #     .filter(Favorite.user_id == User.user_id)
 
 
+
 # IMAGE FUNCTIONS    
 
 # TODO: used or unused? 👍🏻
@@ -206,6 +207,7 @@ def get_park_image(park_id):
     """Get image for a park by park_id"""
 
     return Image.query.filter(Image.park_id == park_id).all()
+
 
 
 # PARKTOPIC FUNCTIONS
