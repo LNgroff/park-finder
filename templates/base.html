@@ -17,6 +17,25 @@
   {% block head %}{% endblock %}
   </head>
   <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+  
+          <div class="navbar-header">
+
+          </div>
+  
+          <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                  <a href="/all_users/<user_id>">Profile</a>
+                  <a href="/login">Log In</a>
+              </ul>
+          </div>
+  
+      </div>
+    </div>
+
+
+
     {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}
