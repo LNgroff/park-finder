@@ -5,10 +5,15 @@
 {% block body %}
     <h1>All Users</h1>
 
-    {% for user in users %}
-    <ul>
-        <li><a href = "/all-users/{{user.user_id}}">{{user.email}}</a></li>
-    </ul>
 
-    {% endfor %}
+        { % for user in user %}
+            <ul>
+                <li><a href = "/user/{{user.user_id}}">{{user.email}}</a></li>
+            </ul>
+            
+        {% endfor %}
+
+    {% else}
+    
+
 {% endblock %}  
