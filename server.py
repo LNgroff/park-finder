@@ -137,15 +137,15 @@ def park_details(park_id):
 
     return render_template('park_details.html', park=park, images=images)
 
-# Not a public facing route
-@app.route('/all-users')
-def show_all_users():
-    """View all users."""
 
-    users = crud.return_all_users()
+# Not a public facing route, disabled for security
+# @app.route('/all-users')
+# def show_all_users():
+    # """View all users."""
 
-    return render_template("all_users.html", users=users)
+    # users = crud.return_all_users()
 
+    # return render_template("all_users.html", users=users)
 
 
 @app.route("/parks/<park_id>/fav-save")
@@ -173,20 +173,21 @@ def add_to_favs(park_id):
 @app.route('/user/<user_id>')
 def user_details(user_id):
     """Show user detail page with their saved parks"""
-    # TODO: [perform join to get parks with favs]
+
     user = crud.get_user_by_id(user_id)
 
+    # Create a diction for user favs
     user_favs = {}
     results = crud.get_user_favs(user_id)
     
+    # Checks if user has saved and parks.
     if results == []:
         user_favs = "You do not have not saved any parks."
     
+    # Set iterable dictionary of user favs
     else:
-        
         for result in results:
-            # print('********', result, '***********')
-            # user_favs[park.park_id] = crud.get_parkimage_by_id(park.park_id)
+
             park = result["Park"]
             park_image = result["Image"]
             
@@ -251,6 +252,7 @@ def log_in():
     # Get user by email in database
     user = crud.get_user_by_email(email)
 
+    # If user exists, check if passwords match, log in user or announce failure
     if user:
 
         if check_password_hash(user.password, request.form.get('password')):
@@ -265,11 +267,13 @@ def log_in():
             flash('Email and password do not match. Try again.')
             return redirect('/')
     
+    # Notify user that no email exists in system
     else: 
         flash("No account is associated with this email.")        
         return redirect('/')
     
 
+# Logs the user out.
 @app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
