@@ -206,7 +206,11 @@ def get_park_image(park_id):
     """Get image for a park by park_id"""
 
     return Image.query.filter(Image.park_id == park_id).all()
+    
+    # images = db.session.query(Image)\
+    #     .filter(Image.park_id == park_id).all()
 
+    # return [q._asdict() for q in images]
 
 
 # PARKTOPIC FUNCTIONS
