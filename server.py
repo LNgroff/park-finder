@@ -129,12 +129,13 @@ def park_details(park_id):
     """Show details on specific parks"""
 
     park = crud.get_park_by_id(park_id)
-    print('**************', park.Park.park_id, '*************')
-    # TODO: Write out function in html to show image gallery
-    # images = crud.get_park_image(park_id)
     
+    # TODO: Write out function in html to show image gallery
+    images = crud.get_park_image(park_id)
+    
+    # print('**************', images, '*************')
 
-    return render_template('park_details.html', park=park)
+    return render_template('park_details.html', park=park, images=images)
 
 # Not a public facing route
 @app.route('/all-users')
@@ -153,15 +154,12 @@ def add_to_favs(park_id):
     # park_id = request.form.get("park_id")
     park = crud.get_park_by_id(park_id)
     
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
     # If current user is logged in
     if current_user.is_authenticated:
 
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!", current_user.get_id(), "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         fav = crud.create_favorite(park.Park.park_id, current_user.get_id())
-
         flash("Park added!")
+        
         return redirect(f"/user/{current_user.get_id()}")
         # return redirect(f"/parks/{park.Park.park_id}")
     
