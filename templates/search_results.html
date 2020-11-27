@@ -6,20 +6,27 @@
     
     <br><br>
     <h1>Resulting Parks</h1>
-    
+
+    {% if parks %}
+
     {% for key, value in parks.items() %}
     
+
         <ul>
             <li><a href = "/parks/{{ key }}">{{value["fullname"]}}</a></li>
             <img src="{{value['image']}}" width="50%" height="50%">
             
         </ul>
-
- 
-        <!-- add line here for image if able to make it work. -->
-
-        
     {% endfor %}
+    
+    {% else %} 
+
+    <p>No results.</p>      
+
+        <!-- add line here for image if able to make it work. -->
+    {% endif %}
+        
+    
 
 
 {% endblock %}
