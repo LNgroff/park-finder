@@ -214,22 +214,23 @@ def register_user():
     secure_password = generate_password_hash(request.form.get('password'), method ="sha256")
     uname = request.form.get('uname')
     
-    # Get user by email from database
-    user = crud.get_user_by_email(email)
-
     # Check that user entered all info and that it's correct info:
-    if email != "" and secure_password != "" and uname != "":
+    if email and secure_password and uname:
+
+        # Get user by email from database
+        user = crud.get_user_by_email(email)
 
         # Check that user doesn't already exist
-        if user == None:
-
+        if user:
+    
+            # Let user know an account with that email already exists.
+            flash('Email already exists. Try again.')
+        
+        else:    
             # Create new user
             crud.create_user(email, password, uname)
             flash('Account created! You can now log in.')
-        
-        # Let user know an account with that email already exists.
-        else:    
-            flash('Email already exists. Try again.')
+
 
     # Ask user to complete all fields
     else:
@@ -261,7 +262,6 @@ def log_in():
     if user:
 
         if check_password_hash(user.password, request.form.get('password')):
-            
             login_user(user)
             flash(f'Logged in. Welcome {user.uname}!')
             
