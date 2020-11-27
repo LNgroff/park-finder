@@ -128,17 +128,16 @@ def show_search_results():
 def park_details(park_id):
     """Show details on specific parks"""
 
+    # gets park instance
     park = crud.get_park_by_id(park_id)
     
-    # TODO: Write out function in html to show image gallery
+    # gets all images
     images = crud.get_park_image(park_id)
-    
-    # print('**************', images, '*************')
 
     return render_template('park_details.html', park=park, images=images)
 
 
-# Not a public facing route, disabled for security
+# Not a public facing route, admin only? can delete?
 # @app.route('/all-users')
 # def show_all_users():
     # """View all users."""
@@ -151,12 +150,14 @@ def park_details(park_id):
 @app.route("/parks/<park_id>/fav-save")
 def add_to_favs(park_id):
     
-    # park_id = request.form.get("park_id")
+    # Get the park object to access the park_id
     park = crud.get_park_by_id(park_id)
     
     # If current user is logged in
     if current_user.is_authenticated:
 
+        # TODO: add instance for if park is already in db for user
+        # get creates new fav for user.
         fav = crud.create_favorite(park.Park.park_id, current_user.get_id())
         flash("Park added!")
         
@@ -171,12 +172,14 @@ def add_to_favs(park_id):
 
 
 @app.route('/user/<user_id>')
+@login_required
 def user_details(user_id):
     """Show user detail page with their saved parks"""
 
+    # Get user to access user_id
     user = crud.get_user_by_id(user_id)
 
-    # Create a diction for user favs
+    # Create a dictionary for user favs
     user_favs = {}
     results = crud.get_user_favs(user_id)
     
@@ -206,16 +209,16 @@ def user_details(user_id):
 def register_user():
     """Get inputs from Creat Account form"""
 
-    # Return inputs from the create account form
+    # Get inputs from the create account form
     email = request.form.get('email')
-    hashed_password = generate_password_hash(request.form.get('password'), method ="sha256")
+    secure_password = generate_password_hash(request.form.get('password'), method ="sha256")
     uname = request.form.get('uname')
     
-    # Return user by email in database
+    # Get user by email from database
     user = crud.get_user_by_email(email)
 
-    # Check that user entered correct info:
-    if email != "" and hashed_password != "" and uname != "":
+    # Check that user entered all info and that it's correct info:
+    if email != "" and secure_password != "" and uname != "":
 
         # Check that user doesn't already exist
         if user == None:
@@ -224,10 +227,11 @@ def register_user():
             crud.create_user(email, password, uname)
             flash('Account created! You can now log in.')
         
+        # Let user know an account with that email already exists.
         else:    
             flash('Email already exists. Try again.')
 
-    # Ask user to enter all fields
+    # Ask user to complete all fields
     else:
         flash('Please fill out all fields.')
 
@@ -238,6 +242,7 @@ def register_user():
 def load_user(user_id):
     """"Flask user loader"""
 
+    # Get user object with given id
     return crud.get_user_by_id(user_id)
 
 
@@ -259,8 +264,6 @@ def log_in():
             
             login_user(user)
             flash(f'Logged in. Welcome {user.uname}!')
-
-            print('********', current_user, '***********')
             
             return redirect("/park_search")
         else:
@@ -273,7 +276,6 @@ def log_in():
         return redirect('/')
     
 
-# Logs the user out.
 @app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
@@ -285,16 +287,9 @@ def logout():
     return redirect("/")
 
 
+
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
 
-
-"""
-TODO:
-Do I change parks_by_state.html to parks? so the page is used for 
-multiple search types? I think yes.
-Add a funtion for a user to add a park to favorites.
-
-
-"""
