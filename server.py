@@ -211,24 +211,26 @@ def register_user():
 
     # Get inputs from the create account form
     email = request.form.get('email')
-    secure_password = generate_password_hash(request.form.get('password'), method ="sha256")
+    password = request.form.get('password')
     uname = request.form.get('uname')
     
     # Check that user entered all info and that it's correct info:
-    if email and secure_password and uname:
+    if email and password and uname:
 
         # Get user by email from database
         user = crud.get_user_by_email(email)
 
         # Check that user doesn't already exist
         if user:
-    
             # Let user know an account with that email already exists.
             flash('Email already exists. Try again.')
         
         else:    
+            # Encrypt user password
+            secure_password = generate_password_hash(request.form.get('password'), method ="sha256")
+            
             # Create new user
-            crud.create_user(email, password, uname)
+            crud.create_user(email, secure_password, uname)
             flash('Account created! You can now log in.')
 
 
