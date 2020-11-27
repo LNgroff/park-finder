@@ -194,7 +194,6 @@ def user_favs_by_park(user_id, park_id):
 
 
 
-
 # IMAGE FUNCTIONS    
 
 # TODO: used or unused? 👍🏻
