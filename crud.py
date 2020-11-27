@@ -190,7 +190,7 @@ def get_user_favs(user_id) :
 def user_favs_by_park(user_id, park_id):
     """Get specific park from user favorites """
 
-    return Favorite.query.filter(Favorite.user_id == user_id and Favorite.park_id == park_id).first()
+    return Favorite.query.filter(Favorite.user_id == user_id, Favorite.park_id == park_id).first()
 
 
 
