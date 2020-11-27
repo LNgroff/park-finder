@@ -4,9 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-### See to do list at end of file.
 
-#  TODO: change the "ratings" in the postgresql
 def connect_to_db(flask_app, db_uri='postgresql:///parks', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
@@ -60,7 +58,6 @@ class User(db.Model):
 
 
 
-
 class Park(db.Model):
     """A park"""
 
@@ -86,7 +83,6 @@ class Park(db.Model):
     # topic = list of Topic objects
     # favorite = list of Favorite objects
 
-    # is this right?
     topic = db.relationship("Topic", secondary='park_topics' , backref="parks")
 
 
@@ -190,16 +186,8 @@ class Favorite(db.Model):
 
 
 
-
-
-
 if __name__ == '__main__':
     from server import app
 
     connect_to_db(app)
 
-
-"""
-TODO:
-
-"""
