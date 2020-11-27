@@ -24,19 +24,14 @@
   <body>
 
     <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
-      <a class="navbar-brand" href="#">Park Finder</a>
+      <a class="navbar-brandbold">Park Finder</a>
           <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
+          <a class="nav-link active" href="/">Home <span class="sr-only"></span></a>
           <ul class="nav justify-content-end">  
-              <a class="nav-link active" href="/user_details/<user_id>">Profile</a>
-            {% if current_user.is_authenticated %}
-            <form class="form-inline">
-              <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Log out</button>
-            </form>
-            {% else %}
-            <form class="form-inline">
-              <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Log in</button>
-            </form>
-            {% endif %}
+              <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
+              <form class="form-inline" action="/login" method="POST" id="login-out"></form>
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="login-button" href="/login">Log out</button>
+              </form>
           </ul>
         </div>
       </div>
@@ -53,7 +48,7 @@
 {% block body %}
 {% endblock %}
     
-    <script src="/static/javaScriptStuff.js"></script>
+    <script src="/static/js/login-logout.js"></script>
 
     {% block after_body %}{% endblock %}
   </body>
