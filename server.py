@@ -148,6 +148,7 @@ def park_details(park_id):
 
 
 @app.route("/parks/<park_id>/fav-save")
+@login_required
 def add_to_favs(park_id):
     
     # Get the park object to access the park_id
@@ -156,13 +157,20 @@ def add_to_favs(park_id):
     # If current user is logged in
     if current_user.is_authenticated:
 
-        # TODO: add instance for if park is already in db for user
-        # get creates new fav for user.
-        fav = crud.create_favorite(park.Park.park_id, current_user.get_id())
-        flash("Park added!")
-        
-        return redirect(f"/user/{current_user.get_id()}")
-        # return redirect(f"/parks/{park.Park.park_id}")
+        # Get instance of user fav for selected park
+        user_favs = crud.user_favs_by_park(current_user.get_id(), park.Park.park_id)
+
+        # If user has already saved the park, inform user.
+        if user_favs:
+            flash("You have already saved this park.")
+            return redirect(f"/parks/{park.Park.park_id}")
+
+        # Otherwise, create new fav for user.
+        else:
+            fav = crud.create_favorite(park.Park.park_id, current_user.get_id())
+            flash("Park added!")
+            
+            return redirect(f"/user/{current_user.get_id()}")
     
     # If user is not logged in, ask to log in 
     else:
@@ -226,8 +234,10 @@ def register_user():
             flash('Email already exists. Try again.')
         
         else:    
+            # TODO: somehow check valid email
+
             # Encrypt user password
-            secure_password = generate_password_hash(request.form.get('password'), method ="sha256")
+            secure_password = generate_password_hash(password, method ="sha256")
             
             # Create new user
             crud.create_user(email, secure_password, uname)

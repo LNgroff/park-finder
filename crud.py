@@ -187,6 +187,13 @@ def get_user_favs(user_id) :
 
     return [q._asdict() for q in favorite_park]
 
+def user_favs_by_park(user_id, park_id):
+    """Get specific park from user favorites """
+
+    return Favorite.query.filter(Favorite.user_id == user_id and Favorite.park_id == park_id).first()
+
+
+
 
 # IMAGE FUNCTIONS    
 
