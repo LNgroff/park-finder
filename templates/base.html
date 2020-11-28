@@ -23,20 +23,19 @@
 
   <body>
 
-    <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
-      <a class="navbar-brandbold">Park Finder</a>
-          <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
-          <a class="nav-link active" href="/">Home <span class="sr-only"></span></a>
-          <ul class="nav justify-content-end">  
-              <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
-              <form class="form-inline" action="/login" method="POST" id="login-out"></form>
-                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="login-button" href="/login">Log out</button>
-              </form>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
+    <div>
+      <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
+        <item class="navbar-brandbold">Park Finder</item>
+        <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
+        <a class="nav-link active" href="/">Home <span class="sr-only"></span></a>
+        <ul class="nav justify-content-end">  
+            <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
+            <form class="form-inline" action="/" method="POST" id="login-out"></form>
+              <button class="btn btn-outline-secondary my-2 my-sm-0" id="login-button">Log in</button>
+            </form>
+        </ul>
+      </nav>
+    </div>
 
     {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
