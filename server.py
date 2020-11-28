@@ -5,6 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
 from flask_login import (LoginManager, login_user, login_required,
                     logout_user, current_user)
 from werkzeug.security import (generate_password_hash, check_password_hash)
+from urllib.parse import urlparse, urljoin
 from jinja2 import StrictUndefined
 import os
 import us
@@ -154,14 +155,13 @@ def park_details(park_id):
 
 
 @app.route("/parks/<park_id>/fav-save")
-@login_required
 def add_to_favs(park_id):
     
     # Get the park object to access the park_id
     park = crud.get_park_by_id(park_id)
     
     # If current user is logged in
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
 
         # Get instance of user fav for selected park
         user_favs = crud.user_favs_by_park(current_user.get_id(), park.Park.park_id)
@@ -267,11 +267,18 @@ def load_user(user_id):
     # Get user object with given id
     return crud.get_user_by_id(user_id)
 
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and \
+            ref_url.netloc == test_url.netloc
 
-@app.route('/login', methods = ['POST'])
+
+@app.route('/login', methods = ['GET','POST'])
 def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
+
 
     # Get email from log in form
     email = request.form.get('email')
@@ -285,8 +292,14 @@ def log_in():
         if check_password_hash(user.password, request.form.get('password')):
             login_user(user)
             flash(f'Logged in. Welcome {user.uname}!')
+
+            next = request.args.get('next')
+
+            if not is_safe_url(next):
+                return abort(400)
             
-            return redirect("/park_search")
+            return redirect(next or "/park_search")
+
         else:
             flash('Email and password do not match. Try again.')
             return redirect('/')
@@ -297,18 +310,18 @@ def log_in():
         return redirect('/')
 
 
-@app.route('/loggedin')
-def is_logged_in():
-# provides user info for login-logout.js to properly log user in/out
-    print("##########################", current_user.is_authenticated(), "##############")
-    return jsonify(current_user.is_authenticated())
+# @app.route('/loggedin')
+# def is_logged_in():
+# # provides user info for login-logout.js to properly log user in/out
+#     print("##########################", current_user.is_authenticated, "##############")
+#     return jsonify(current_user.is_authenticated)
 
 
 @app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
     """Log a user out."""
-        
+    
     logout_user()
     flash("Logged out!")
     
