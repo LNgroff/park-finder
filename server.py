@@ -286,7 +286,14 @@ def log_in():
     else: 
         flash("No account is associated with this email.")        
         return redirect('/')
-    
+
+
+@app.route('/loggedin')
+def is_logged_in():
+# provides user info for login-logout.js to properly log user in/out
+
+    return jsonify(current_user.is_authenticated)
+
 
 @app.route('/logout', methods = ['POST'])
 @login_required
