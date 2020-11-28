@@ -52,8 +52,15 @@ def show_search_results():
 
     resulting_parks = {}
 
+    # If the user makes no selection, ask them to.
+    if topics == [] and fullstate == "no selection":
+
+        flash("Please select at least one topic or a state.")
+        return redirect("/park_search")
+
+    
     # If the user selects a state but no topic:
-    if topics == [] and fullstate != "noselection":
+    if topics == [] and fullstate != "no selection":
         
         # convert state to postal code and perform search by state
         userstate = us.states.lookup(fullstate).abbr
@@ -155,7 +162,7 @@ def add_to_favs(park_id):
     park = crud.get_park_by_id(park_id)
     
     # If current user is logged in
-    if current_user.is_authenticated:
+    if current_user.is_authenticated():
 
         # Get instance of user fav for selected park
         user_favs = crud.user_favs_by_park(current_user.get_id(), park.Park.park_id)
@@ -180,37 +187,40 @@ def add_to_favs(park_id):
 
 
 @app.route('/user/<user_id>')
-@login_required
 def user_details(user_id):
     """Show user detail page with their saved parks"""
 
-    # Get user to access user_id
-    user = crud.get_user_by_id(user_id)
+    if current_user.is_authenticated:
+        # Get user to access user_id
+        user = crud.get_user_by_id(user_id)
 
-    # Create a dictionary for user favs
-    user_favs = {}
-    results = crud.get_user_favs(user_id)
-    
-    # Checks if user has saved and parks.
-    if results == []:
-        user_favs = "You do not have not saved any parks."
-    
-    # Set iterable dictionary of user favs
+        # Create a dictionary for user favs
+        user_favs = {}
+        results = crud.get_user_favs(user_id)
+        
+        # Checks if user has saved and parks.
+        if results == []:
+            user_favs = "You do not have not saved any parks."
+        
+        # Set iterable dictionary of user favs
+        else:
+            for result in results:
+
+                park = result["Park"]
+                park_image = result["Image"]
+                
+                user_favs[park.park_id] = {"park_id" : park.park_id,\
+                    "image" : park_image.image_url, "fullname" : park.fullname}
+
+            print('********', user_favs, '***********')
+
+
+        return render_template('user_details.html', 
+                                user=user,
+                                parks=user_favs)
     else:
-        for result in results:
-
-            park = result["Park"]
-            park_image = result["Image"]
-            
-            user_favs[park.park_id] = {"park_id" : park.park_id,\
-                "image" : park_image.image_url, "fullname" : park.fullname}
-
-        print('********', user_favs, '***********')
-
-
-    return render_template('user_details.html', 
-                            user=user,
-                            parks=user_favs)
+        flash("Please log in to view favorite parks.")
+        return redirect("/")
 
 
 @app.route('/users', methods = ['POST'] )
@@ -291,8 +301,8 @@ def log_in():
 @app.route('/loggedin')
 def is_logged_in():
 # provides user info for login-logout.js to properly log user in/out
-
-    return jsonify(current_user.is_authenticated)
+    print("##########################", current_user.is_authenticated(), "##############")
+    return jsonify(current_user.is_authenticated())
 
 
 @app.route('/logout', methods = ['POST'])
