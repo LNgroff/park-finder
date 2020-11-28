@@ -20,7 +20,6 @@
 
   </head>
 
-
   <body>
 
     <div>
@@ -37,10 +36,8 @@
       </nav>
     </div>
 
-    {% for msg in get_flashed_messages() %}
-      <p class="flash-msg">
-        {{ msg }}
-      </p>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-primary">{{ message }}</div>
     {% endfor %}
 
     
