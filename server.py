@@ -51,7 +51,6 @@ def show_search_results():
     fullstate = request.form.get("state")
 
     resulting_parks = {}
-
     # If the user makes no selection, ask them to.
     if topics == [] and fullstate == "no selection":
 
