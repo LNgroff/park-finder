@@ -6,6 +6,7 @@
       src="https://code.jquery.com/jquery-3.5.1.js"
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
       crossorigin="anonymous"
+      src="static/js/login-logout.js"
       ></script>
       
         <!-- Load Bootstrap 4 -->
@@ -14,6 +15,7 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
       <!-- Load our stylesheet -->
       <link rel="stylesheet" href="/static/css/site.css">
+      <link rel="stylesheet" href="/static/css/login-box.css">
     <title>
         {% block title %}{% endblock %}
     </title>
@@ -24,19 +26,54 @@
 
     <div>
       <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
-        <item class="navbar-brandbold bold">Park Finder</item>
+        <ul class="nav justify-content-end">  
+        <item class="navbar-brand">Park Finder</item>
         <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
         <a class="nav-link active" href='/'>Welcome <span class="sr-only"></span></a>
+        </ul>
         <ul class="nav justify-content-end">  
           <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
+          
           {% if current_user.is_authenticated %}
             <form action='/logout' id="logout" method="POST">
               <button type="submit" class="btn btn-outline-primary">Log out</button>
             </form>
-          {% else %}
-            <form action='/home' id="login">
+            
+            {% else %}
+            <!-- <form action='/home' id="login">
               <button type="submit" class="btn btn-outline-primary">Log in</button>
-            </form>
+            </form> -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  id="view-login"
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                Log in
+                </button>
+                <div class="dropdown-menu">
+                  <form class="px-4 py-3" action="/login" id="login" method="POST">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                      <input type="email" id="form1Example1" class="form-control" />
+                      <label class="form-label" for="form1Example1">Email address</label>
+                    </div>
+              
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form1Example2" class="form-control" />
+                      <label class="form-label" for="form1Example2">Password</label>
+                    </div>
+              
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                  </form>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">New around here? Sign up</a>
+                </div>
+              </div>
           {% endif %}
 
         </ul>
@@ -51,7 +88,7 @@
 {% block body %}
 {% endblock %}
     
-    <script src="/static/js/login-logout.js"></script>
+    <script src="static/js/login-logout.js"></script>
 
     {% block after_body %}{% endblock %}
   </body>
