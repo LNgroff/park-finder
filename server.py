@@ -28,11 +28,20 @@ STATES = us.states.STATES_AND_TERRITORIES
 
 
 @app.route('/')
+def get_landing_page():
+    """Returns homepage."""
+    
+    image = crud.get_random_image()
+
+    return render_template("landing.html", image=image)
+
+@app.route('/home')
 def get_homepage():
     """Returns homepage."""
+    
 
-    return render_template("homepage.html")
-
+    return render_template("homepage.html")    
+    
 
 @app.route('/park_search')
 def park_search():
@@ -219,7 +228,7 @@ def user_details(user_id):
                                 parks=user_favs)
     else:
         flash("Please log in to view favorite parks.")
-        return redirect("/")
+        return redirect('/home')
 
 
 @app.route('/users', methods = ['POST'] )
@@ -257,7 +266,7 @@ def register_user():
     else:
         flash('Please fill out all fields.')
 
-    return redirect('/')
+    return redirect('/home')
 
 
 @login_manager.user_loader
@@ -266,6 +275,7 @@ def load_user(user_id):
 
     # Get user object with given id
     return crud.get_user_by_id(user_id)
+
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
@@ -302,12 +312,12 @@ def log_in():
 
         else:
             flash('Email and password do not match. Try again.')
-            return redirect('/')
+            return redirect('/home')
     
     # Notify user that no email exists in system
     else: 
         flash("No account is associated with this email.")        
-        return redirect('/')
+        return redirect('/home')
 
 
 # @app.route('/loggedin')
@@ -321,11 +331,11 @@ def log_in():
 @login_required
 def logout():
     """Log a user out."""
-    
+
     logout_user()
     flash("Logged out!")
     
-    return redirect("/")
+    return redirect('/home')
 
 
 
