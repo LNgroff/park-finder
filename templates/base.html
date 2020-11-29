@@ -26,7 +26,7 @@
       <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
         <item class="navbar-brandbold">Park Finder</item>
         <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
-        <a class="nav-link active" href="/">Home <span class="sr-only"></span></a>
+        <a class="nav-link active" href='/'>Welcome <span class="sr-only"></span></a>
         <ul class="nav justify-content-end">  
           <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
           {% if current_user.is_authenticated %}
@@ -34,7 +34,7 @@
               <button type="submit" class="btn btn-outline-primary">Log out</button>
             </form>
           {% else %}
-            <form action='/' id="login">
+            <form action='/home' id="login">
               <button type="submit" class="btn btn-outline-primary">Log in</button>
             </form>
           {% endif %}
