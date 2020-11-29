@@ -26,9 +26,10 @@ crossorigin="anonymous"
                 
 
                 {% for topic in topics %}
-                <div class="topic-check">
-                    <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
-                    <label for="{{topic.topic_name}}">{{topic.topic_name}}</label><br>
+                <div class="topic-check row-cols-md-3">
+                    <div class="col mb-4"></div>
+                        <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
+                        <label for="{{topic.topic_name}}">{{topic.topic_name}}</label>
 
 
                     <script type="text/javascript">
