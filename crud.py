@@ -2,6 +2,7 @@
 
 from model import db, Park, User, Image, Favorite, Topic, ParkTopic, connect_to_db
 from sqlalchemy import text
+import random
 
 
 # USER FUNCTIONS
@@ -217,6 +218,15 @@ def get_park_image(park_id):
     #     .filter(Image.park_id == park_id).all()
 
     # return [q._asdict() for q in images]
+
+def get_random_image():
+    """Get random image for landing page"""
+
+    query = db.session.query(Image)
+    row_count = int(query.count())
+    
+    return query.offset(int(row_count*random.random())).first()
+
 
 
 # PARKTOPIC FUNCTIONS
