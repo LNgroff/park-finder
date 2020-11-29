@@ -2,28 +2,38 @@
 
 {% block title %}Parks{% endblock %}
 
+{% block head %}
+
+    <link href="static/css/site.css" rel="stylesheet" />
+    
+{% endblock %}
+
+
 {% block body %}
     
     <br><br>
     <h1>Resulting Parks</h1>
 
     {% if parks %}
-
-    {% for key, value in parks.items() %}
-    
-
-        <ul>
-            <li><a href = "/parks/{{ key }}">{{value["fullname"]}}</a></li>
-            <img src="{{value['image']}}" width="50%" height="50%">
-            
-        </ul>
-    {% endfor %}
-    
+        <div class="container">
+            <div class="row">
+            {% for key, value in parks.items() %}
+                <div class="col-3 mx-auto">
+                    <div class="card mb-3 shadow-sm" style="width: 15rem;">
+                        <img class="card-img-top thumbnail" src="{{value['image']}}">
+                        <div class="card-body">
+                            <a href="/parks/{{ key }}"><h4 class="card-title">{{value["fullname"]}}</h4></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        
+            </div>
+        </div>
     {% else %} 
 
     <p>No results.</p>      
 
-        <!-- add line here for image if able to make it work. -->
     {% endif %}
         
     
