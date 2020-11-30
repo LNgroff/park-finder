@@ -10,15 +10,16 @@
 
 
 {% block body %}
-    
+    <div class="container">
     <br><br>
-    <h1>Resulting Parks</h1>
-
+        <div class="text-center">
+            <h1>Resulting Parks</h1><br><br>
+        </div>
     {% if parks %}
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-around"">
             {% for key, value in parks.items() %}
-                <div class="col-3 mx-auto">
+                <div class="col-sm mx-auto">
                     <div class="card mb-3 shadow-sm" style="width: 15rem;">
                         <img class="card-img-top thumbnail" src="{{value['image']}}">
                         <div class="card-body">
@@ -36,7 +37,7 @@
 
     {% endif %}
         
-    
+    </div>
 
 
 {% endblock %}
