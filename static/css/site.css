@@ -1,8 +1,12 @@
 body { 
-    padding-top: 65px; 
+    padding-top: 100px; 
     padding-bottom: 65px; 
     padding-right: 65px; 
     padding-left: 65px; 
 }
 
 
+.card {
+    padding-top: 50px;
+    align-items: center;
+}
