@@ -39,44 +39,28 @@
               <button type="submit" class="btn btn-outline-primary">Log out</button>
             </form>
             
-            {% else %}
-            <!-- <form action='/home' id="login">
-              <button type="submit" class="btn btn-outline-primary">Log in</button>
-            </form> -->
-              <div class="dropdown">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  id="view-login"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                Log in
-                </button>
-                <div class="dropdown-menu">
-                  <form class="px-4 py-3" action="/login" id="login" method="POST">
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                      <input type="email" id="form1Example1" class="form-control" />
-                      <label class="form-label" for="form1Example1">Email address</label>
-                    </div>
-              
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                      <input type="password" id="form1Example2" class="form-control" />
-                      <label class="form-label" for="form1Example2">Password</label>
-                    </div>
-              
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                  </form>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">New around here? Sign up</a>
-                </div>
-              </div>
+          {% else %}
+          <!-- <form action='/home' id="login">
+            <button type="submit" class="btn btn-outline-primary">Log in</button>
+          </form> -->
+          <div class="dropdown">
+            <button type="button" id="show-login" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</button>
+              <form action="/login" id="login" method="POST">
+                  <br>
+                  <div class="form-group">
+                      <div style="text-align: center;">
+                          <div style="display: float; text-align: left;">
+                              <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                              <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
+                              <input type="submit" class="btn btn-secondary">
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
           {% endif %}
 
-        </ul>
+        
       </nav>
     </div>
 
@@ -89,6 +73,7 @@
 {% endblock %}
     
     <script src="static/js/login-logout.js"></script>
+    
 
     {% block after_body %}{% endblock %}
   </body>
