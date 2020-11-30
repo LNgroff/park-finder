@@ -16,8 +16,10 @@ from model import connect_to_db
 import crud
 
 
+
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+# app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = "aJlHh;p'lBBTH,ULG1Ysli2OP%nOdwZV2^{aZO<8{%#5d{B9q#--|qG-JS}cP{I"
 app.jinja_env.undefined = StrictUndefined
 
 login_manager = LoginManager()
@@ -152,6 +154,12 @@ def park_details(park_id):
 
     return render_template('park_details.html', park=park, images=images)
 
+@app.route('/images')
+def get_images(park_id):
+    """Get images for a specific park"""
+
+    return crud.get_park_image(park_id)
+
 
 # Not a public facing route, admin only? can delete?
 # @app.route('/all-users')
@@ -199,6 +207,7 @@ def user_details(user_id):
     """Show user detail page with their saved parks"""
 
     if current_user.is_authenticated:
+
         # Get user to access user_id
         user = crud.get_user_by_id(user_id)
 
@@ -227,7 +236,7 @@ def user_details(user_id):
                                 user=user,
                                 parks=user_favs)
     else:
-        flash("Please log in to view favorite parks.")
+        flash("Please log in or register to view favorite parks.")
         return redirect('/home')
 
 
@@ -343,4 +352,5 @@ def logout():
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(host='0.0.0.0', debug=True)
+    
 
