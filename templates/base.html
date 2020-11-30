@@ -27,41 +27,44 @@
     <div>
       <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
         <ul class="nav justify-content-end">  
-        <item class="navbar-brand">Park Finder</item>
-        <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
-        <a class="nav-link active" href='/'>Welcome <span class="sr-only"></span></a>
+          <item class="navbar-brand">Park Finder</item>
+          <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
+          <a class="nav-link active" href='/'>Welcome <span class="sr-only"></span></a>
         </ul>
+
         <ul class="nav justify-content-end">  
           <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
-          
+
           {% if current_user.is_authenticated %}
             <form action='/logout' id="logout" method="POST">
               <button type="submit" class="btn btn-outline-primary">Log out</button>
             </form>
             
           {% else %}
-          <!-- <form action='/home' id="login">
-            <button type="submit" class="btn btn-outline-primary">Log in</button>
-          </form> -->
-          <div class="dropdown">
-            <button type="button" id="show-login" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</button>
-              <form action="/login" id="login" method="POST">
-                  <br>
-                  <div class="form-group">
-                      <div style="text-align: center;">
-                          <div style="display: float; text-align: left;">
-                              <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
-                              <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
-                              <input type="submit" class="btn btn-secondary"><br><br>
-                              <div class="dropdown-divider"></div>
-                              <a href="/home" class="font-size 10px">Not registered?</a>
+              <form action='/home' id="login">
+                <button type="submit" class="btn btn-outline-primary">Log in</button>
+              </form> 
+
+              {# <div class="dropdown popout">
+                <button type="button" id="show-login" class="btn btn-secondary" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</button>
+                
+                  <form action="/login" id="login" method="POST">
+                      <br>
+                      <div class="form-group">
+                          <div style="text-align: center;">
+                              <div style="display: float; text-align: left;">
+                                  <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                                  <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
+                                  <input type="submit" class="btn btn-secondary"><br><br>
+                                  <div class="dropdown-divider"></div>
+                                  <a href="/home" class="font-size 10px">Not registered?</a>
+                              </div>
                           </div>
                       </div>
-                  </div>
-              </form>
-          </div>
+                  </form>
+              </div> #}
           {% endif %}
-
+        </ul>
         
       </nav>
     </div>
