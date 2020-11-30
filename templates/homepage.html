@@ -2,28 +2,52 @@
 {% block title %}Park Finder Home{% endblock %}
 
 {% block body %}
-<h1>Park Finder</h1>
+<div class="container text-center">
+<!-- <h1>Park Finder</h1> -->
 
-    <h2>Discover your next adventure!</h2>
+    <h2>Get started by creating an account or logging in!</h2>
+    <br>
+    <br>
+</div>
 
-
-    <h3>Create an Account</h3>
-    <form action="/users" method="POST">
-        <p>
-            Email <input type="text" name="email"><br><br>
-            Password <input type="password" name="password"><br><br>
-            Name <input type="text" name="uname"> <br><br>
-            <input type="submit">
-        </p>
-    </form>
-
-    <h3>Log In</h3>
-    <form action="/login" method="POST">
-        <p>
-            Email <input type="text" name="email"><br><br>
-            Password <input type="password" name="password"><br><br>
-            <input type="submit">
-        </p>
-    </form>
-
+    <div class="container md-auto">
+        <div class="row justify-content-around"">
+            <div class="card col-4" style="width: 18rem;">
+                <h3>Create an Account</h3>
+                <form action="/users" method="POST" class="p-4">
+                    <div class="form-group">
+                        <div style="text-align: center;">
+                            <div style="display: float; text-align: left;">
+                                <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                                <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
+                                <p>Username: <input type="text" name="uname" class="form-control" placeholder="password"></p>
+                                <div class="text-center">
+                                    <br>
+                                    <input type="submit" class="btn btn-secondary"><br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card col-4" style="width: 18rem;">
+                <h3>Log In</h3>
+                <form action="/login" method="POST">
+                    <br>
+                    <div class="form-group">
+                        <div style="text-align: center;">
+                            <div style="display: float; text-align: left;">
+                                <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                                <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
+                                <div class="text-center">
+                                    <br>
+                                    <input type="submit" class="btn btn-secondary"><br><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
