@@ -4,9 +4,7 @@
 
 {% block head %}
 
-    <link href="static/css/image-gallery.css" rel="stylesheet" />
-    <link href="static/css/site.css" rel="stylesheet" />
-    <script src="static/js/image-gallery.js" type="text/javascript"></script>
+
 
 {% endblock %}
 
@@ -18,11 +16,20 @@
         Location: {{ park.Park.state }}
     </p>
 
+
+    <p>
+        Topics: 
+        {% for topic in topics %}
+            {{ topic.Topic.topic_name }}{{ ", " if not loop.last }}
+
+        {% endfor%}
+    </p>
+
     <p>
         {{ park.Park.description }}
     </p>
 
-    <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" href="{{ park.Park.park_url }}">official website!</a></p>
+    <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" target="_blank" href="{{ park.Park.park_url }}">official website!</a></p>
 
     <br>
     <section id="fav-save">
@@ -34,63 +41,41 @@
     </section>
 
     <section id= "image-gallery">
-        <div class="jumbotron">
-            <div class="row row-cols-1 row-cols-md-3">
-                        {% for image in images %}
-                            <div class= "col-sm">
-                                <a href="{{image.image_url}}"><img class="card-img-top thumbnail" src="{{image.image_url}}"></a>
+        <div class="jumbotron" style="text-center">
+            <div class="row row-cols-1 row-cols-md-4">
+
+                {% for image in images %}
+                <div class="col-sm mx-auto; image-text">
+                {# or this: <div class="col-sm mx-auto;"> #}    
+                    <a href="{{image.image_url}}" class="pop"><img class="thumbnail" src="{{image.image_url}}"></a>
+                    <p></p>
+                </div>
+
+                {#<a href="#" class="pop">
+                    <img class="thumbnail" id="imageresource" src="{{image.image_url}}">
+                    Click to Enlarge
+                </a>#}
+
+                {% endfor %} 
+                {# 
+                <!-- Creates the bootstrap modal where the image will appear -->
+                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">              
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <img src="" class="imagepreview" style="width: 100%;" >
                             </div>
-                        {% endfor %} 
+                        </div>
+                    </div>
+                </div>#}
+
+                
+                
             </div>
         </div>
     </section>
 
-<!-- break -->
-
-{#    <section id="gallery-view" value={{images}}>
-        <div class="full-img">
-            <img class="displayed-img" width="50%" height="50%" src="{{images[0].image_url}}">
-            <div class="overlay"></div>
-            <!-- <button class="dark">Darken</button> -->
-        </div>
-
-        <div class="thumb-bar">
-
-    </section> #}
-
-{# <section id="light-box">
-    
-    <div class="row">
-        {% for image in images %}
-        <div class="col">
-            <img src="{{image.image_url}}" onclick="openLightbox();toSlide(1)" class="hover-shadow preview"/>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div id="Lightbox" class="modal">
-        <span class="close pointer" onclick="closeLightbox()">&times;</span>
-        <div class="modal-content">
-            {% for image in images %}
-                <div class="slide">
-                    <img src="{{image.image_url}}" class="image-slide"/>
-                </div>
-            {% endfor %}
-            
-            <a class="previous" onclick="changeSlide(-1)">&#10094;</a>
-            <a class="next" onclick="changeSlide(1)">&#10095;</a>
-            
-            <div class="dots">
-                {% for image in images %}
-                    <div class="col">
-                    <img src="{{image.image_url}}" class="modal-preview hover-shadow" onclick="toSlide(1)"/>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-</section> #}   
 
 
 

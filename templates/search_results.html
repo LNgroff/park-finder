@@ -3,8 +3,6 @@
 {% block title %}Parks{% endblock %}
 
 {% block head %}
-
-    <link href="static/css/site.css" rel="stylesheet" />
     
 {% endblock %}
 
@@ -16,15 +14,11 @@
         </div>
     {% if parks %}
         <div class="jumbotron">
-            <div class="row row-cols-1 row-cols-md-3">
+            <div class="row row-cols-1 row-cols-lg-4">
                 {% for key, value in parks.items() %}
-                    <div class="col-sm mx-auto">
-                        <div class="card mb-3" style="width: 15rem;">
-                            <img class="card-img-top thumbnail" src="{{value['image']}}">
-                            <div class="card-body text-center">
-                                <a href="/parks/{{ key }}"><h5 class="card-title">{{value["fullname"]}}</h5></a>
-                            </div>
-                        </div>
+                    <div class="col-sm mx-auto; image-text;">
+                            <img class="thumbnail" src="{{value['image']}}"><br><br>
+                            <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
                     </div>
                 {% endfor %}
         
