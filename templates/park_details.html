@@ -22,28 +22,30 @@
         {{ park.Park.description }}
     </p>
 
-    <p>For more details about {{ park.Park.fullname }}, visit it's <a href="{{ park.Park.park_url }}">official website!</a></p>
+    <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" href="{{ park.Park.park_url }}">official website!</a></p>
 
     <br>
     <section id="fav-save">
 
-        <form action="/parks/{{park.Park.park_id}}/fav-save">
-            <button type="submit" class="btn btn-primary">Add to favorites</button>
+        <form action="/parks/{{park.Park.park_id}}/fav-save" class="text-center">
+            <button type="submit" class="btn btn-primary">Add to favorites <i class="fas fa-leaf"></i></button>
         </form>
-                
+    <br>
     </section>
 
     <section id= "image-gallery">
-
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col-sm"></div>
-                    {% for image in images %}
-                        <div class= "col-sm" style="height: 200px;">
-                            <img id="thumbnailImage" src="{{image.image_url}}" class="img-thumbnail rounded mx-auto d-block">
-                        </div>
-                    {% endfor %} 
+        <div class="jumbotron">
+            <div class="row row-cols-1 row-cols-md-3">
+                        {% for image in images %}
+                            <div class= "col-sm">
+                                <a href="{{image.image_url}}"><img class="card-img-top thumbnail" src="{{image.image_url}}"></a>
+                            </div>
+                        {% endfor %} 
+            </div>
         </div>
     </section>
+
+<!-- break -->
 
 {#    <section id="gallery-view" value={{images}}>
         <div class="full-img">
@@ -55,6 +57,40 @@
         <div class="thumb-bar">
 
     </section> #}
+
+{# <section id="light-box">
+    
+    <div class="row">
+        {% for image in images %}
+        <div class="col">
+            <img src="{{image.image_url}}" onclick="openLightbox();toSlide(1)" class="hover-shadow preview"/>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="Lightbox" class="modal">
+        <span class="close pointer" onclick="closeLightbox()">&times;</span>
+        <div class="modal-content">
+            {% for image in images %}
+                <div class="slide">
+                    <img src="{{image.image_url}}" class="image-slide"/>
+                </div>
+            {% endfor %}
+            
+            <a class="previous" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+            
+            <div class="dots">
+                {% for image in images %}
+                    <div class="col">
+                    <img src="{{image.image_url}}" class="modal-preview hover-shadow" onclick="toSlide(1)"/>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</section> #}   
 
 
 

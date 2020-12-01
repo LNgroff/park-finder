@@ -4,23 +4,38 @@
 
 
 {% block body %}
-<h1>{{ user.uname }}</h1>
+<h1></h1>
 
 
-
-<p>
-    <h2>Favorite Parks</h2>
-    
-    {% for key, value in parks.items() %}
-    
-        <ul>
-            <li><a href = "/parks/{{ key }}">{{value["fullname"]}}</a></li>
-            <img src="{{value['image']}}" width="50%" height="50%">
-            
-        </ul>
-
+    <div class="container center">
+        <div class="text-center">
+            <h1>{{ user.uname }}'s Parks</h1>
+            <p>Adventure awaits!</p><br><br>
+        </div>
+    {% if parks %}
+        <div class="jumbotron">
+            <div class="row row-cols-1 row-cols-md-3">
+                {% for key, value in parks.items() %}
+                    <div class="col-sm mx-auto">
+                        <div class="card mb-3 shadow-sm">
+                            <img class="card-img-top thumbnail" src="{{value['image']}}">
+                            <div class="card-body text-center">
+                                <a href="/parks/{{ key }}"><h5 class="card-title">{{value["fullname"]}}</h5></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
         
-    {% endfor %}
-</p>
+            </div>
+        </div>
+    {% else %} 
+
+    <p>No results.</p>      
+
+    {% endif %}
+
+            
+    </div>
+
 
 {% endblock %}

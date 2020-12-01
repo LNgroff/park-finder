@@ -27,12 +27,12 @@
     <div>
       <nav class="navbar fixed-top navbar-static-top navbar-light bg-light">
         <ul class="nav justify-content-end">  
-          <item class="navbar-brand">Park Finder</item>
-          <a class="nav-link active" href="/park_search">Park Search <span class="sr-only"></span></a>
-          <a class="nav-link active" href='/'>Welcome <span class="sr-only"></span></a>
+          <a class="nav-link active navbar-brand" href='/'>Park Finder <i class="fas fa-tree"></i><span class="sr-only"></span></a>
+          
         </ul>
 
-        <ul class="nav justify-content-end">  
+        <ul class="nav justify-content-end"> 
+          <a class="nav-link active" href="/park_search">Search<span class="sr-only"></span></a> 
           <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
 
           {% if current_user.is_authenticated %}
@@ -43,7 +43,7 @@
           {% else %}
               <form action='/home' id="login">
                 <button type="submit" class="btn btn-outline-primary">Log in</button>
-              </form> 
+              </form>
 
               {# <div class="dropdown popout">
                 <button type="button" id="show-login" class="btn btn-secondary" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</button>
@@ -65,12 +65,11 @@
               </div> #}
           {% endif %}
         </ul>
-        
       </nav>
     </div>
 
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-primary">{{ message }}</div>
+    <div class="alert">{{ message }}</div>
     {% endfor %}
 
     
@@ -80,8 +79,14 @@
     <script src="static/js/login-logout.js"></script>
     
 
-    {% block after_body %}{% endblock %}
   </body>
 
+    <br><br>
+    {% block after_body %}
+
+    <div class= "text-center">
+    <p><small><i>All information and photographs populated from the <a style="color: #C66C36" href="https://www.nps.gov/index.htm">National Park Service.</a></i></small></p>
+    </div>
+    {% endblock %}
 
 </html>
