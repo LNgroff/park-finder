@@ -2,18 +2,18 @@
 
 
 
-// $(document).ready(function() {
+$(document).ready(function() {
 
-//     $('#login').hide();
+    $('#login').hide();
 
-//     $('#show-login').on({
-//         click: function(){
-//             $('#login').toggle();
+    $('#show-login').on({
+        click: function(){
+            $('#login').toggle();
 
-//         }
-//     });
+        }
+    });
 
-// });
+});
 
 // $(document).ready(function() {
 
