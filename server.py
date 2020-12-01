@@ -66,7 +66,7 @@ def show_search_results():
     # If the user makes no selection, ask them to.
     if topics == [] and fullstate == "no selection":
 
-        flash("Please select at least one topic or a state.")
+        flash("Please select at least one feature or a state.")
         return redirect("/park_search")
 
     
