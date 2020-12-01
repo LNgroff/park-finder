@@ -51,3 +51,10 @@ footer {
     color:white
 }
 
+.boxed{
+    background-color: rgba(150, 151, 150, 0.8);
+    padding: 3px;
+    text-align: left;
+    padding-right: 10px;
+    float: left;
+}
