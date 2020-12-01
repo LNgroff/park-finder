@@ -4,6 +4,7 @@ body {
     background-size: cover;
     color: white;
     text-align: center;
+    font-family: Calibri
 }
 
 /* site-wrapper and site-wrapper-inner are to vertically center content using
@@ -32,10 +33,12 @@ footer {
 .card {
     vertical-align: middle;
     background-color: rgba(150, 151, 150, 0.8);
-    padding: 20px;
-    width: 30%;
+    padding: 50px;
+    width: 25%;
     margin: 0 auto;
-    outline: 10px, white
+    outline: 10px, white;
+    border-radius: 5% !important;
+    
 
 }
 
