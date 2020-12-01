@@ -238,6 +238,17 @@ def add_topics_to_park(park, topic):
 
     db.session.commit()
 
+def get_parks_topics(park_id):
+    """Get random image for landing page"""
+
+    reply = db.session.query(ParkTopic, Topic)\
+        .filter(ParkTopic.park_id == park_id)\
+        .filter(ParkTopic.topic_id == Topic.topic_id).all()
+    
+    return reply
+    # return db.session.query(ParkTopic).outerjoin(Topic)\
+    #     .filter(ParkTopic.park_id == park_id).all()
+
 
 
 if __name__ == '__main__':
