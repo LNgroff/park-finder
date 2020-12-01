@@ -1,0 +1,13 @@
+
+
+img {
+  height: auto;
+  max-width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+img.expanded {
+  max-width: none;
+}
+
+img:hover {opacity: 0.7;}

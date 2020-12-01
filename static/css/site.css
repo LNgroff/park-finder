@@ -17,15 +17,24 @@ body {
     box-shadow: none !important;
     margin-left: 45px;
     margin-right: 45px;
+    background-color: none !important;
 }
 
 .card-body{
     width: 325px;
-    background-color: #E1E2E1;
+    background-color: none !important;
+}
+
+.image-text {
+    background-color: none !important;
+    width: 250px;
+    align-items: left;
+    text-align: center;
 }
 
 .card-title {
     align-items: center;
+    background-color: none !important;
 }
 
 .alert {
@@ -61,8 +70,8 @@ td {
 .thumbnail {
     object-fit: cover;
     object-position: 100% 0;
-    width: 325px;
-    height: 225px
+    width: 250px;
+    height: 250px
 }
 
 /* Navbar styling */
@@ -75,8 +84,16 @@ td {
     background-color: #5d745f !important;
 }
 
+.nav {
+    padding-right: 80px;
+}
 
 /* Button styling */
+
+.button-drop {
+    position: fixed;
+    right: 10px
+}
 
 .btn-primary {
     color: white;
@@ -127,7 +144,7 @@ td {
 .btn-outline-primary:hover {
     color: white;
     background-color: #415243;
-    border-color: #415243
+    border-color: white
 }
 
 .btn-outline-primary:focus,
