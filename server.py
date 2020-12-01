@@ -152,7 +152,9 @@ def park_details(park_id):
     # gets all images
     images = crud.get_park_image(park_id)
 
-    return render_template('park_details.html', park=park, images=images)
+    topics = crud.get_parks_topics(park_id)
+
+    return render_template('park_details.html', park=park, images=images, topics=topics)
 
 @app.route('/images')
 def get_images(park_id):
@@ -316,8 +318,10 @@ def log_in():
 
             if not is_safe_url(next):
                 return abort(400)
-            
-            return redirect(next or "/park_search")
+
+            referer = request.headers.get("Referer")
+
+            return redirect(next or referer)
 
         else:
             flash('Email and password do not match. Try again.')
@@ -344,7 +348,9 @@ def logout():
     logout_user()
     flash("Logged out!")
     
-    return redirect('/home')
+    referer = request.headers.get("Referer")
+
+    return redirect(referer)
 
 
 
