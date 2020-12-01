@@ -1,4 +1,3 @@
 env
 __pycache__/
 secrets.sh
-static/css/image-gallery.css
