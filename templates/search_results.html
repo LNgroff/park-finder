@@ -17,8 +17,8 @@
                 <div class="row row-cols-1 row-cols-lg-4">
                     {% for key, value in parks.items() %}
                         <div class="col-sm mx-auto; image-text;">
-                                <img class="thumbnail" src="{{value['image']}}"><br><br>
-                                <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
+                                <a href="/parks/{{ key }}"><img class="thumbnail" src="{{value['image']}}"><br><br>
+                                <h6>{{value["fullname"]}}</h6></a>
                         </div>
                     {% endfor %}
             

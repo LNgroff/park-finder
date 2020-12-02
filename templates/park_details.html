@@ -10,30 +10,31 @@
 {% block body %}
 <body>
 
-    <h1>{{ park.Park.fullname }}</h1>
-    <p>Location: {{ park.Park.state }}</p>
+    <div class="abox">
+        <h1>{{ park.Park.fullname }}</h1>
+        <p>Location: {{ park.Park.state }}</p>
 
-    <p>Topics: 
-        {% for topic in topics %}
-            {{ topic.Topic.topic_name }}{{ ", " if not loop.last }}
-        {% endfor%}
-    </p>
+        <p>Topics: 
+            {% for topic in topics %}
+                {{ topic.Topic.topic_name }}{{ ", " if not loop.last }}
+            {% endfor%}
+        </p>
 
-    <p>{{ park.Park.description }}</p>
+        <p>{{ park.Park.description }}</p>
 
-    <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" target="_blank" href="{{ park.Park.park_url }}">official website!</a></p>
-    <br>
-
+        <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" target="_blank" href="{{ park.Park.park_url }}">official website!</a></p>
+    </div>
     <section id="fav-save">
+        <br><br>
         <form action="/parks/{{park.Park.park_id}}/fav-save" class="text-center">
             <button type="submit" class="btn btn-primary">Add to favorites <i class="fas fa-leaf"></i></button>
         </form>
-    <br>
+        <br><br>
     </section>
 
-    <section id= "image-gallery">
-        <div class="jumbotron" style="text-center">
-            <div class="row row-cols-1 row-cols-md-4">
+    <section class="below" id="image-gallery">
+        <!-- <div class="jumbotron" style="text-center"> -->
+            <div class="row row-cols-1 row-cols-md-4 justify-content-md-center">
 
                 {% for image in images %}
                 <div class="col-sm mx-auto; image-text">   
@@ -55,7 +56,7 @@
                         <div class="modal-content">              
                             <div class="modal-body">
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <img src="" class="imagepreview" style="width: 100%" >
+                            <img src="" class="imagepreview" style="width: 100%;" >
                             </div>
                         </div>
                     </div>
