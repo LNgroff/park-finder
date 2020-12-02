@@ -51,6 +51,31 @@ input[type="submit"]:hover{
   padding-right: 20px;
 }
 
-.parks {
-  move: 20px;
+
+.dropdown-menu-right {
+  /* background-color: white; */
+  padding-left: 20px;
 }
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%; /* Bottom of button */
+  right: 0;
+  margin-left: -100px; /* More to the left */
+}
+
+.button-drop {
+  position: fixed;
+  right: 10px;
+  width: 86.5px;
+}
+
+/* .form-group {
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  /* background-color: white; */
+} */

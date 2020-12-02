@@ -90,10 +90,6 @@ td {
 
 /* Button styling */
 
-.button-drop {
-    position: fixed;
-    right: 10px
-}
 
 .btn-primary {
     color: white;
