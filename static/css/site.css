@@ -1,3 +1,6 @@
+/* General styling */
+
+
 body { 
     padding-top: 100px; 
     padding-bottom: 65px; 
@@ -6,30 +9,9 @@ body {
     font-family: Geneva;
 }
 
-
 .jumbotron {
     background: #c3c7c68c
 
-}
-
-.card {
-    align-items: center;
-    box-shadow: none !important;
-    margin-left: 45px;
-    margin-right: 45px;
-    background-color: none !important;
-}
-
-.card-body{
-    width: 325px;
-    background-color: none !important;
-}
-
-.image-text {
-    background-color: none !important;
-    width: 250px;
-    align-items: left;
-    text-align: center;
 }
 
 .card-title {
@@ -42,30 +24,17 @@ body {
     color: #B75501;
 }
 
-.topic-search {
-    padding-right;
-}
-
-.col {
-    padding-bottom: 10px;
-}
-
-
 a {
     color: #415243;
 }
+
 a:hover{
     color: #36421f;
 }
 
 
-td {
-    width: 600px;
-}
 
-.topic-search {
-    margin-left: 20px;
-}
+/* Image related styling */
 
 .thumbnail {
     object-fit: cover;
@@ -73,6 +42,32 @@ td {
     width: 250px;
     height: 250px
 }
+
+
+.image-text {
+    background-color: none !important;
+    width: 250px;
+    align-items: left;
+    text-align: center;
+}
+
+
+
+/* Topic table related styling */
+
+td {
+    width: 600px;
+}
+
+.col {
+    padding-bottom: 10px;
+}
+
+
+.topic-search {
+    margin-left: 20px;
+}
+
 
 /* Navbar styling */
 
@@ -87,6 +82,8 @@ td {
 .nav {
     padding-right: 80px;
 }
+
+
 
 /* Button styling */
 
@@ -106,7 +103,7 @@ td {
 
 .btn-primary:focus,
 .btn-primary.focus {
-    box-shadow: 0 0 0 .2rem white)
+    /* box-shadow: 0 0 0 .2rem white */
 }
 
 .btn-primary.disabled,
@@ -127,7 +124,7 @@ td {
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
 .show>.btn-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 .2rem white)
+    /* box-shadow: 0 0 0 .2rem white */
 }
 
 .btn-outline-primary {
@@ -145,7 +142,7 @@ td {
 
 .btn-outline-primary:focus,
 .btn-outline-primary.focus {
-    box-shadow: 0 0 0 .2rem white)
+    /* box-shadow: 0 0 0 .2rem white */
 }
 
 .btn-outline-primary.disabled,
@@ -165,5 +162,5 @@ td {
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
 .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
 .show>.btn-outline-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 .2rem white)
+    /* box-shadow: 0 0 0 .2rem white */
 }

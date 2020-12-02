@@ -1,4 +1,4 @@
-
+/* Login drop down */
 
 .login-form{
   position: absolute;
@@ -63,9 +63,9 @@ input[type="submit"]:hover{
 
 .dropdown-menu {
   position: absolute;
-  top: 100%; /* Bottom of button */
+  top: 100%;
   right: 0;
-  margin-left: -100px; /* More to the left */
+  margin-left: -100px;
 }
 
 .button-drop {
@@ -73,9 +73,3 @@ input[type="submit"]:hover{
   right: 10px;
   width: 86.5px;
 }
-
-/* .form-group {
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
-  /* background-color: white; */
-} */
