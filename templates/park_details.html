@@ -5,35 +5,26 @@
 {% block head %}
 
 
-
 {% endblock %}
 
 {% block body %}
 <body>
 
     <h1>{{ park.Park.fullname }}</h1>
-    <p>
-        Location: {{ park.Park.state }}
-    </p>
+    <p>Location: {{ park.Park.state }}</p>
 
-
-    <p>
-        Topics: 
+    <p>Topics: 
         {% for topic in topics %}
             {{ topic.Topic.topic_name }}{{ ", " if not loop.last }}
-
         {% endfor%}
     </p>
 
-    <p>
-        {{ park.Park.description }}
-    </p>
+    <p>{{ park.Park.description }}</p>
 
     <p>For more details about {{ park.Park.fullname }}, visit their <a style="color: #C66C36" target="_blank" href="{{ park.Park.park_url }}">official website!</a></p>
-
     <br>
-    <section id="fav-save">
 
+    <section id="fav-save">
         <form action="/parks/{{park.Park.park_id}}/fav-save" class="text-center">
             <button type="submit" class="btn btn-primary">Add to favorites <i class="fas fa-leaf"></i></button>
         </form>
@@ -45,12 +36,12 @@
             <div class="row row-cols-1 row-cols-md-4">
 
                 {% for image in images %}
-                <div class="col-sm mx-auto; image-text">
-                {# or this: <div class="col-sm mx-auto;"> #}    
+                <div class="col-sm mx-auto; image-text">   
                     <a href="{{image.image_url}}" class="pop"><img class="thumbnail" src="{{image.image_url}}"></a>
                     <p></p>
                 </div>
 
+                <!-- code for defunct modal -->
                 {#<a href="#" class="pop">
                     <img class="thumbnail" id="imageresource" src="{{image.image_url}}">
                     Click to Enlarge
@@ -58,25 +49,21 @@
 
                 {% endfor %} 
                 {# 
-                <!-- Creates the bootstrap modal where the image will appear -->
+                <!-- code for defunct modal -->
                 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">              
                             <div class="modal-body">
                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <img src="" class="imagepreview" style="width: 100%;" >
+                            <img src="" class="imagepreview" style="width: 100%" >
                             </div>
                         </div>
                     </div>
                 </div>#}
-
-                
-                
+            
             </div>
         </div>
     </section>
-
-
 
 
 

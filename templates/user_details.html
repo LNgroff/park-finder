@@ -2,36 +2,31 @@
 
 {% block title %}{{ user.email }} - Profile{% endblock %}
 
-
 {% block body %}
-<h1></h1>
-
-
+<body>
     <div class="container center">
         <div class="text-center">
             <h1>{{ user.uname }}'s Parks</h1>
             <p>Adventure awaits!</p><br><br>
         </div>
-    {% if parks %}
-        <div class="jumbotron">
-            <div class="row row-cols-1 row-cols-md-4">
-                {% for key, value in parks.items() %}
-                <div class="col-sm mx-auto; image-text;">
-                    <img class="thumbnail" src="{{value['image']}}"><br><br>
-                    <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
-                </div>
-                {% endfor %}
-        
-            </div>
-        </div>
-    {% else %} 
 
-    <p>No results.</p>      
-
-    {% endif %}
-
+        {% if parks %}
+            <div class="jumbotron">
+                <div class="row row-cols-1 row-cols-md-4">
+                    {% for key, value in parks.items() %}
+                    <div class="col-sm mx-auto; image-text;">
+                        <img class="thumbnail" src="{{value['image']}}"><br><br>
+                        <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
+                    </div>
+                    {% endfor %}
             
+                </div>
+            </div>
+        {% else %} 
+            <p>No results.</p>      
+        {% endif %}
+        
     </div>
 
-
+</body>
 {% endblock %}

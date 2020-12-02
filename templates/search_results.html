@@ -12,25 +12,23 @@
         <div class="text-center">
             <h1>Resulting Parks</h1><br><br>
         </div>
-    {% if parks %}
-        <div class="jumbotron">
-            <div class="row row-cols-1 row-cols-lg-4">
-                {% for key, value in parks.items() %}
-                    <div class="col-sm mx-auto; image-text;">
-                            <img class="thumbnail" src="{{value['image']}}"><br><br>
-                            <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
-                    </div>
-                {% endfor %}
-        
+        {% if parks %}
+            <div class="jumbotron">
+                <div class="row row-cols-1 row-cols-lg-4">
+                    {% for key, value in parks.items() %}
+                        <div class="col-sm mx-auto; image-text;">
+                                <img class="thumbnail" src="{{value['image']}}"><br><br>
+                                <a href="/parks/{{ key }}"><h6>{{value["fullname"]}}</h6></a>
+                        </div>
+                    {% endfor %}
+            
+                </div>
             </div>
-        </div>
-    {% else %} 
-
-    <p>No results.</p>      
-
-    {% endif %}
+            
+        {% else %} 
+            <p>No results.</p>      
+        {% endif %}
         
     </div>
-
 
 {% endblock %}

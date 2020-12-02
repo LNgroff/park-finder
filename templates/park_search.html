@@ -12,88 +12,84 @@ crossorigin="anonymous"
 
 {% block body %}
 
-    <body>
-        
-        <div class="containter">
-            <div class= "text-center">
-                <h1>Park Search</h1> <br><br>
-            </div>
+<body>
+    
+    <div class="containter">
+        <div class= "text-center">
+            <h1>Park Search</h1> <br><br>
         </div>
-        
-        <form action="/search_results" method="POST"> 
-            <!-- action="/search_results" method="POST" -->
+    </div>
+    
+    <form action="/search_results" method="POST"> 
 
+        <section id="state-select">
+            <div class="container text-center">
+            <label for="state-select">Choose a state/location:</label>
+            
+            <select name="state" id="state-select">
+                <option value="no selection">--</option>
 
-            <section id="state-select">
-                <div class="container text-center">
-                <label for="state-select">Choose a state/location:</label>
-
-                <select name="state" id="state-select">
-                    <option value="no selection">--</option>
-
-                    {% for state in STATES %}
-                    <div class="state-div">
-                        <option value="{{ state }}" name="state">{{ state }}</option>
-                    </div>
-                    {% endfor %}
-                    
-                </select><br><br>
-                
+                {% for state in STATES %}
+                <div class="state-div">
+                    <option value="{{ state }}" name="state">{{ state }}</option>
                 </div>
-            </section>
-
-
-            <section id="topic-select"><br>
-                <div class="text-center">
-                    <p>Which features would you like to search by?</p>
-                    <p><small><i>(Select up to 3 features)</i></small></p>
-                </div>
+                {% endfor %}
                 
-                <div class="col mb-4">
+            </select><br><br> 
+            </div>
+        </section>
+
+
+        <section id="topic-select"><br>
+            <div class="text-center">
+                <p>Which features would you like to search by?</p>
+                <p><small><i>(Select up to 3 features)</i></small></p>
+            </div>
+            
+            <div class="col mb-4">
                 <div class="col-sm"></div>
                 
                 <div class="jumbotron">
-                <table class="topic-search">
-                    {%- for row in topics|batch(4, '&nbsp;') %}
-                        <tr>
-                            {%- for topic in row %}
-                            <td>
-                                <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
-                                <label style="margin-left: 8px" for="{{topic.topic_name}}">{{topic.topic_name}}</label>
-                            </td>
-                            {%- endfor %}
-                        </tr>
-                    {%- endfor %}
-                    
-                        <script type="text/javascript">
-                        function limitChecks() {
-                            let chkboxes = document.getElementsByName("topic");
-                            let numChkBoxes = 0;
+                    <table class="topic-search">
+                        {%- for row in topics|batch(4, '&nbsp;') %}
+                            <tr>
+                                {%- for topic in row %}
+                                <td>
+                                    <input class="topicCheckbox" type="checkbox" id="{{ topic.topic_id }}" name="topic" value= "{{ topic.topic_id }}" onclick="return limitChecks()">
+                                    <label style="margin-left: 8px" for="{{topic.topic_name}}">{{topic.topic_name}}</label>
+                                </td>
+                                {%- endfor %}
+                            </tr>
+                        {%- endfor %}
+                        
+                            <script type="text/javascript">
+                            function limitChecks() {
+                                let chkboxes = document.getElementsByName("topic");
+                                let numChkBoxes = 0;
 
-                            for(let count=0; count<chkboxes.length; count++){
-                                if(chkboxes[count].checked){
-                                    numChkBoxes = numChkBoxes +1;
+                                for(let count=0; count<chkboxes.length; count++){
+                                    if(chkboxes[count].checked){
+                                        numChkBoxes = numChkBoxes +1;
+                                    }
+                                }
+                                if(numChkBoxes>3){
+                                    alert("Only three selections allowed.");
+                                    return false;
                                 }
                             }
-                            if(numChkBoxes>3){
-                                alert("Only three selections allowed.");
-                                return false;
-                            }
-                        }
-                        </script>
-                    
-                </table>
+                            </script>
+                        
+                    </table>
                 </div>
             </div>
-            </section>
+        </section>
 
-            <div class="container text-center">
-                <button id="submit" type="submit" class="btn btn-primary">Search <i class="fas fa-binoculars"></i></button>
-            </div>
+        <div class="container text-center">
+            <button id="submit" type="submit" class="btn btn-primary">Search <i class="fas fa-binoculars"></i></button>
+        </div>
+    </form>
 
-        </form>
-
-    </body>
+</body>
 
 
     {% endblock %}
