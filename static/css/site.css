@@ -16,7 +16,6 @@ body {
 
 }
 
-
 .alert {
     background-color: #b7560150;
     color: #B75501;
@@ -30,6 +29,16 @@ a:hover{
     color: #36421f;
 }
 
+.abox {
+    background-color: #b7560150;
+    width: 90%;
+    padding-left: 85px;
+    padding-right: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    left: -75px;
+    position: relative;
+}
 
 
 /* Image related styling */
