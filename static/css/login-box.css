@@ -48,7 +48,7 @@ input[type="submit"]:hover{
 
 .popout { 
   position: absolute !important;
-  padding-right: 20px;
+  padding-right: 50px;
 }
 
 
@@ -64,7 +64,6 @@ input[type="submit"]:hover{
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  right: 0;
   margin-left: -100px;
 }
 
@@ -72,4 +71,28 @@ input[type="submit"]:hover{
   position: fixed;
   right: 10px;
   width: 86.5px;
+}
+
+.form-drop {
+  padding-bottom: 20px !important; 
+  padding-right: 20px !important; 
+  margin-top: 1.5rem !important; 
+  background-color: #D3B6A0 !important; 
+  box-shadow: inset !important;
+  border-radius: 5px !important;
+  border: solid !important;
+  border: 10px !important;
+}
+
+.form-group{
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+
+}
+
+.card {
+  align-items: center;
+  background-color: none !important;
+  
 }

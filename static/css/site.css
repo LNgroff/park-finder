@@ -7,17 +7,15 @@ body {
     padding-right: 65px; 
     padding-left: 65px;
     font-family: Geneva;
+    background-color: #c3c7c68c;
 }
 
 .jumbotron {
-    background: #c3c7c68c
+    background: white;
+    border-radius: 5px;
 
 }
 
-.card-title {
-    align-items: center;
-    background-color: none !important;
-}
 
 .alert {
     background-color: #b7560150;
