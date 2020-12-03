@@ -147,7 +147,7 @@ class Image(db.Model):
                 db.ForeignKey("parks.park_id"),
                 nullable = False)
     image_url = db.Column(db.String,
-                unique = True,
+                unique = False,
                 nullable = False)
     
     park = db.relationship('Park', backref='images')

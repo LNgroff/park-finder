@@ -41,7 +41,7 @@ def get_landing_page():
 def get_homepage():
     """Returns homepage."""
 
-    image = crud.get_image(154)
+    image = crud.get_image(158)
 
     return render_template("homepage.html", image=image)    
     
@@ -51,8 +51,6 @@ def park_search():
     """Returns search page"""
 
     opt_topics = crud.return_all_topics()
-
-    
 
     return render_template("park_search.html", topics=opt_topics, STATES=STATES)
 
@@ -144,7 +142,7 @@ def show_search_results():
                         parks=resulting_parks,
                         state=userstate)
 
-# TODO: Image gallery
+
 @app.route('/parks/<park_id>')
 def park_details(park_id):
     """Show details on specific parks"""
