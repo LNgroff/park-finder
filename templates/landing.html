@@ -7,11 +7,11 @@
     <!-- Load Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <title>National Park Finder</title>
-    <style >body{background-image: url("{{image.image_url}}")} </style>
+    <style>body{background-image: url("{{image.image_url}}"); overflow-x: hidden; overflow-y:hidden;} </style>
 </head>
 
 <div class="boxed">
-<h7 style="text-align: left; padding-left: 10px; padding-top: 10px;"><a style="color:white;" href="/parks/{{image.park.park_id}}"><i class="fas fa-map-marker-alt"></i> Image: {{image.park.fullname}}, {{image.park.state}}</a></h7>
+<h7 style="text-align: left; padding-left: 10px; padding-top: 10px;"><a style="color:white;" href="/parks/{{image.park.park_id}}"><i class="fas fa-map-marker-alt"></i> {{image.park.fullname}}, {{image.park.state}}</a></h7>
 </div>
 
 <body>

@@ -10,15 +10,16 @@
 {% block body %}
     <div class="container center">
         <div class="text-center">
-            <h1>Resulting Parks</h1><br><br>
+            <h1>Results</h1><br><br>
         </div>
         {% if parks %}
             <div class="jumbotron">
-                <div class="row row-cols-1 row-cols-lg-4">
+                <div class="row row-cols-1 row-cols-lg-4 justify-content-md-center">
                     {% for key, value in parks.items() %}
-                        <div class="col-sm mx-auto; image-text;">
+                        <div class="col-sm mx-auto; image-text; text-center">
                                 <a href="/parks/{{ key }}"><img class="thumbnail" src="{{value['image']}}"><br><br>
                                 <h6>{{value["fullname"]}}</h6></a>
+                                <br><br>
                         </div>
                     {% endfor %}
             

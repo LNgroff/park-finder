@@ -1,46 +1,42 @@
+<head>
+    <!-- <div class="image-tag" style="bottom: 0;">
+        <h7><a style="color:#c3c7c68c" href="/parks/{{image.park.park_id}}"><i class="fas fa-map-marker-alt"></i> {{image.park.fullname}}, {{image.park.state}}</a></h7>
+    </div> -->
+    <style>body{background-image: url("https://www.nps.gov/common/uploads/structured_data/3C7A88A0-1DD8-B71B-0B4720E73A7F0534.jpg"); background-size: cover; 
+        overflow-x:hidden;}</style>
+
+</head>
 {% extends 'base.html' %}
-{% block title %}Park Finder Home{% endblock %}
+{% block title %}Park Finder Login{% endblock %}
+
+
 
 {% block body %}
 <body>
-    <div class="container text-center">
-        <br>
-        <h2>Save your favorite by creating an account or logging in!</h2>
-        <p style="padding-bottom: 50px"></p>
-    </div>
-
     <!-- <div class="jumbotron"> -->
-        <div class="row justify-content-around">
-            <div class="card col-4" style="padding-top: 50px">
+        <div class="row justify-content-md-center">
+            <div class="card col-3;">
                 <h3>Create an Account</h3>
+
                 <form action="/users" method="POST" class="p-4">
                     <div class="form-group">
-                        <div style="text-align: center;">
-                            <div style="display: float; text-align: left;">
-                                <p style="padding-bottom: 1px">Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
-                                <p style="padding-bottom: 1px">Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
-                                <p style="padding-bottom: 1px">Username: <input type="text" name="uname" class="form-control" placeholder="name"></p><br>
-                                <div class="card-footer bg-transparent text-center">
-                                    <br><input type="submit" class="btn btn-secondary">
-                                </div>
-                            </div>
+                        <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                        <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p>
+                        <p>Username: <input type="text" name="uname" class="form-control" placeholder="name"></p><br>
+                        <div class="card-footer">
+                            <input type="submit" class="btn btn-secondary">
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="card col-4" style="padding-top: 50px">
+            <div class="card col-3;">
                 <h3>Log In</h3>
                 <form action="/login" method="POST" class="p-4">
-                    <br>
                     <div class="form-group">
-                        <div style="text-align: center;">
-                            <div style="display: float; text-align: left;">
-                                <p style="padding-bottom: 1px">Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
-                                <p style="padding-bottom: 1px">Password: <input type="password" name="password" class="form-control" placeholder="password"></p><br><br><br><br>
-                                <div class="card-footer bg-transparent text-center">
-                                    <br><input type="submit" class="btn btn-secondary">
-                                </div>
-                            </div>
+                        <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>
+                        <p>Password: <input type="password" name="password" class="form-control" placeholder="password"></p><br><br><br><br>
+                        <div class="card-footer">
+                            <input type="submit" class="btn btn-secondary">
                         </div>
                     </div>
                 </form>
@@ -49,4 +45,6 @@
     </div>
 </body>
 
+
 {% endblock %}
+

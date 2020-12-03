@@ -16,7 +16,7 @@ crossorigin="anonymous"
     
     <div class="containter">
         <div class= "text-center">
-            <h1>Park Search</h1> <br><br>
+            <h1>Park Search <i class="fas fa-search"></i></h1><br><br>
         </div>
     </div>
     
@@ -43,7 +43,7 @@ crossorigin="anonymous"
         <section id="topic-select"><br>
             <div class="text-center">
                 <p>Which features would you like to search by?</p>
-                <p><small><i>(Select up to 3 features)</i></small></p>
+                <p><small><i>(Select up to 3 features)</i></small></p><br>
             </div>
             
             <div class="col mb-4">
@@ -51,7 +51,7 @@ crossorigin="anonymous"
                 
                 <div class="jumbotron">
                     <table class="topic-search">
-                        {%- for row in topics|batch(4, '&nbsp;') %}
+                        {%- for row in topics|batch(3, '&nbsp;') %}
                             <tr>
                                 {%- for topic in row %}
                                 <td>
