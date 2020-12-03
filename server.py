@@ -40,9 +40,10 @@ def get_landing_page():
 @app.route('/home')
 def get_homepage():
     """Returns homepage."""
-    
 
-    return render_template("homepage.html")    
+    image = crud.get_image(154)
+
+    return render_template("homepage.html", image=image)    
     
 
 @app.route('/park_search')
@@ -50,6 +51,8 @@ def park_search():
     """Returns search page"""
 
     opt_topics = crud.return_all_topics()
+
+    
 
     return render_template("park_search.html", topics=opt_topics, STATES=STATES)
 
@@ -175,6 +178,10 @@ def get_images(park_id):
 
 @app.route("/parks/<park_id>/fav-save")
 def add_to_favs(park_id):
+    """Allows user to save a park to thier profile"""
+    
+    # Gets current page to reload
+    referer = request.headers.get("Referer")
     
     # Get the park object to access the park_id
     park = crud.get_park_by_id(park_id)
@@ -201,6 +208,7 @@ def add_to_favs(park_id):
     else:
         flash("Log in to add park to favorites!")
     
+        
         return redirect(f"/parks/{park.Park.park_id}")
 
 
@@ -219,7 +227,7 @@ def user_details(user_id):
         
         # Checks if user has saved and parks.
         if results == []:
-            user_favs = "You do not have not saved any parks."
+            user_favs = []
         
         # Set iterable dictionary of user favs
         else:
@@ -231,15 +239,16 @@ def user_details(user_id):
                 user_favs[park.park_id] = {"park_id" : park.park_id,\
                     "image" : park_image.image_url, "fullname" : park.fullname}
 
-            print('********', user_favs, '***********')
-
 
         return render_template('user_details.html', 
                                 user=user,
                                 parks=user_favs)
     else:
-        flash("Please log in or register to view favorite parks.")
-        return redirect('/home')
+        flash("Please log in to view your favorite parks.")
+        
+        # Gets current page to reload
+        referer = request.headers.get("Referer")
+        return redirect(referer)
 
 
 @app.route('/users', methods = ['POST'] )
@@ -277,7 +286,9 @@ def register_user():
     else:
         flash('Please fill out all fields.')
 
-    return redirect('/home')
+    # Gets current page to reload
+    referer = request.headers.get("Referer")
+    return redirect(referer)
 
 
 @login_manager.user_loader
@@ -289,6 +300,8 @@ def load_user(user_id):
 
 
 def is_safe_url(target):
+    """Checks to see if url is safe."""
+    
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
@@ -300,43 +313,51 @@ def log_in():
     """Gets input from log-in and checks to see if emails and passwords
     match."""
 
+    #Gets current page to reload upon completion
+    referer = request.headers.get("Referer")
 
     # Get email from log in form
     email = request.form.get('email')
+    password = request.form.get('password')
 
-    # Get user by email in database
-    user = crud.get_user_by_email(email)
+    # Check that user entered all info and that it's correct info:
+    if email and password:
 
-    # If user exists, check if passwords match, log in user or announce failure
-    if user:
+        # Get user by email in database
+        user = crud.get_user_by_email(email)
 
-        if check_password_hash(user.password, request.form.get('password')):
-            login_user(user)
-            flash(f'Logged in. Welcome {user.uname}!')
+        # If user exists, check if passwords match, log in user or announce failure
+        if user:
 
-            next = request.args.get('next')
+            if check_password_hash(user.password, password):
+                login_user(user)
+                flash(f'Logged in. Welcome {user.uname}!')
 
-            if not is_safe_url(next):
-                return abort(400)
+                next = request.args.get('next')
 
-            referer = request.headers.get("Referer")
+                if not is_safe_url(next):
+                    return abort(400)
 
-            return redirect(next or referer)
+                return redirect(next or referer)
 
-        else:
-            flash('Email and password do not match. Try again.')
-            return redirect('/home')
-    
-    # Notify user that no email exists in system
-    else: 
-        flash("No account is associated with this email.")        
-        return redirect('/home')
+            else:
+                flash('Email and password do not match. Try again.')
+        
+        # Notify user that no email exists in system
+        else: 
+            flash("No account is associated with this email, please register.")        
+
+    # Ask user to complete all fields
+    else:
+        flash("Please fill out all fields.")
+        
+        
+    return redirect(referer)
 
 
 # @app.route('/loggedin')
 # def is_logged_in():
 # # provides user info for login-logout.js to properly log user in/out
-#     print("##########################", current_user.is_authenticated, "##############")
 #     return jsonify(current_user.is_authenticated)
 
 
@@ -348,11 +369,8 @@ def logout():
     logout_user()
     flash("Logged out!")
     
-    referer = request.headers.get("Referer")
 
-    return redirect(referer)
-
-
+    return redirect('/park_search')
 
 
 if __name__ == '__main__':
