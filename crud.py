@@ -214,10 +214,10 @@ def get_park_image(park_id):
 
     return Image.query.filter(Image.park_id == park_id).all()
     
-    # images = db.session.query(Image)\
-    #     .filter(Image.park_id == park_id).all()
+def get_image(image_id): 
+    """Get image for a park by park_id"""
 
-    # return [q._asdict() for q in images]
+    return Image.query.get(image_id)
 
 def get_random_image():
     """Get random image for landing page"""
