@@ -185,6 +185,25 @@ class Favorite(db.Model):
                 user_id: {self.user_id}"""
 
 
+def test_data():
+    """Create sample data."""
+
+    test_user1000 = User(user_id=1000,
+                email ="user1000@user.com",
+                password ="[{HgZ2TEjpQe;DeEJ?yC",
+                uname = "bob1000")
+
+    test_user2000 = User(user_id=2000,
+                email ="user1000@user.com",
+                password ="[{HgZ2TEjpQe;DeEJ?yC",
+                uname = "bob2000")
+
+
+    db.session.add_all([test_user1000,
+                        test_user2000])
+    
+    db.session.commit()
+
 
 if __name__ == '__main__':
     from server import app
