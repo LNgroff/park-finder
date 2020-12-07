@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %} 
-<script
-src="https://code.jquery.com/jquery-3.5.1.js"
-integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-crossorigin="anonymous"
-></script>
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"
+    ></script>
 {% endblock %} 
 
 {% block title %}Park Search{% endblock %}
@@ -16,7 +16,7 @@ crossorigin="anonymous"
     
     <div class="containter">
         <div class= "text-center">
-            <h1>Park Search <i class="fas fa-search"></i></h1><br><br>
+            <h1>Park Search <i class="fas fa-search"></i></h1><br><br><br>
         </div>
     </div>
     
@@ -35,7 +35,7 @@ crossorigin="anonymous"
                 </div>
                 {% endfor %}
                 
-            </select><br><br> 
+            </select><br>
             </div>
         </section>
 
@@ -43,12 +43,11 @@ crossorigin="anonymous"
         <section id="topic-select"><br>
             <div class="text-center">
                 <p>Which features would you like to search by?</p>
-                <p><small><i>(Select up to 3 features)</i></small></p><br>
+                <p><small><i>(Select up to 3 features)</i></small></p>
             </div>
             
             <div class="col mb-4">
                 <div class="col-sm"></div>
-                
                 <div class="jumbotron">
                     <table class="topic-search">
                         {%- for row in topics|batch(3, '&nbsp;') %}
@@ -78,7 +77,6 @@ crossorigin="anonymous"
                                 }
                             }
                             </script>
-                        
                     </table>
                 </div>
             </div>

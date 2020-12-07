@@ -1,9 +1,9 @@
 <head>
-    <div class="image-tag" style="bottom: 0;">
+    <div class="image-tag">
         <h7><a style="color:#dbddddab" href="/parks/{{image.park.park_id}}"><i class="fas fa-map-marker-alt"></i> {{image.park.fullname}}, {{image.park.state}}</a></h7>
     </div>
     <style>body{background-image: url("{{image.image_url}}"); background-size: cover; 
-        overflow-x:hidden;}</style>
+        overflow-x: hidden;}</style>
 
 </head>
 {% extends 'base.html' %}
@@ -13,10 +13,21 @@
 
 {% block body %}
 <body>
-    <!-- <div class="jumbotron"> -->
+        <div class="about p-4" style="text-center;">
+            <h1 class="text-center">Welcome to Park Finder</h1><br>
+            <p class="text-center">
+                The National Park Service has nearly 500 parks within it's care. Park Finder <br>
+                will help you discover and save parks you may not know about. Search by the <br>
+                type of geological and ecological features you would like to see and narrow by <br>
+                state. Who knows, what new sights await!?
+                Login below or start exploring!<br>
+                <h5 class="text-center"><a style="color: #2d3f2f" href="/park_search">Get started</a></h5>
+            </p>
+        </div>    
         <div class="row justify-content-md-center">
+
             <div class="card col-3;">
-                <h3>Create an Account</h3>
+                <h4>Create an Account</h4>
 
                 <form action="/users" method="POST" class="p-4">
                     <div class="form-group">
@@ -30,7 +41,7 @@
                 </form>
             </div>
             <div class="card col-3;">
-                <h3>Log In</h3>
+                <h4>Log In</h4>
                 <form action="/login" method="POST" class="p-4">
                     <div class="form-group">
                         <p>Email: <input type="text" name="email" class="form-control" placeholder="name@example.com"></p>

@@ -71,7 +71,19 @@ input[type="submit"]:hover{
   
 }
 
-
+.about {
+  width: 30%;
+  padding-top: 20px;
+  padding-right: 40px;
+  padding-left: 40px;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  inline-size: 75%;
+  align-items: center;
+  vertical-align: center;
+  color: black
+}
 
 .button-drop {
   position: fixed;
@@ -100,4 +112,3 @@ input[type="submit"]:hover{
   text-align: left;
   
 }
-

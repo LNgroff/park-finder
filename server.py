@@ -31,7 +31,7 @@ STATES = us.states.STATES_AND_TERRITORIES
 
 @app.route('/')
 def get_landing_page():
-    """Returns homepage."""
+    """Returns landing."""
     
     image = crud.get_random_image()
 
@@ -125,7 +125,7 @@ def show_search_results():
         userstate = us.states.lookup(fullstate).abbr
 
         for topic in topics:
-            # resulting_parks[topic] = crud.get_park_image_topic(topic, userstate)
+
             results = crud.get_parktopic_image(topic, userstate)
             
             # Loop through each park in results and get needed values
@@ -270,7 +270,6 @@ def register_user():
             flash('Email already exists. Try again.')
         
         else:    
-            # TODO: somehow check valid email
 
             # Encrypt user password
             secure_password = generate_password_hash(password, method ="sha256")
@@ -353,12 +352,6 @@ def log_in():
     return redirect(referer)
 
 
-# @app.route('/loggedin')
-# def is_logged_in():
-# # provides user info for login-logout.js to properly log user in/out
-#     return jsonify(current_user.is_authenticated)
-
-
 @app.route('/logout', methods = ['POST'])
 @login_required
 def logout():
@@ -368,7 +361,7 @@ def logout():
     flash("Logged out!")
     
 
-    return redirect('/park_search')
+    return redirect('/home')
 
 
 if __name__ == '__main__':
