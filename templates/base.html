@@ -34,6 +34,7 @@
         <a class="nav-link active navbar-brand" href='/'>Park Finder <i class="fas fa-tree"></i><span class="sr-only"></span></a>
       </ul>
       <ul class="nav justify-content-end"> 
+        <a class="nav-link active" href="/home">Home<span class="sr-only"></span></a>
         <a class="nav-link active" href="/park_search">Search<span class="sr-only"></span></a> 
         <a class="nav-link active" href="/user/{{current_user.get_id()}}">My Parks<span class="sr-only"></span></a>
 
@@ -83,9 +84,9 @@
 
 <br><br>
 
-    {% block after_body %}
-    
-    {% endblock %}
+{% block after_body %}
+
+{% endblock %}
 <footer>
 <div id="credit">
   <br><br><br>

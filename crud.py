@@ -91,8 +91,6 @@ def get_park_by_id(park_id):
 def get_parkimage_by_id(park_id):
     """Get park details by park_id with image."""
 
-    # return db..session.query(Favorite, Park).join
-
     return Image.query.filter(Image.park_id == park_id).first()
 
 

@@ -20,18 +20,16 @@ body {
     ;
 }
 
-/* The footer always appears at the bottom of the browser window. */
 
 footer {
     position: fixed;
     bottom: 0;
-    width: 100%;  /* required because fixed position */
+    width: 100%;
 }
 
 .card {
     vertical-align: middle;
     text-align: center;
-    /* background-color: #969796cc; */
     background-color: #3a3a3ad7;
     padding: 50px;
     width: 25%;
@@ -51,7 +49,6 @@ footer {
 
 .boxed{
     background-color: #969796cc;
-    /* background-color: #3a3a3ad7; */
     padding: 3px;
     text-align: left;
     padding-right: 10px;

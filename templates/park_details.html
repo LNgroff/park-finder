@@ -34,36 +34,34 @@
     </section>
 
     <section class="below" id="image-gallery">
-        <!-- <div class="jumbotron" style="text-center"> -->
-            <div class="row row-cols-1 row-cols-md-4 justify-content-md-center">
+        <div class="row row-cols-1 row-cols-md-4 justify-content-md-center">
 
-                {% for image in images %}
-                <div class="col-sm mx-auto; image-text;">   
-                    <a href="{{image.image_url}}" class="pop"><img class="thumbnail" src="{{image.image_url}}"></a>
-                    <br><br><br>
-                </div>
+            {% for image in images %}
+            <div class="col-sm mx-auto; image-text;">   
+                <a href="{{image.image_url}}" class="pop"><img class="thumbnail" src="{{image.image_url}}"></a>
+                <br><br><br>
+            </div>
 
-                <!-- code for defunct modal -->
-                {#<a href="#" class="pop">
-                    <img class="thumbnail" id="imageresource" src="{{image.image_url}}">
-                    Click to Enlarge
-                </a>#}
+            <!-- code for defunct modal -->
+            {#<a href="#" class="pop">
+                <img class="thumbnail" id="imageresource" src="{{image.image_url}}">
+                Click to Enlarge
+            </a>#}
 
-                {% endfor %} 
-                {# 
-                <!-- code for defunct modal -->
-                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">              
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            {% endfor %} 
+            
+            <!-- code for defunct modal -->
+            {# <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">              
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                             <img src="" class="imagepreview" style="width: 100%;" >
-                            </div>
                         </div>
                     </div>
-                </div>#}
-            
-            </div>
+                </div>
+            </div>#}
+        
         </div>
     </section>
 

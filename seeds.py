@@ -19,6 +19,7 @@ os.system("createdb parks")
 model.connect_to_db(server.app)
 model.db.create_all()
 
+"""Code to update park data upon seeding"""
 # API_KEY = os.environ.get("API_KEY")
 
 # request_url = f"https://developer.nps.gov/api/v1/parks?&api_key={{API_KEY}}"
@@ -28,8 +29,6 @@ model.db.create_all()
 #     fd.write(parks_response.content)
 
 
-# with open("data/parks.json") as f:
-#     park_data = json.loads(f.read())
 
 with open("data/allParks.json") as f:
     park_data = json.loads(f.read())
@@ -70,16 +69,12 @@ for park in park_data["data"]:
 
     # populates images in db
     for image in park["images"]:
-
-        # if image == park["images"][0]:
-        #     db_image = crud.create_image(db_park.park_id, image["url"])
-        #     images_in_db.append(db_image)
         
         db_image = crud.create_image(db_park.park_id, image["url"])
         images_in_db.append(db_image)
 
 
-# Test users
+# Creates test users
 for n in range(10):
     email = f"user{n}@test.com"
     password = generate_password_hash(f"test{n}", method="sha256")
