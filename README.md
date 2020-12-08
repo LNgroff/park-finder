@@ -7,7 +7,7 @@ Park Finder allows a user to search for national parks based on ecological or ge
 
 ### Park Finder Demo
 
-  [![Watch the video](https://img.youtube.com/vi/E2CyVqj0n9U/maxresdefault.jpg)](https://www.youtube.com/watch?v=E2CyVqj0n9U)
+  [![Watch the video](https://img.youtube.com/vi/E2CyVqj0n9U/0.jpg)](https://youtu.be/E2CyVqj0n9U)
 
 
 
