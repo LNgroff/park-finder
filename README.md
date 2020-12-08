@@ -60,9 +60,10 @@ Park Finder allows a user to search for national parks based on ecological or ge
 
 #### Open a new browser window and visit: http://0.0.0.0:5000/
 
-Get started exploring!!
+Get started exploring!! <br>
 
 
 ## Keep an eye out for...
-Future features may include a feature to compare parks, a map for the park’s profile page, a search option for parks directly, an improved UI. 
+Future features may include the ability to compare parks, a map for each park’s profile page, a option to seach for parks directly, and an improved UI. 
+
 
