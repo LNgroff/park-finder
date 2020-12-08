@@ -32,7 +32,9 @@ Park Finder allows a user to search for national parks based on ecological or ge
 
 
 #### First clone the repository:
-  ```$ git clone https://github.com/LNgroff/park-finder.git```
+  ```
+  $ git clone https://github.com/LNgroff/park-finder.git
+  ```
 
 #### Set up virtual environment:
   ```
@@ -42,13 +44,19 @@ Park Finder allows a user to search for national parks based on ecological or ge
   ```
 
 #### Install dependencies:
-  ```(env) $ pip3 install -r requirements.tx```
+  ```
+  (env) $ pip3 install -r requirements.tx
+  ```
 
 #### Create and seed the database: 
-  ```(env) $ python3 seed.py```
+  ```
+  (env) $ python3 seed.py
+  ```
 
 #### Run the server on the backend
-  ```(env) $ python3 server.py```
+  ```
+  (env) $ python3 server.py
+  ```
 
 #### Open a new browser window and visit: http://0.0.0.0:5000/
 
